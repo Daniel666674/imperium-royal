@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imperium Royal | Luxury Perfume House</title>
+<meta name="description" content="Imperium Royal, perfumeria premium con perfumes originales, asesoria privada y envios a toda Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#050403;
+  --noir:#0b0908;
+  --charcoal:#15110d;
+  --bronze:#7a4d2b;
+  --gold:#d7b56f;
+  --gold-2:#f4dc9c;
+  --ivory:#fbf2e1;
+  --cream:#decfb1;
+  --taupe:#9b8d79;
+  --rose:#5c2432;
+  --blue:#111927;
+  --green:#15251d;
+  --line:rgba(244,220,156,.22);
+  --glass:rgba(255,255,255,.065);
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Manrope",system-ui,sans-serif;
+  --ease:260ms cubic-bezier(.2,.8,.2,1);
+}
+html{scroll-behavior:smooth;background:var(--black)}
+body{font-family:var(--sans);background:var(--black);color:var(--ivory);line-height:1.55;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{border:0;background:transparent;color:inherit;cursor:pointer}
+img,svg{display:block;max-width:100%}
+.shell{width:min(100% - 44px,1380px);margin-inline:auto}
+.grain{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:.16;background-image:radial-gradient(rgba(255,255,255,.45) .6px,transparent .6px);background-size:3px 3px;mix-blend-mode:overlay}
+.ticker{height:36px;overflow:hidden;color:#140d06;background:linear-gradient(90deg,#a97031,#f4dc9c,#c2964d);border-bottom:1px solid rgba(255,255,255,.2)}
+.ticker-track{display:flex;align-items:center;height:100%;width:max-content;animation:ticker 28s linear infinite}
+.ticker span{padding-inline:32px;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;white-space:nowrap}
+@keyframes ticker{to{transform:translateX(-50%)}}
+.nav{position:sticky;top:0;z-index:50;background:rgba(5,4,3,.76);backdrop-filter:blur(22px);border-bottom:1px solid var(--line)}
+.nav-inner{height:84px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:26px}
+.brand{display:flex;align-items:center;gap:14px}
+.brand-mark{width:44px;height:44px;display:grid;place-items:center;border:1px solid rgba(215,181,111,.7);background:radial-gradient(circle at 50% 10%,rgba(244,220,156,.22),rgba(215,181,111,.04))}
+.brand-mark svg{width:29px;color:var(--gold)}
+.brand strong{display:block;font-family:var(--serif);font-size:27px;font-weight:600;line-height:.88;letter-spacing:.08em;color:var(--gold-2)}
+.brand small{display:block;margin-top:7px;color:var(--taupe);font-size:8px;font-weight:800;letter-spacing:.34em;text-transform:uppercase}
+.nav-links{display:flex;justify-content:center;gap:8px}
+.nav-btn,.utility-btn,.control-btn,.tab-btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:40px;border:1px solid var(--line);background:rgba(255,255,255,.028);color:var(--cream);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;transition:transform var(--ease),background var(--ease),border-color var(--ease),color var(--ease),box-shadow var(--ease)}
+.nav-btn{padding:0 16px;border-radius:999px}
+.nav-btn:hover,.utility-btn:hover,.control-btn:hover,.tab-btn:hover{transform:translateY(-2px);border-color:rgba(244,220,156,.55);background:var(--glass);color:var(--gold-2)}
+.nav-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-2));border-color:var(--gold);color:#120c06;box-shadow:0 12px 30px rgba(215,181,111,.16)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.utility-btn{width:42px;padding:0;border-radius:14px 14px 14px 3px}
+.whatsapp{padding:0 18px;background:#1e8d57;border-color:#1e8d57;color:white;border-radius:4px 999px 999px 4px}
+.hero{position:relative;min-height:calc(100vh - 120px);overflow:hidden;background:
+  radial-gradient(760px 500px at 76% 50%,rgba(215,181,111,.22),transparent 62%),
+  radial-gradient(620px 420px at 18% 78%,rgba(92,36,50,.22),transparent 64%),
+  linear-gradient(135deg,#050403 0%,#130c08 48%,#050403 100%)}
+.hero::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,rgba(5,4,3,.96),rgba(5,4,3,.72) 43%,rgba(5,4,3,.08) 66%,rgba(5,4,3,.72)),
+  repeating-linear-gradient(90deg,rgba(255,255,255,.04) 0 1px,transparent 1px 10%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:24%;background:linear-gradient(transparent,var(--black))}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,560px);gap:44px;align-items:center;padding:70px 0 62px}
+.eyebrow{display:inline-flex;align-items:center;gap:14px;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.26em;text-transform:uppercase}
+.eyebrow::before{content:"";width:56px;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:0}
+h1{margin-top:22px;font-size:clamp(74px,10vw,154px);line-height:.86;color:var(--ivory)}
+h1 em,h2 em,h3 em{font-style:italic;color:var(--gold-2);font-weight:400}
+.hero-copy p{max-width:600px;margin-top:28px;color:var(--cream);font-size:17px;line-height:1.85}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.primary,.secondary{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:50px;padding:0 24px;border:1px solid var(--line);font-size:12px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;transition:transform var(--ease),background var(--ease),border-color var(--ease),color var(--ease)}
+.primary{background:var(--gold);border-color:var(--gold);color:#120c06}
+.secondary{background:rgba(255,255,255,.035);color:var(--cream)}
+.primary:hover,.secondary:hover{transform:translateY(-2px);background:var(--gold-2);border-color:var(--gold-2);color:#120c06}
+.hero-proof{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;margin-top:52px;max-width:760px;border:1px solid var(--line);background:var(--line)}
+.proof-card{background:rgba(5,4,3,.72);padding:18px 16px}
+.proof-card b{display:block;font-family:var(--serif);font-size:34px;font-weight:500;line-height:1;color:var(--gold-2)}
+.proof-card span{display:block;margin-top:8px;color:var(--taupe);font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.hero-gallery{position:relative;min-height:650px;perspective:1200px}
+.hero-photo{position:absolute;border:1px solid rgba(244,220,156,.28);background:#fff;box-shadow:0 38px 76px rgba(0,0,0,.52);overflow:hidden;animation:float 6s ease-in-out infinite}
+.hero-photo img,.hero-photo .photo-art{width:100%;height:100%;object-fit:contain;background:#fff;padding:14px}
+.hero-photo.main{width:370px;height:430px;right:70px;top:56px;transform:rotateY(-10deg) rotateZ(2deg);animation-delay:-1s}
+.hero-photo.back{width:250px;height:300px;left:0;top:118px;transform:rotateZ(-8deg);filter:saturate(.9) brightness(.92);animation-delay:-2.5s}
+.hero-photo.front{width:230px;height:260px;right:0;bottom:70px;transform:rotateZ(-3deg);animation-delay:-4s}
+.hero-caption{position:absolute;left:32px;bottom:32px;width:300px;padding:18px;border:1px solid var(--line);background:rgba(10,8,7,.78);backdrop-filter:blur(18px)}
+.hero-caption b{font-family:var(--serif);font-size:25px;font-weight:500;color:var(--ivory)}
+.hero-caption span{display:block;margin-top:8px;color:var(--taupe);font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
+@keyframes float{0%,100%{translate:0 0}50%{translate:0 -18px}}
+.section{padding:104px 0;background:var(--black)}
+.section-alt{background:linear-gradient(180deg,#100d0b,#050403)}
+.section-head{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:38px}
+h2{margin-top:12px;font-size:clamp(44px,5.4vw,82px);line-height:.94;color:var(--ivory)}
+.architecture{position:relative;background:#080706;border-block:1px solid var(--line);overflow:hidden}
+.architecture-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:1px;background:var(--line);border-inline:1px solid var(--line)}
+.arch-panel{min-height:520px;background:#0d0a08;padding:46px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.arch-panel::after{content:"";position:absolute;right:-130px;bottom:-130px;width:360px;height:360px;border:1px solid rgba(215,181,111,.2);border-radius:50%}
+.arch-panel strong{font-family:var(--serif);font-size:clamp(42px,4vw,68px);font-weight:500;line-height:.96;color:var(--ivory)}
+.arch-panel p{position:relative;z-index:2;max-width:440px;color:var(--cream);font-size:16px;line-height:1.8}
+.journey{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+.journey-card{min-height:260px;background:linear-gradient(140deg,var(--tone),#080604);padding:30px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.journey-card span{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.journey-card b{font-family:var(--serif);font-size:34px;font-weight:500;color:var(--ivory);line-height:1.05}
+.journey-card p{color:var(--taupe);font-size:14px;max-width:310px}
+.shopbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:18px;border:1px solid var(--line);background:#0b0908;margin-bottom:18px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab-btn{padding:0 18px;border-radius:999px 999px 999px 7px;position:relative;overflow:hidden}
+.tab-btn::after{content:"";position:absolute;inset:auto 13px 7px;height:1px;background:currentColor;opacity:.28;transform:scaleX(0);transform-origin:left;transition:transform var(--ease)}
+.tab-btn:hover::after,.tab-btn.active::after{transform:scaleX(1)}
+.tab-btn[data-filter="all"]{border-radius:999px}
+.tab-btn[data-filter="hombre"]{border-color:rgba(93,136,190,.38);color:#c9d9ef}
+.tab-btn[data-filter="mujer"]{border-color:rgba(194,101,129,.42);color:#f1c4cf}
+.tab-btn[data-filter="unisex"]{border-color:rgba(113,164,128,.42);color:#c8e7cf}
+.tab-btn.active{background:linear-gradient(135deg,var(--gold),var(--gold-2));border-color:var(--gold);color:#130d07}
+.sorts{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.select{min-height:40px;border:1px solid var(--line);background:#0d0a08;color:var(--cream);padding:0 12px;font-size:12px;font-weight:700;outline:none}
+.search-wrap{display:flex;align-items:center;gap:10px;min-height:40px;border:1px solid var(--line);background:rgba(255,255,255,.035);padding:0 13px;border-radius:999px}
+.search-wrap svg{color:var(--gold)}
+.search-wrap input{width:210px;border:0;outline:0;background:transparent;color:var(--ivory);font-size:12px;font-weight:700}
+.search-wrap input::placeholder{color:var(--taupe)}
+.catalog-count{min-height:40px;display:inline-flex;align-items:center;border:1px solid rgba(215,181,111,.32);padding:0 13px;border-radius:999px;color:var(--gold-2);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.scroll-progress{position:fixed;left:0;right:0;top:0;height:3px;z-index:80;background:linear-gradient(90deg,var(--gold),var(--gold-2));transform:scaleX(0);transform-origin:left;box-shadow:0 0 18px rgba(244,220,156,.55)}
+.catalog-layout{display:grid;grid-template-columns:360px 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.spotlight{background:linear-gradient(160deg,#110d0a,#070605);min-height:660px;padding:28px;display:flex;flex-direction:column;justify-content:space-between;position:sticky;top:104px}
+.spotlight.added{animation:addedPulse 560ms ease}
+.spotlight figure{height:420px;background:#fff;border:1px solid rgba(244,220,156,.18);display:grid;place-items:center;overflow:hidden}
+.spotlight img,.spotlight .photo-art{width:100%;height:100%;object-fit:contain;padding:18px}
+.spotlight h3{font-size:42px;line-height:.98;margin-top:22px;color:var(--ivory)}
+.spotlight p{margin-top:14px;color:var(--taupe)}
+.spotlight .price{font-family:var(--serif);font-size:39px;color:var(--gold-2);margin-top:18px}
+.product-track-wrap{background:#0d0a08;padding:28px;overflow:hidden}
+.track-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:18px}
+.control-btn{width:44px;padding:0;border-radius:999px}
+.product-track{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,32%);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:8px}
+.product-track::-webkit-scrollbar{display:none}
+.product-card{scroll-snap-align:start;border:1px solid var(--line);background:#11100e;min-height:590px;display:flex;flex-direction:column;transition:transform var(--ease),border-color var(--ease),background var(--ease),box-shadow var(--ease),opacity 420ms ease;transform-style:preserve-3d;will-change:transform}
+.product-card:hover{transform:translateY(-8px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));border-color:rgba(244,220,156,.55);background:#15120f;box-shadow:0 24px 54px rgba(0,0,0,.32)}
+.product-card.enter{animation:cardIn 560ms cubic-bezier(.18,.9,.24,1) both;animation-delay:calc(var(--i,0) * 32ms)}
+.product-card.added{animation:addedPulse 560ms ease}
+@keyframes cardIn{from{opacity:0;transform:translateY(30px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes addedPulse{0%,100%{box-shadow:0 0 0 rgba(215,181,111,0)}45%{box-shadow:0 0 0 8px rgba(215,181,111,.18)}}
+.product-image{height:330px;background:#fff;display:grid;place-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.product-image img,.product-image .photo-art{width:100%;height:100%;object-fit:contain;padding:14px;transition:transform 520ms ease}
+.product-card:hover .product-image img,.product-card:hover .product-image .photo-art{transform:scale(1.045)}
+.product-info{padding:24px;display:flex;flex-direction:column;flex:1}
+.product-brand{color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.24em;text-transform:uppercase}
+.product-info h3{font-size:32px;line-height:1;margin-top:9px;color:var(--ivory)}
+.notes{display:grid;gap:8px;margin:20px 0;color:var(--taupe);font-size:13px}
+.notes div{display:grid;grid-template-columns:68px 1fr;gap:12px}
+.notes b{color:var(--gold);font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.product-bottom{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.price{font-family:var(--serif);font-size:31px;color:var(--gold-2)}
+.mini-add{min-height:42px;padding:0 14px;background:var(--gold);color:#120c06;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.atelier{overflow:hidden;border-block:1px solid var(--line);background:#080604}
+.atelier-stage{height:620px;display:flex;align-items:center;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:0 max(22px,calc((100vw - 1380px)/2 + 22px))}
+.atelier-stage::-webkit-scrollbar{display:none}
+.atelier-panel{position:relative;flex:0 0 min(82vw,520px);height:430px;scroll-snap-align:center;border:1px solid var(--line);background:linear-gradient(140deg,var(--tone),#070504);overflow:hidden;padding:34px;display:flex;flex-direction:column;justify-content:space-between}
+.atelier-panel::before{content:"";position:absolute;inset:24px;border:1px solid rgba(244,220,156,.16)}
+.atelier-panel img,.atelier-panel .photo-art{position:absolute;right:-18px;bottom:-18px;width:250px;height:250px;object-fit:contain;background:#fff;padding:12px;box-shadow:0 26px 54px rgba(0,0,0,.45)}
+.atelier-panel h3{position:relative;z-index:2;max-width:310px;font-size:48px;line-height:.95}
+.atelier-panel p{position:relative;z-index:2;max-width:280px;color:var(--cream)}
+.service-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.service-lead{background:linear-gradient(145deg,var(--gold),#9c6130);color:#120c06;padding:48px}
+.service-lead h2{color:#120c06}
+.service-lead p{max-width:450px;margin-top:18px;color:#261507;font-weight:600}
+.services{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+.service-card{background:#0d0a08;padding:34px;min-height:220px}
+.service-card svg{color:var(--gold);margin-bottom:18px}
+.service-card b{display:block;font-family:var(--serif);font-size:31px;font-weight:500;color:var(--ivory)}
+.service-card p{margin-top:10px;color:var(--taupe)}
+.faq{border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:28px 0;font-family:var(--serif);font-size:30px;color:var(--ivory);cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary span{width:34px;height:34px;border:1px solid var(--line);display:grid;place-items:center;color:var(--gold);transition:rotate var(--ease),background var(--ease)}
+details[open] summary span{rotate:45deg;background:var(--gold);color:#120c06}
+details p{max-width:760px;color:var(--taupe);padding:0 0 28px;font-size:15px;line-height:1.8}
+.newsletter{border-block:1px solid var(--line);background:linear-gradient(120deg,#080604,#20110b);padding:64px 0}
+.newsletter-inner{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.newsletter h2{font-size:clamp(42px,4.4vw,70px)}
+.form{display:flex;gap:10px}
+.form input{min-width:0;flex:1;height:54px;border:1px solid var(--line);background:rgba(255,255,255,.055);color:var(--ivory);padding:0 18px;outline:none}
+footer{padding:58px 0 34px;background:#050403}
+.footer-grid{display:grid;grid-template-columns:1.35fr repeat(3,1fr);gap:42px}
+footer p,footer a{color:var(--taupe);font-size:13px;line-height:1.9}
+footer h4{margin-bottom:16px;color:var(--gold);font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase}
+footer ul{list-style:none;display:grid;gap:8px}
+.footer-bottom{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;margin-top:46px;padding-top:22px;border-top:1px solid var(--line);color:var(--taupe);font-size:12px}
+.floating-wa{position:fixed;right:22px;bottom:22px;z-index:55;width:58px;height:58px;display:grid;place-items:center;background:#1e8d57;color:white;box-shadow:0 18px 36px rgba(0,0,0,.42);animation:waBreathe 3.2s ease-in-out infinite}
+@keyframes waBreathe{0%,100%{transform:translateY(0);box-shadow:0 18px 36px rgba(0,0,0,.42)}50%{transform:translateY(-5px);box-shadow:0 24px 46px rgba(30,141,87,.28)}}
+.photo-art{position:relative;display:grid;place-items:center;overflow:hidden;background:
+  radial-gradient(ellipse at center,rgba(255,255,255,.96),rgba(236,231,220,.95));
+  isolation:isolate}
+.photo-art::before{content:"";position:absolute;inset:8%;background:radial-gradient(ellipse at center,rgba(0,0,0,.12),transparent 58%);filter:blur(18px);transform:translateY(35%)}
+.photo-art .box{position:absolute;left:10%;top:14%;width:43%;height:70%;background:linear-gradient(140deg,var(--box-1),var(--box-2));border:1px solid rgba(255,255,255,.34);box-shadow:18px 22px 26px rgba(0,0,0,.24)}
+.photo-art .box::after{content:attr(data-brand);position:absolute;inset:16% 8%;display:grid;place-items:center;border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.9);font-family:var(--serif);font-size:clamp(20px,3vw,38px);line-height:.92;text-align:center;letter-spacing:.06em}
+.photo-art .bottle{position:absolute;right:13%;bottom:12%;width:36%;height:63%;border-radius:13px 13px 20px 20px;background:linear-gradient(160deg,rgba(255,255,255,.18),transparent 20%),linear-gradient(180deg,var(--juice-1),var(--juice-2));border:1px solid rgba(0,0,0,.34);box-shadow:0 20px 28px rgba(0,0,0,.26)}
+.photo-art .bottle::before{content:"";position:absolute;left:50%;top:-14%;width:42%;height:18%;transform:translateX(-50%);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#1b1a1a,#050505);box-shadow:0 0 0 1px rgba(255,255,255,.22)}
+.photo-art .bottle::after{content:attr(data-name);position:absolute;inset:36% 10% auto;min-height:28%;display:grid;place-items:center;color:white;font-family:var(--serif);font-size:clamp(17px,2.3vw,32px);line-height:.92;text-align:center;text-shadow:0 2px 9px rgba(0,0,0,.8)}
+.photo-art.bleu{--box-1:#111827;--box-2:#02040a;--juice-1:#111827;--juice-2:#02040a}
+.photo-art.sauvage{--box-1:#111722;--box-2:#020307;--juice-1:#121d2b;--juice-2:#07111f}
+.photo-art.vip{--box-1:#1c1a19;--box-2:#040403;--juice-1:#060606;--juice-2:#3a3230}
+.photo-art.belle{--box-1:#f1e9dc;--box-2:#be9a91;--juice-1:#ffd6aa;--juice-2:#f4a66f}
+.reveal{opacity:0;transform:translateY(34px);transition:opacity 800ms ease,transform 800ms ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.catalog-layout.updating{animation:catalogFlash 420ms ease}
+@keyframes catalogFlash{0%{filter:saturate(.75);opacity:.72}100%{filter:saturate(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+@media (max-width:1120px){
+  .nav-links{display:none}.hero-grid,.architecture-grid,.catalog-layout,.service-grid,.newsletter-inner{grid-template-columns:1fr}
+  .hero-gallery{min-height:560px}.spotlight{position:relative;top:auto}.product-track{grid-auto-columns:minmax(280px,48%)}.footer-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:740px){
+  .shell{width:min(100% - 30px,1380px)}.ticker{height:32px}.nav-inner{height:72px}.whatsapp{display:none}.brand strong{font-size:22px}.brand-mark{width:38px;height:38px}
+  .hero-grid{padding:52px 0 42px}h1{font-size:clamp(58px,18vw,92px)}.hero-copy p{font-size:15px}.hero-proof{grid-template-columns:repeat(2,1fr)}
+  .hero-gallery{min-height:460px}.hero-photo.main{width:270px;height:330px;right:18px}.hero-photo.back{width:190px;height:230px}.hero-photo.front{width:170px;height:200px;bottom:40px}.hero-caption{display:none}
+  .section{padding:74px 0}.section-head{align-items:flex-start;flex-direction:column}.journey,.services{grid-template-columns:1fr}.arch-panel{min-height:390px;padding:30px}
+  .shopbar{align-items:stretch;flex-direction:column}.tabs,.sorts{width:100%}.tab-btn{flex:1}.select{width:100%}.product-track{grid-auto-columns:88%}
+  .atelier-stage{height:540px}.atelier-panel{flex-basis:86vw;height:400px}.atelier-panel img,.atelier-panel .photo-art{width:190px;height:190px}.footer-grid{grid-template-columns:1fr}.form{flex-direction:column}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="ticker"><div class="ticker-track">
+  <span>Perfumes 100% originales</span><span>Entrega Bogota 24h</span><span>Pago contra entrega</span><span>Asesoria privada por WhatsApp</span><span>Empaque premium</span>
+  <span>Perfumes 100% originales</span><span>Entrega Bogota 24h</span><span>Pago contra entrega</span><span>Asesoria privada por WhatsApp</span><span>Empaque premium</span>
+</div></div>
+<header class="nav">
+  <div class="shell nav-inner">
+    <a class="brand" href="#inicio" aria-label="Imperium Royal inicio">
+      <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M8 45 15 20l13 15 4-22 4 22 13-15 7 25H8Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M12 50h40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span>
+      <span><strong>Imperium Royal</strong><small>Luxury Perfumery</small></span>
+    </a>
+    <nav class="nav-links" aria-label="Navegacion principal">
+      <a class="nav-btn active" href="#inicio">Inicio</a>
+      <a class="nav-btn" href="#arquitectura">Arquitectura</a>
+      <a class="nav-btn" href="#catalogo">Catalogo</a>
+      <a class="nav-btn" href="#atelier">Atelier</a>
+      <a class="nav-btn" href="#servicio">Servicio</a>
+      <a class="nav-btn" href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="utility-btn" onclick="scrollToSection('catalogo')" aria-label="Ir al catalogo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2h12l3 6v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z"/><path d="M3 8h18M9 12a3 3 0 0 0 6 0"/></svg></button>
+      <a class="nav-btn whatsapp" href="https://wa.me/573105550199?text=Hola%20Imperium%20Royal%2C%20quiero%20asesoria%20premium" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+  </div>
+</header>
+<main id="inicio">
+  <section class="hero">
+    <div class="shell hero-grid">
+      <div class="hero-copy reveal">
+        <span class="eyebrow">Bogota / Cajica / Colombia</span>
+        <h1>Luxury scent <em>with presence</em></h1>
+        <p>Una experiencia premium para comprar perfumes originales: visual, asistida, editorial y hecha para que cada fragancia se sienta como una decision de estilo.</p>
+        <div class="cta-row">
+          <a class="primary" href="#catalogo">Comprar coleccion <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          <a class="secondary" href="#atelier">Ver experiencia</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-card"><b>500+</b><span>Referencias</span></div>
+          <div class="proof-card"><b>24h</b><span>Bogota</span></div>
+          <div class="proof-card"><b>4.9</b><span>Rating</span></div>
+          <div class="proof-card"><b>100%</b><span>Original</span></div>
+        </div>
+      </div>
+      <div class="hero-gallery reveal" aria-label="Productos destacados">
+        <figure class="hero-photo back"><div class="photo-art bleu" role="img" aria-label="Bleu de Chanel Eau de Parfum"><span class="box" data-brand="BLEU"></span><span class="bottle" data-name="Bleu de Chanel"></span></div></figure>
+        <figure class="hero-photo main"><div class="photo-art sauvage" role="img" aria-label="Dior Sauvage Eau de Parfum"><span class="box" data-brand="SAUVAGE"></span><span class="bottle" data-name="Sauvage"></span></div></figure>
+        <figure class="hero-photo front"><div class="photo-art vip" role="img" aria-label="Carolina Herrera 212 VIP Black"><span class="box" data-brand="212 VIP"></span><span class="bottle" data-name="212 VIP"></span></div></figure>
+        <div class="hero-caption"><b>Signature Black Selection</b><span>Dior / Chanel / Carolina Herrera</span></div>
+      </div>
+    </div>
+  </section>
+  <section class="architecture" id="arquitectura">
+    <div class="shell architecture-grid">
+      <div class="arch-panel reveal">
+        <span class="eyebrow">Arquitectura</span>
+        <strong>Ordenado como una boutique, no como una pagina comun.</strong>
+        <p>La experiencia se divide en decision, descubrimiento, prueba social y contacto. Cada bloque empuja al cliente a elegir con confianza.</p>
+      </div>
+      <div class="journey">
+        <article class="journey-card reveal" style="--tone:#111927"><span>01 / Impacto</span><b>Hero con producto real</b><p>Primera pantalla visual, aspiracional y clara.</p></article>
+        <article class="journey-card reveal" style="--tone:#3c1a22"><span>02 / Compra</span><b>Catalogo filtrable</b><p>Botones, ordenamiento y carrusel horizontal.</p></article>
+        <article class="journey-card reveal" style="--tone:#15251d"><span>03 / Experiencia</span><b>Scroll atelier</b><p>Una seccion horizontal para romper el desplazamiento normal.</p></article>
+        <article class="journey-card reveal" style="--tone:#2c1b10"><span>04 / Confianza</span><b>Concierge premium</b><p>Servicio, envio, autenticidad y WhatsApp.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section" id="catalogo">
+    <div class="shell">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">Catalogo Royal</span><h2>Shop the <em>icons</em></h2></div>
+      </div>
+      <div class="shopbar reveal">
+        <div class="tabs" role="tablist" aria-label="Filtros de categoria">
+          <button class="tab-btn active" data-filter="all">Todos</button>
+          <button class="tab-btn" data-filter="hombre">Hombre</button>
+          <button class="tab-btn" data-filter="mujer">Mujer</button>
+          <button class="tab-btn" data-filter="unisex">Unisex</button>
+        </div>
+        <div class="sorts">
+          <label class="search-wrap" aria-label="Buscar perfume">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+            <input id="searchInput" type="search" placeholder="Buscar perfume">
+          </label>
+          <span class="catalog-count" id="catalogCount">40 piezas</span>
+          <select class="select" id="sortSelect" aria-label="Ordenar productos">
+            <option value="featured">Orden: destacados</option>
+            <option value="priceAsc">Precio: menor a mayor</option>
+            <option value="priceDesc">Precio: mayor a menor</option>
+            <option value="name">Nombre A-Z</option>
+            <option value="brand">Marca A-Z</option>
+          </select>
+          <button class="nav-btn" onclick="renderProducts()">Aplicar</button>
+        </div>
+      </div>
+      <div class="catalog-layout reveal">
+        <aside class="spotlight" id="spotlight"></aside>
+        <div class="product-track-wrap">
+          <div class="track-controls">
+            <button class="control-btn" onclick="moveTrack(-1)" aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18 9 12l6-6"/></svg></button>
+            <button class="control-btn" onclick="moveTrack(1)" aria-label="Siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+          <div class="product-track" id="productTrack" aria-label="Lista de perfumes"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="atelier" id="atelier">
+    <div class="atelier-stage" id="atelierStage">
+      <article class="atelier-panel" style="--tone:#111927"><span class="eyebrow">Fresh Noir</span><h3>Masculino, limpio, magnetico.</h3><p>Citricos frios, madera azul, salida elegante.</p><div class="photo-art bleu" role="img" aria-label="Bleu de Chanel"><span class="box" data-brand="BLEU"></span><span class="bottle" data-name="Bleu"></span></div></article>
+      <article class="atelier-panel" style="--tone:#2d1118"><span class="eyebrow">Velvet Rose</span><h3>Femenino con aura de regalo.</h3><p>Florales suaves, vainilla, piel luminosa.</p><div class="photo-art belle" role="img" aria-label="La Vie Est Belle Lancome"><span class="box" data-brand="La Vie"></span><span class="bottle" data-name="Belle"></span></div></article>
+      <article class="atelier-panel" style="--tone:#0f1118"><span class="eyebrow">Black Party</span><h3>Intenso, nocturno, memorable.</h3><p>Cacao, especias, ambar y poder urbano.</p><div class="photo-art vip" role="img" aria-label="212 VIP Black"><span class="box" data-brand="212 VIP"></span><span class="bottle" data-name="VIP Black"></span></div></article>
+      <article class="atelier-panel" style="--tone:#1d130b"><span class="eyebrow">Wild Signature</span><h3>La firma que abre puertas.</h3><p>Ambroxan, pimienta, bergamota y proyeccion.</p><div class="photo-art sauvage" role="img" aria-label="Dior Sauvage"><span class="box" data-brand="SAUVAGE"></span><span class="bottle" data-name="Sauvage"></span></div></article>
+    </div>
+  </section>
+  <section class="section section-alt" id="servicio">
+    <div class="shell service-grid">
+      <div class="service-lead reveal">
+        <span class="eyebrow" style="color:#3b210e">Concierge</span>
+        <h2>Servicio que se siente premium.</h2>
+        <p>La compra no termina en el carrito: asesoria, autenticidad, empaque, tiempos claros y seguimiento directo por WhatsApp.</p>
+      </div>
+      <div class="services">
+        <article class="service-card reveal"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m9 12 2 2 4-5"/><circle cx="12" cy="12" r="9"/></svg><b>Originalidad</b><p>Perfumes autenticos, seleccionados con criterio y garantia.</p></article>
+        <article class="service-card reveal"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7z"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg><b>Envio</b><p>Bogota en 24h y cobertura nacional con seguimiento.</p></article>
+        <article class="service-card reveal"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z"/></svg><b>Asesoria</b><p>Recomendacion por piel, personalidad, ocasion e intensidad.</p></article>
+        <article class="service-card reveal"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7"/></svg><b>Regalo</b><p>Empaque y presentacion pensados para sorprender.</p></article>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="shell">
+      <div class="section-head reveal"><div><span class="eyebrow">FAQ</span><h2>Compra con <em>certeza</em></h2></div></div>
+      <div class="faq reveal">
+        <details open><summary>Los perfumes son originales?<span>+</span></summary><p>Si. Imperium Royal comunica autenticidad como parte central de la experiencia premium.</p></details>
+        <details><summary>Como elijo mi fragancia?<span>+</span></summary><p>El flujo invita a una asesoria privada por WhatsApp para elegir por ocasion, piel, familia olfativa e intensidad.</p></details>
+        <details><summary>Puedo ordenar por categoria o precio?<span>+</span></summary><p>Si. El catalogo incluye botones de categoria y selector de ordenamiento.</p></details>
+      </div>
+    </div>
+  </section>
+  <section class="newsletter" id="contacto">
+    <div class="shell newsletter-inner reveal">
+      <div><span class="eyebrow">Acceso privado</span><h2>Join the royal list.</h2></div>
+      <form class="form" onsubmit="subscribe(event)">
+        <input type="email" placeholder="tu@correo.com" aria-label="Correo electronico" required>
+        <button class="primary" type="submit">Suscribirme</button>
+      </form>
+    </div>
+  </section>
+</main>
+<footer>
+  <div class="shell footer-grid">
+    <div><a class="brand" href="#inicio"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><path d="M8 45 15 20l13 15 4-22 4 22 13-15 7 25H8Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/><path d="M12 50h40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span><span><strong>Imperium Royal</strong><small>Luxury Perfumery</small></span></a><p style="margin-top:18px;max-width:330px">Perfumeria premium con producto real, experiencia editorial y compra asistida.</p></div>
+    <div><h4>Catalogo</h4><ul><li><a href="#catalogo">Todos</a></li><li><a href="#catalogo">Hombre</a></li><li><a href="#catalogo">Mujer</a></li><li><a href="#catalogo">Unisex</a></li></ul></div>
+    <div><h4>Experiencia</h4><ul><li><a href="#arquitectura">Arquitectura</a></li><li><a href="#atelier">Atelier</a></li><li><a href="#servicio">Servicio</a></li></ul></div>
+    <div><h4>Contacto</h4><p>+57 310 555 0199<br>Cajica, Cundinamarca<br>Envios a Colombia</p></div>
+  </div>
+  <div class="shell footer-bottom"><span>© 2026 Imperium Royal Perfumeria.</span><span>Nequi / Daviplata / Bancolombia / Contraentrega</span></div>
+</footer>
+<a class="floating-wa" href="https://wa.me/573105550199?text=Hola%20Imperium%20Royal%2C%20quiero%20asesoria%20para%20elegir%20un%20perfume" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="25" height="25" viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.8-.9-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-1.7-.9-2.8-1.6-3.9-3.5-.3-.5.3-.5.8-1.6.1-.2 0-.4 0-.5l-.9-2.1c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.8-.7 2-1.4.2-.7.2-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.7 0-3.3-.5-4.7-1.4l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a>
+<script>
+document.body.insertAdjacentHTML("afterbegin",'<div class="scroll-progress" id="scrollProgress"></div>');
+const PRODUCTS=[
+  {brand:"Dior",name:"Sauvage EDP",cat:"hombre",price:469000,size:"100 ml",art:"sauvage",box:"SAUVAGE",bottle:"Sauvage",notes:["Bergamota","Pimienta / Lavanda","Ambroxan / Cedro"],featured:1},
+  {brand:"Chanel",name:"Bleu de Chanel",cat:"hombre",price:520000,size:"100 ml",art:"bleu",box:"BLEU",bottle:"Bleu",notes:["Citricos","Jengibre","Maderas nobles"],featured:2},
+  {brand:"Carolina Herrera",name:"212 VIP Black",cat:"hombre",price:389000,size:"100 ml",art:"vip",box:"212 VIP",bottle:"VIP Black",notes:["Pimienta negra","Cacao / Lavanda","Ambar / Vainilla"],featured:3},
+  {brand:"Lancome",name:"La Vie Est Belle",cat:"mujer",price:349000,size:"100 ml",art:"belle",box:"La Vie",bottle:"Belle",notes:["Pera","Iris / Jazmin","Praline / Vainilla"],featured:4},
+  {brand:"Yves Saint Laurent",name:"Y EDP",cat:"hombre",price:430000,size:"100 ml",art:"bleu",box:"YSL Y",bottle:"Y",notes:["Manzana","Salvia / Geranio","Cedro / Tonka"],featured:5},
+  {brand:"Yves Saint Laurent",name:"Black Opium",cat:"mujer",price:399000,size:"90 ml",art:"vip",box:"OPIUM",bottle:"Black",notes:["Pera","Cafe / Flor blanca","Vainilla / Pachuli"],featured:6},
+  {brand:"Versace",name:"Eros EDP",cat:"hombre",price:359000,size:"100 ml",art:"bleu",box:"EROS",bottle:"Eros",notes:["Menta","Tonka / Geranio","Vainilla / Vetiver"],featured:7},
+  {brand:"Versace",name:"Dylan Blue",cat:"hombre",price:335000,size:"100 ml",art:"bleu",box:"DYLAN",bottle:"Blue",notes:["Bergamota","Papiro / Pachuli","Incienso / Musk"],featured:8},
+  {brand:"Paco Rabanne",name:"Invictus",cat:"hombre",price:342000,size:"100 ml",art:"sauvage",box:"INVICTUS",bottle:"Invictus",notes:["Toronja","Laurel / Jazmin","Guayaco / Ambar"],featured:9},
+  {brand:"Paco Rabanne",name:"One Million",cat:"hombre",price:378000,size:"100 ml",art:"vip",box:"1 MILLION",bottle:"Gold",notes:["Mandarina","Canela / Rosa","Cuero / Ambar"],featured:10},
+  {brand:"Giorgio Armani",name:"Acqua di Gio Profondo",cat:"hombre",price:455000,size:"100 ml",art:"bleu",box:"PROFONDO",bottle:"Gio",notes:["Notas marinas","Lavanda / Romero","Mineral / Musk"],featured:11},
+  {brand:"Giorgio Armani",name:"Si EDP",cat:"mujer",price:420000,size:"100 ml",art:"belle",box:"SI",bottle:"Si",notes:["Cassis","Rosa / Fresia","Vainilla / Ambroxan"],featured:12},
+  {brand:"Carolina Herrera",name:"Good Girl",cat:"mujer",price:430000,size:"80 ml",art:"vip",box:"GOOD GIRL",bottle:"Good",notes:["Almendra","Jazmin / Tuberosa","Cacao / Tonka"],featured:13},
+  {brand:"Carolina Herrera",name:"Bad Boy",cat:"hombre",price:390000,size:"100 ml",art:"sauvage",box:"BAD BOY",bottle:"Bad Boy",notes:["Pimienta","Cedro / Salvia","Cacao / Tonka"],featured:14},
+  {brand:"Jean Paul Gaultier",name:"Le Male Elixir",cat:"hombre",price:410000,size:"125 ml",art:"vip",box:"LE MALE",bottle:"Elixir",notes:["Lavanda","Miel / Tabaco","Vainilla / Tonka"],featured:15},
+  {brand:"Jean Paul Gaultier",name:"La Belle",cat:"mujer",price:370000,size:"100 ml",art:"belle",box:"LA BELLE",bottle:"Belle",notes:["Pera","Vetiver","Vainilla"],featured:16},
+  {brand:"Tom Ford",name:"Ombre Leather",cat:"unisex",price:650000,size:"100 ml",art:"vip",box:"OMBRE",bottle:"Leather",notes:["Cardamomo","Cuero / Jazmin","Ambar / Musgo"],featured:17},
+  {brand:"Tom Ford",name:"Black Orchid",cat:"unisex",price:690000,size:"100 ml",art:"vip",box:"ORCHID",bottle:"Black",notes:["Trufa","Orquidea negra","Chocolate / Pachuli"],featured:18},
+  {brand:"Maison Francis Kurkdjian",name:"Baccarat Rouge 540",cat:"unisex",price:980000,size:"70 ml",art:"belle",box:"BR 540",bottle:"Rouge",notes:["Azafran","Ambargris","Cedro / Resina"],featured:19},
+  {brand:"Creed",name:"Aventus",cat:"hombre",price:990000,size:"100 ml",art:"sauvage",box:"AVENTUS",bottle:"Aventus",notes:["Pina / Bergamota","Abedul / Jazmin","Musk / Roble"],featured:20},
+  {brand:"Dolce & Gabbana",name:"Light Blue",cat:"unisex",price:329000,size:"100 ml",art:"bleu",box:"LIGHT BLUE",bottle:"Blue",notes:["Limon siciliano","Bambu / Jazmin","Cedro / Musk"],featured:21},
+  {brand:"Dolce & Gabbana",name:"The One",cat:"hombre",price:348000,size:"100 ml",art:"vip",box:"THE ONE",bottle:"One",notes:["Toronja","Jengibre / Cardamomo","Tabaco / Ambar"],featured:22},
+  {brand:"Givenchy",name:"L'Interdit",cat:"mujer",price:395000,size:"80 ml",art:"belle",box:"INTERDIT",bottle:"Interdit",notes:["Pera","Tuberosa / Jazmin","Vetiver / Pachuli"],featured:23},
+  {brand:"Valentino",name:"Born in Roma Donna",cat:"mujer",price:405000,size:"100 ml",art:"belle",box:"ROMA",bottle:"Donna",notes:["Grosella","Jazmin","Vainilla bourbon"],featured:24},
+  {brand:"Valentino",name:"Born in Roma Uomo",cat:"hombre",price:405000,size:"100 ml",art:"sauvage",box:"ROMA",bottle:"Uomo",notes:["Violeta","Salvia","Vetiver / Madera"],featured:25},
+  {brand:"Azzaro",name:"The Most Wanted",cat:"hombre",price:360000,size:"100 ml",art:"vip",box:"WANTED",bottle:"Wanted",notes:["Cardamomo","Toffee","Madera ambarada"],featured:26},
+  {brand:"Montblanc",name:"Explorer",cat:"hombre",price:290000,size:"100 ml",art:"sauvage",box:"EXPLORER",bottle:"Explorer",notes:["Bergamota","Vetiver","Pachuli / Cuero"],featured:27},
+  {brand:"Hugo Boss",name:"Boss Bottled",cat:"hombre",price:315000,size:"100 ml",art:"vip",box:"BOSS",bottle:"Bottled",notes:["Manzana","Canela","Madera / Vainilla"],featured:28},
+  {brand:"Calvin Klein",name:"CK One",cat:"unisex",price:210000,size:"200 ml",art:"bleu",box:"CK ONE",bottle:"One",notes:["Bergamota","Te verde","Musk / Ambar"],featured:29},
+  {brand:"Narciso Rodriguez",name:"For Her",cat:"mujer",price:360000,size:"100 ml",art:"belle",box:"FOR HER",bottle:"Narciso",notes:["Rosa","Musk","Pachuli / Ambar"],featured:30},
+  {brand:"Marc Jacobs",name:"Daisy",cat:"mujer",price:340000,size:"100 ml",art:"belle",box:"DAISY",bottle:"Daisy",notes:["Fresa","Violeta / Jazmin","Madera blanca"],featured:31},
+  {brand:"Viktor&Rolf",name:"Flowerbomb",cat:"mujer",price:445000,size:"100 ml",art:"belle",box:"FLOWER",bottle:"Bomb",notes:["Te","Orquidea / Jazmin","Pachuli"],featured:32},
+  {brand:"Burberry",name:"Her EDP",cat:"mujer",price:370000,size:"100 ml",art:"belle",box:"BURBERRY",bottle:"Her",notes:["Frutos rojos","Jazmin / Violeta","Musk / Ambar"],featured:33},
+  {brand:"Lattafa",name:"Yara EDP",cat:"unisex",price:189000,size:"100 ml",art:"belle",box:"YARA",bottle:"Yara",notes:["Frutas","Rosa / Jazmin","Almizcle / Ambar"],featured:34},
+  {brand:"Lattafa",name:"Oud For Glory",cat:"unisex",price:210000,size:"100 ml",art:"vip",box:"OUD",bottle:"Glory",notes:["Azafran","Oud","Almizcle / Ambar"],featured:35},
+  {brand:"Lattafa",name:"Khamrah",cat:"unisex",price:220000,size:"100 ml",art:"vip",box:"KHAMRAH",bottle:"Khamrah",notes:["Canela","Datil / Praline","Vainilla / Tonka"],featured:36},
+  {brand:"Armaf",name:"Club de Nuit Intense",cat:"hombre",price:230000,size:"105 ml",art:"sauvage",box:"CDN",bottle:"Intense",notes:["Limon / Pina","Rosa / Abedul","Musk / Ambargris"],featured:37},
+  {brand:"Maison Alhambra",name:"Tobacco Touch",cat:"unisex",price:180000,size:"80 ml",art:"vip",box:"TOBACCO",bottle:"Touch",notes:["Tabaco","Especias","Vainilla / Cacao"],featured:38},
+  {brand:"Al Haramain",name:"Amber Oud Gold",cat:"unisex",price:315000,size:"120 ml",art:"belle",box:"AMBER OUD",bottle:"Gold",notes:["Bergamota","Melon / Pina","Vainilla / Musk"],featured:39},
+  {brand:"Rasasi",name:"Hawas For Him",cat:"hombre",price:260000,size:"100 ml",art:"bleu",box:"HAWAS",bottle:"Hawas",notes:["Manzana","Ciruela / Cardamomo","Ambargris / Musk"],featured:40}
+];
+let activeFilter="all";
+function money(n){return "$"+n.toLocaleString("es-CO")}
+function productArt(p){
+  return `<div class="photo-art ${p.art}" role="img" aria-label="${p.brand} ${p.name}"><span class="box" data-brand="${p.box}"></span><span class="bottle" data-name="${p.bottle}"></span></div>`;
+}
+function sorted(list){
+  const mode=document.getElementById("sortSelect")?.value||"featured";
+  return [...list].sort((a,b)=>{
+    if(mode==="priceAsc") return a.price-b.price;
+    if(mode==="priceDesc") return b.price-a.price;
+    if(mode==="name") return a.name.localeCompare(b.name);
+    if(mode==="brand") return a.brand.localeCompare(b.brand);
+    return a.featured-b.featured;
+  });
+}
+function renderProducts(){
+  const query=(document.getElementById("searchInput")?.value||"").trim().toLowerCase();
+  const filtered=(activeFilter==="all"?PRODUCTS:PRODUCTS.filter(p=>p.cat===activeFilter)).filter(p=>{
+    const haystack=[p.brand,p.name,p.cat,p.notes.join(" ")].join(" ").toLowerCase();
+    return !query||haystack.includes(query);
+  });
+  const list=sorted(filtered);
+  const hero=list[0]||PRODUCTS[0];
+  const layout=document.querySelector(".catalog-layout");
+  layout?.classList.remove("updating");
+  void layout?.offsetWidth;
+  layout?.classList.add("updating");
+  document.getElementById("catalogCount").textContent=`${list.length} piezas`;
+  document.getElementById("spotlight").innerHTML=`<div><figure>${productArt(hero)}</figure><h3>${hero.name}</h3><p>${hero.brand} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="primary" onclick="quickAdd(this)">Agregar al carrito</button>`;
+  document.getElementById("productTrack").innerHTML=list.map((p,i)=>`<article class="product-card enter" style="--i:${i}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="product-bottom"><span class="price">${money(p.price)}</span><button class="mini-add" onclick="quickAdd(this)">Agregar</button></div></div></article>`).join("");
+  bindCardMotion();
+}
+document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));btn.classList.add("active");activeFilter=btn.dataset.filter;renderProducts()}));
+document.getElementById("searchInput")?.addEventListener("input",renderProducts);
+function moveTrack(dir){document.getElementById("productTrack").scrollBy({left:dir*360,behavior:"smooth"})}
+function quickAdd(btn){
+  const card=btn.closest(".product-card")||btn.closest(".spotlight");
+  card?.classList.remove("added");
+  void card?.offsetWidth;
+  card?.classList.add("added");
+  const old=btn.textContent;
+  btn.textContent="Agregado";
+  setTimeout(()=>btn.textContent=old,1100);
+}
+function subscribe(e){e.preventDefault();const btn=e.target.querySelector("button");btn.textContent="Suscrito";setTimeout(()=>{btn.textContent="Suscribirme";e.target.reset()},1500)}
+function scrollToSection(id){document.getElementById(id)?.scrollIntoView({behavior:"smooth"})}
+function bindCardMotion(){
+  document.querySelectorAll(".product-card").forEach(card=>{
+    card.addEventListener("pointermove",event=>{
+      const rect=card.getBoundingClientRect();
+      const x=(event.clientX-rect.left)/rect.width-.5;
+      const y=(event.clientY-rect.top)/rect.height-.5;
+      card.style.setProperty("--ry",`${x*5}deg`);
+      card.style.setProperty("--rx",`${-y*5}deg`);
+    });
+    card.addEventListener("pointerleave",()=>{
+      card.style.setProperty("--ry","0deg");
+      card.style.setProperty("--rx","0deg");
+    });
+  });
+}
+const revealObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")})},{threshold:.18});
+document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+const navObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){document.querySelectorAll(".nav-btn[href^='#']").forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+entry.target.id))}})},{threshold:.32});
+document.querySelectorAll("main > section[id], main").forEach(el=>navObserver.observe(el));
+window.addEventListener("scroll",()=>{
+  const max=document.documentElement.scrollHeight-window.innerHeight;
+  const progress=max>0?window.scrollY/max:0;
+  document.getElementById("scrollProgress").style.transform=`scaleX(${progress})`;
+  const y=window.scrollY*.08;
+  document.querySelectorAll(".hero-photo").forEach((el,i)=>{el.style.marginTop=(i+1)*y*.18+"px"});
+  document.querySelectorAll(".atelier-panel").forEach((el,i)=>{el.style.setProperty("translate",`${Math.sin((window.scrollY+i*90)/320)*8}px 0`)});
+},{passive:true});
+renderProducts();
+</script>
+</body>
+</html>
