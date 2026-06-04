@@ -66,7 +66,7 @@ function renderCatalog(){
   if(spotlight){
     spotlight.innerHTML=`<div><figure>${productArt(hero)}</figure><h3>${hero.name}</h3><p>${hero.brand} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="pill-btn primary" data-add>Reservar pieza</button>`;
   }
-  grid.innerHTML=list.map((p,i)=>`<article class="product-card enter" style="--i:${i}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`).join("");
+  grid.innerHTML=list.map((p,i)=>`<article class="product-card enter" data-cat="${p.cat}" style="--i:${i}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`).join("");
   bindCardMotion();
 }
 
