@@ -84,8 +84,10 @@ img,svg{display:block;max-width:100%}
 
 .nav-actions{display:flex;align-items:center;gap:8px}
 .icon-btn{width:46px;padding:0;color:var(--cream);border-radius:50%}
-.wa-btn{padding:0 22px;background:linear-gradient(135deg,#1f8f58,#2ec27a);border-color:transparent;color:#fff;box-shadow:0 14px 30px rgba(31,143,88,.42),0 4px 10px rgba(31,143,88,.25)}
-.wa-btn:hover{transform:translateY(-3px) scale(1.04);box-shadow:0 20px 40px rgba(31,143,88,.55),0 6px 14px rgba(31,143,88,.35);color:#fff}
+.wa-btn{width:46px;padding:0;background:linear-gradient(135deg,#1f8f58,#2ec27a);border-color:transparent;color:#fff;border-radius:50%;box-shadow:0 14px 30px rgba(31,143,88,.42),0 4px 10px rgba(31,143,88,.25)}
+.wa-btn svg{width:22px;height:22px}
+.wa-btn:hover{transform:translateY(-3px) scale(1.08) rotate(-6deg);box-shadow:0 20px 40px rgba(31,143,88,.55),0 6px 14px rgba(31,143,88,.35);color:#fff}
+.floating-wa svg{width:32px;height:32px}
 .menu-toggle{display:none}
 
 .hero{position:relative;min-height:calc(100vh - 122px);overflow:hidden}
