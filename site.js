@@ -125,22 +125,38 @@ function bindFinder(){
 
 function bindGlobal(){
   document.body.insertAdjacentHTML("afterbegin",'<div class="progress" id="scrollProgress"></div>');
+  document.body.insertAdjacentHTML("afterbegin",'<div class="cursor-glow" id="cursorGlow"></div>');
   document.querySelector(".menu-toggle")?.addEventListener("click",()=>document.querySelector(".nav-links")?.classList.toggle("open"));
   const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")}),{threshold:.16});
   document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+  const header=document.querySelector(".site-header");
   window.addEventListener("scroll",()=>{
     const max=document.documentElement.scrollHeight-window.innerHeight;
     const progress=max>0?window.scrollY/max:0;
     document.querySelector("#scrollProgress").style.transform=`scaleX(${progress})`;
+    header?.classList.toggle("scrolled",window.scrollY>40);
     document.querySelectorAll(".photo-frame").forEach((el,i)=>{el.style.marginTop=(i+1)*window.scrollY*.012+"px"});
     document.querySelectorAll(".atelier-panel").forEach((el,i)=>{el.style.translate=`${Math.sin((window.scrollY+i*90)/320)*8}px 0`});
   },{passive:true});
+  const glow=document.querySelector("#cursorGlow");
+  if(glow&&matchMedia("(pointer:fine)").matches){
+    window.addEventListener("pointermove",e=>{glow.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;glow.classList.add("on")},{passive:true});
+    window.addEventListener("pointerleave",()=>glow.classList.remove("on"));
+  }
+  document.querySelectorAll(".feature-tile,.service-card,.panel").forEach(tile=>{
+    tile.addEventListener("pointermove",e=>{
+      const r=tile.getBoundingClientRect();
+      tile.style.setProperty("--mx",((e.clientX-r.left)/r.width*100)+"%");
+      tile.style.setProperty("--my",((e.clientY-r.top)/r.height*100)+"%");
+    });
+  });
   document.querySelectorAll("form[data-soft-submit]").forEach(form=>form.addEventListener("submit",event=>{
     event.preventDefault();
     const btn=form.querySelector("button");
     const old=btn.textContent;
     btn.textContent="Enviado";
-    setTimeout(()=>{btn.textContent=old;form.reset()},1300);
+    btn.classList.add("pulse");
+    setTimeout(()=>{btn.textContent=old;btn.classList.remove("pulse");form.reset()},1300);
   }));
 }
 
