@@ -113,8 +113,9 @@ function renderCatalog(){
     const heroIdx=PRODUCTS.indexOf(hero);
     spotlight.innerHTML=`<div><figure data-open="${heroIdx}" style="cursor:pointer">${productArt(hero)}</figure><h3>${hero.name}</h3><p>${hero.brand} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="pill-btn primary" data-open="${heroIdx}">Ver detalle</button>`;
   }
-  grid.innerHTML=list.map((p,i)=>{const idx=PRODUCTS.indexOf(p);return `<article class="product-card enter" data-cat="${p.cat}" data-open="${idx}" style="--i:${Math.min(i,10)}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`}).join("");
+  grid.innerHTML=list.map((p,i)=>{const idx=PRODUCTS.indexOf(p);return `<article class="product-card enter" data-cat="${p.cat}" data-open="${idx}" style="--i:${Math.min(i,10)}"><figure class="product-image">${favBtn(idx)}${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`}).join("");
   bindCardMotion();
+  updateFavUI();
 }
 
 function bindCardMotion(){
@@ -186,6 +187,35 @@ function waLinkFor(p){
   const msg=`Hola Imperium Royal, me interesa ${p.brand} ${p.name} (${p.size}) por ${money(p.price)}. Esta disponible?`;
   return `https://wa.me/573105550199?text=${encodeURIComponent(msg)}`;
 }
+const WA_PATH="M16.003.064C7.17.064.008 7.226.008 16.062a15.94 15.94 0 0 0 2.137 7.992L0 32.064l8.2-2.148a15.98 15.98 0 0 0 7.803 1.992h.007c8.83 0 15.99-7.162 15.99-15.998 0-4.28-1.663-8.302-4.682-11.322A15.89 15.89 0 0 0 16.003.064zM23.31 19.28c-.4-.2-2.37-1.17-2.74-1.3-.37-.13-.64-.2-.9.2-.27.4-1.03 1.3-1.27 1.57-.23.27-.47.3-.87.1-.4-.2-1.69-.62-3.22-1.98-1.19-1.06-1.99-2.37-2.22-2.77-.23-.4-.02-.62.18-.82.18-.18.4-.47.6-.7.2-.23.27-.4.4-.67.13-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.23-2.97-.33-.78-.66-.67-.9-.69-.23-.01-.5-.01-.77-.01-.27 0-.7.1-1.07.5-.37.4-1.4 1.37-1.4 3.34 0 1.97 1.43 3.87 1.63 4.13.2.27 2.82 4.31 6.83 6.04.95.41 1.7.66 2.28.84.96.31 1.83.26 2.52.16.77-.12 2.37-.97 2.7-1.9.33-.93.33-1.73.23-1.9-.1-.17-.37-.27-.77-.47z";
+const WA_SVG=`<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="${WA_PATH}"/></svg>`;
+const MAG_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>';
+const HEART_SVG='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+function miniCard(p,i){return `<button class="finder-card" data-cat="${p.cat}" data-open="${i}"><div class="finder-card-photo">${productArt(p)}</div><div class="finder-card-info"><span class="product-brand">${p.brand}</span><b>${p.name}</b><span class="finder-card-price">${money(p.price)}</span></div></button>`;}
+
+/* ---- Favoritos (wishlist) ---- */
+const FAV_KEY="ir_favs";
+const getFavs=()=>{try{return JSON.parse(localStorage.getItem(FAV_KEY))||[]}catch(e){return[]}};
+const setFavs=a=>{try{localStorage.setItem(FAV_KEY,JSON.stringify(a))}catch(e){}};
+const isFav=i=>getFavs().includes(i);
+function toggleFav(i){const f=getFavs();const k=f.indexOf(i);if(k>=0)f.splice(k,1);else f.push(i);setFavs(f);updateFavUI();if(document.querySelector("#favModal")?.open)renderFavModal();}
+function updateFavUI(){
+  const n=getFavs().length;
+  document.querySelectorAll("[data-fav-count]").forEach(el=>{el.textContent=n;el.classList.toggle("show",n>0)});
+  document.querySelectorAll("[data-fav-toggle]").forEach(b=>{const i=+b.dataset.favToggle;const on=isFav(i);b.classList.toggle("on",on);b.setAttribute("aria-pressed",on?"true":"false")});
+}
+function favBtn(i){return `<button class="fav-btn" data-fav-toggle="${i}" aria-label="Guardar en favoritos">${HEART_SVG}</button>`;}
+
+/* ---- Recently viewed ---- */
+const RECENT_KEY="ir_recent";
+function pushRecent(i){let r=[];try{r=JSON.parse(sessionStorage.getItem(RECENT_KEY))||[]}catch(e){}r=[i,...r.filter(x=>x!==i)].slice(0,6);try{sessionStorage.setItem(RECENT_KEY,JSON.stringify(r))}catch(e){}renderRecent();}
+function renderRecent(){
+  const grid=document.querySelector("[data-recent]");const sec=document.querySelector("[data-recent-section]");if(!grid)return;
+  let r=[];try{r=JSON.parse(sessionStorage.getItem(RECENT_KEY))||[]}catch(e){}
+  if(!r.length){if(sec)sec.style.display="none";return;}
+  if(sec)sec.style.display="";
+  grid.innerHTML=r.map(i=>{const p=PRODUCTS[i];return p?miniCard(p,i):""}).join("");
+}
 function ensureModal(){
   if(document.querySelector("#productModal")) return;
   document.body.insertAdjacentHTML("beforeend",'<dialog id="productModal" class="product-modal" aria-labelledby="modalTitle"><button class="modal-close" data-close aria-label="Cerrar">&times;</button><div class="modal-body" data-modal-body></div></dialog>');
@@ -213,21 +243,132 @@ function openProductModal(idx){
         <div><b>Corazon</b><span>${p.notes[1]||""}</span></div>
         <div><b>Base</b><span>${p.notes[2]||""}</span></div>
       </div>
-      <div class="price-row"><span class="price">${money(p.price)}</span><a class="pill-btn primary" href="${waLinkFor(p)}" target="_blank" rel="noopener">Pedir por WhatsApp</a></div>
-      ${sims.length?`<div class="m-similar"><span class="eyebrow">Piezas similares</span><div class="m-similar-row">${sims.map(({q,i})=>`<button class="finder-card" data-cat="${q.cat}" data-open="${i}"><div class="finder-card-photo">${productArt(q)}</div><div class="finder-card-info"><span class="product-brand">${q.brand}</span><b>${q.name}</b><span class="finder-card-price">${money(q.price)}</span></div></button>`).join("")}</div></div>`:""}
+      <div class="price-row"><span class="price">${money(p.price)}</span><div class="m-actions">${favBtn(idx)}<a class="pill-btn primary wa-cta" href="${waLinkFor(p)}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir por WhatsApp</span></a></div></div>
+      ${sims.length?`<div class="m-similar"><span class="eyebrow">Piezas similares</span><div class="m-similar-row">${sims.map(({q,i})=>miniCard(q,i)).join("")}</div></div>`:""}
     </div>`;
   document.body.style.overflow="hidden";
-  dlg.showModal();
+  updateFavUI();
+  pushRecent(idx);
+  if(typeof closeSearch==="function") closeSearch();
+  if(!dlg.open) dlg.showModal();
+  dlg.scrollTop=0;
 }
-function bindModalDelegation(){
+function bindGlobalClicks(){
   document.addEventListener("click",e=>{
+    const fav=e.target.closest("[data-fav-toggle]");
+    if(fav){e.preventDefault();e.stopPropagation();toggleFav(+fav.dataset.favToggle);return;}
+    const favOpen=e.target.closest("[data-fav-open]");
+    if(favOpen){e.preventDefault();openFavModal();return;}
+    const searchOpen=e.target.closest("[data-search-open]");
+    if(searchOpen){e.preventDefault();openSearch();return;}
+    const chat=e.target.closest("[data-chat-toggle]");
+    if(chat){e.preventDefault();toggleChat();return;}
     const trigger=e.target.closest("[data-open]");
-    if(!trigger) return;
-    const idx=parseInt(trigger.dataset.open,10);
-    if(isNaN(idx)) return;
-    if(trigger.tagName==="A") e.preventDefault();
-    openProductModal(idx);
+    if(trigger){
+      const idx=parseInt(trigger.dataset.open,10);
+      if(isNaN(idx)) return;
+      if(trigger.tagName==="A") e.preventDefault();
+      openProductModal(idx);
+    }
   });
+}
+
+/* ---- Favoritos modal ---- */
+function ensureFavModal(){
+  if(document.querySelector("#favModal"))return;
+  document.body.insertAdjacentHTML("beforeend",'<dialog id="favModal" class="product-modal fav-modal" aria-label="Favoritos"><button class="modal-close" data-close aria-label="Cerrar">&times;</button><div class="fav-modal-body"><span class="eyebrow">Tu seleccion</span><h3>Mis favoritos</h3><div data-fav-body></div></div></dialog>');
+  const dlg=document.querySelector("#favModal");
+  dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
+  dlg.addEventListener("close",()=>document.body.style.overflow="");
+  dlg.querySelector("[data-close]").addEventListener("click",()=>dlg.close());
+}
+function renderFavModal(){
+  const body=document.querySelector("[data-fav-body]");if(!body)return;
+  const favs=getFavs();
+  if(!favs.length){body.innerHTML='<div class="fav-empty"><p>Aun no has guardado piezas. Toca el corazon en cualquier perfume para guardarlo aqui.</p><a class="pill-btn primary" href="catalogo.html">Explorar catalogo</a></div>';return;}
+  const rows=favs.map(i=>{const p=PRODUCTS[i];return p?`<div class="fav-row" data-cat="${p.cat}">${miniCard(p,i)}<button class="fav-remove" data-fav-toggle="${i}" aria-label="Quitar">Quitar</button></div>`:""}).join("");
+  const names=favs.map(i=>{const p=PRODUCTS[i];return p?`${p.brand} ${p.name}`:""}).filter(Boolean).join("; ");
+  const msg=encodeURIComponent(`Hola Imperium Royal, me interesan estas piezas: ${names}. Me confirman disponibilidad y precio?`);
+  body.innerHTML=`<div class="fav-list">${rows}</div><a class="pill-btn primary wa-cta" href="https://wa.me/573105550199?text=${msg}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir todo por WhatsApp</span></a>`;
+  updateFavUI();
+}
+function openFavModal(){ensureFavModal();renderFavModal();document.body.style.overflow="hidden";const d=document.querySelector("#favModal");if(!d.open)d.showModal();}
+
+/* ---- Search overlay ---- */
+function ensureSearch(){
+  if(document.querySelector("#searchOverlay"))return;
+  document.body.insertAdjacentHTML("beforeend",'<div id="searchOverlay" class="search-overlay" hidden><div class="search-panel"><div class="search-bar">'+MAG_SVG+'<input type="search" id="searchOverlayInput" placeholder="Busca marca, nota u ocasion..." aria-label="Buscar perfumes"><button class="search-close" data-search-close aria-label="Cerrar">&times;</button></div><div class="search-results" data-search-results></div></div></div>');
+  const ov=document.querySelector("#searchOverlay");
+  const input=ov.querySelector("#searchOverlayInput");
+  const paint=()=>{
+    const q=input.value.trim().toLowerCase();
+    const res=ov.querySelector("[data-search-results]");
+    if(!q){res.innerHTML='<p class="search-hint">Escribe para encontrar entre las 74 piezas.</p>';return;}
+    const hits=PRODUCTS.map((p,i)=>({p,i})).filter(({p})=>[p.brand,p.name,p.cat,p.mood,p.notes.join(" ")].join(" ").toLowerCase().includes(q)).slice(0,8);
+    res.innerHTML=hits.length?hits.map(({p,i})=>miniCard(p,i)).join(""):'<p class="search-hint">Sin coincidencias. Prueba otra marca o nota.</p>';
+  };
+  input.addEventListener("input",paint);
+  ov.addEventListener("click",e=>{if(e.target===ov||e.target.closest("[data-search-close]"))closeSearch()});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!ov.hidden)closeSearch()});
+}
+function openSearch(){ensureSearch();const ov=document.querySelector("#searchOverlay");ov.hidden=false;document.body.style.overflow="hidden";const inp=ov.querySelector("#searchOverlayInput");inp.value="";ov.querySelector("[data-search-results]").innerHTML='<p class="search-hint">Escribe para encontrar entre las 74 piezas.</p>';requestAnimationFrame(()=>inp.focus());}
+function closeSearch(){const ov=document.querySelector("#searchOverlay");if(ov){ov.hidden=true;document.body.style.overflow=""}}
+
+/* ---- Nav tools (search + favoritos) ---- */
+function initNavTools(){
+  document.querySelectorAll(".nav-actions").forEach(actions=>{
+    actions.querySelectorAll("a.icon-btn").forEach(a=>{if(/buscar/i.test(a.textContent))a.remove()});
+    const wa=actions.querySelector(".wa-btn");
+    const tools=`<button class="icon-btn nav-tool" data-search-open aria-label="Buscar">${MAG_SVG}</button><button class="icon-btn nav-tool fav-nav" data-fav-open aria-label="Favoritos">${HEART_SVG}<span class="fav-count" data-fav-count>0</span></button>`;
+    if(wa) wa.insertAdjacentHTML("beforebegin",tools);
+    else actions.insertAdjacentHTML("beforeend",tools);
+  });
+  updateFavUI();
+}
+
+/* ---- Chatbot ---- */
+const CHAT_QUICK=[
+  {q:"Hacen envios?",a:"Si 🚚 En Bogota y la sabana entregamos en 24h. Al resto de Colombia por transportadora con guia de seguimiento."},
+  {q:"Metodos de pago",a:"Aceptamos Nequi, Daviplata, Bancolombia y pago contra entrega segun tu ciudad."},
+  {q:"Son originales?",a:"100% originales ✅ Verificamos lote y procedencia de cada frasco antes de venderlo."},
+  {q:"Quiero una recomendacion",a:"Con gusto. Usa el Selector Royal aqui en la pagina, o cuentame para quien, la ocasion y tu presupuesto y te paso 3 opciones.",link:{href:"guia.html",label:"Abrir selector"}},
+  {q:"Ver catalogo",a:"Aqui tienes el catalogo completo de 74 piezas 👇",link:{href:"catalogo.html",label:"Abrir catalogo"}}
+];
+function chatMsg(text,who){const log=document.querySelector("[data-chat-log]");if(!log)return;log.insertAdjacentHTML("beforeend",`<div class="chat-msg ${who}">${text}</div>`);log.scrollTop=log.scrollHeight;}
+function chatTyping(show){const log=document.querySelector("[data-chat-log]");if(!log)return;let t=log.querySelector(".chat-typing");if(show){if(!t){log.insertAdjacentHTML("beforeend",'<div class="chat-msg bot chat-typing"><span></span><span></span><span></span></div>');log.scrollTop=log.scrollHeight}}else if(t)t.remove();}
+function chatReply(item){
+  chatMsg(item.q,"me");
+  chatTyping(true);
+  setTimeout(()=>{
+    chatTyping(false);
+    let html=item.a;
+    if(item.link)html+=`<a class="chat-link" href="${item.link.href}">${item.link.label} &rarr;</a>`;
+    chatMsg(html,"bot");
+  },700);
+}
+function initChat(){
+  document.querySelectorAll(".floating-wa").forEach(n=>n.remove());
+  const quick=CHAT_QUICK.map((it,i)=>`<button class="chat-chip" data-chat-q="${i}">${it.q}</button>`).join("");
+  document.body.insertAdjacentHTML("beforeend",`
+    <div class="chat-widget">
+      <div class="chat-panel" id="chatPanel" hidden>
+        <header class="chat-head"><span class="chat-avatar">${WA_SVG}</span><div><b>Imperium Royal</b><small><i></i> En linea · responde al instante</small></div><button class="chat-x" data-chat-toggle aria-label="Cerrar">&times;</button></header>
+        <div class="chat-log" data-chat-log></div>
+        <div class="chat-quick">${quick}</div>
+        <div class="chat-foot"><a class="pill-btn primary wa-cta" href="https://wa.me/573105550199?text=Hola%20Imperium%20Royal%2C%20quiero%20asesoria" target="_blank" rel="noopener">${WA_SVG}<span>Continuar en WhatsApp</span></a></div>
+      </div>
+      <button class="chat-launch" data-chat-toggle aria-label="Abrir chat">${WA_SVG}<span class="chat-badge">1</span></button>
+    </div>`);
+  document.querySelector(".chat-quick").addEventListener("click",e=>{const b=e.target.closest("[data-chat-q]");if(!b)return;chatReply(CHAT_QUICK[+b.dataset.chatQ]);});
+  window.__chatGreeted=false;
+}
+function toggleChat(){
+  const panel=document.querySelector("#chatPanel");if(!panel)return;
+  const open=panel.hasAttribute("hidden");
+  panel.toggleAttribute("hidden",!open);
+  document.querySelector(".chat-launch")?.classList.toggle("active",open);
+  const badge=document.querySelector(".chat-badge");if(badge)badge.style.display="none";
+  if(open&&!window.__chatGreeted){window.__chatGreeted=true;chatTyping(true);setTimeout(()=>{chatTyping(false);chatMsg("Hola 👋 Soy el concierge de Imperium Royal. Toca una pregunta o escribenos por WhatsApp.","bot")},600);}
 }
 
 function bindFinder(){
@@ -326,8 +467,17 @@ function bindGlobal(){
   }));
 }
 
+function initPWA(){
+  if(!document.querySelector('link[rel="manifest"]')) document.head.insertAdjacentHTML("beforeend",'<link rel="manifest" href="manifest.json">');
+  if(!document.querySelector('meta[name="theme-color"]')) document.head.insertAdjacentHTML("beforeend",'<meta name="theme-color" content="#2a1d12">');
+}
 bindGlobal();
 bindCatalog();
 bindFinder();
 ensureModal();
-bindModalDelegation();
+bindGlobalClicks();
+initNavTools();
+initChat();
+initPWA();
+renderRecent();
+updateFavUI();
