@@ -117,7 +117,10 @@ function renderCatalog(){
 }
 
 function bindCardMotion(){
+  if(!matchMedia("(pointer:fine)").matches) return;
   document.querySelectorAll(".product-card").forEach(card=>{
+    if(card.dataset.motion) return;
+    card.dataset.motion="1";
     card.addEventListener("pointermove",event=>{
       const rect=card.getBoundingClientRect();
       const x=(event.clientX-rect.left)/rect.width-.5;
@@ -183,8 +186,9 @@ function bindFinder(){
 }
 
 function bindGlobal(){
+  const fine=matchMedia("(pointer:fine)").matches;
   document.body.insertAdjacentHTML("afterbegin",'<div class="progress" id="scrollProgress"></div>');
-  document.body.insertAdjacentHTML("afterbegin",'<div class="cursor-glow" id="cursorGlow"></div>');
+  if(fine) document.body.insertAdjacentHTML("afterbegin",'<div class="cursor-glow" id="cursorGlow"></div>');
   const menuToggle=document.querySelector(".menu-toggle");
   menuToggle?.addEventListener("click",()=>{
     const open=document.querySelector(".nav-links")?.classList.toggle("open");
@@ -192,23 +196,40 @@ function bindGlobal(){
     menuToggle.setAttribute("aria-expanded",open?"true":"false");
   });
   injectSocial();
-  const revealObserver=new IntersectionObserver((entries,obs)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");obs.unobserve(entry.target)}}),{threshold:0,rootMargin:"0px 0px -6% 0px"});
-  document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+  const showAll=()=>document.querySelectorAll(".reveal:not(.visible)").forEach(el=>el.classList.add("visible"));
+  if("IntersectionObserver" in window){
+    const revealObserver=new IntersectionObserver((entries,obs)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");obs.unobserve(entry.target)}}),{threshold:0,rootMargin:"0px 0px -2% 0px"});
+    document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
+    setTimeout(showAll,900);
+  } else { showAll(); }
   const header=document.querySelector(".site-header");
-  window.addEventListener("scroll",()=>{
-    const max=document.documentElement.scrollHeight-window.innerHeight;
-    const progress=max>0?window.scrollY/max:0;
-    document.querySelector("#scrollProgress").style.transform=`scaleX(${progress})`;
-    header?.classList.toggle("scrolled",window.scrollY>40);
-    document.querySelectorAll(".photo-frame").forEach((el,i)=>{el.style.marginTop=(i+1)*window.scrollY*.012+"px"});
-    document.querySelectorAll(".atelier-panel").forEach((el,i)=>{el.style.translate=`${Math.sin((window.scrollY+i*90)/320)*8}px 0`});
-  },{passive:true});
+  const progressBar=document.querySelector("#scrollProgress");
+  const photoFrames=document.querySelectorAll(".photo-frame");
+  const atelierPanels=document.querySelectorAll(".atelier-panel");
+  let ticking=false;
+  const onScroll=()=>{
+    if(ticking) return;
+    ticking=true;
+    requestAnimationFrame(()=>{
+      const y=window.scrollY;
+      const max=document.documentElement.scrollHeight-window.innerHeight;
+      const progress=max>0?y/max:0;
+      if(progressBar) progressBar.style.transform=`scaleX(${progress})`;
+      header?.classList.toggle("scrolled",y>40);
+      if(fine){
+        photoFrames.forEach((el,i)=>{el.style.marginTop=(i+1)*y*.012+"px"});
+        atelierPanels.forEach((el,i)=>{el.style.translate=`${Math.sin((y+i*90)/320)*8}px 0`});
+      }
+      ticking=false;
+    });
+  };
+  window.addEventListener("scroll",onScroll,{passive:true});
   const glow=document.querySelector("#cursorGlow");
-  if(glow&&matchMedia("(pointer:fine)").matches){
+  if(glow){
     window.addEventListener("pointermove",e=>{glow.style.transform=`translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;glow.classList.add("on")},{passive:true});
     window.addEventListener("pointerleave",()=>glow.classList.remove("on"));
   }
-  document.querySelectorAll(".feature-tile,.service-card,.panel").forEach(tile=>{
+  if(fine) document.querySelectorAll(".feature-tile,.service-card,.panel").forEach(tile=>{
     tile.addEventListener("pointermove",e=>{
       const r=tile.getBoundingClientRect();
       tile.style.setProperty("--mx",((e.clientX-r.left)/r.width*100)+"%");
