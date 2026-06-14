@@ -430,7 +430,64 @@ footer ul{list-style:none;display:grid;gap:8px}
 .cta-band h2{position:relative;z-index:1}
 .cta-band .cta-row{position:relative;z-index:1;justify-content:center}
 
+/* Product modal */
+.product-modal{padding:0;border:0;border-radius:var(--radius-lg);max-width:1040px;width:min(94vw,1040px);max-height:92vh;background:linear-gradient(160deg,#fffdf7,#f6efe0);box-shadow:var(--shadow-deep);overflow:hidden;color:var(--espresso)}
+.product-modal::backdrop{background:rgba(42,29,18,.62);backdrop-filter:blur(8px)}
+.product-modal[open]{animation:modalIn 420ms cubic-bezier(.2,.8,.2,1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(24px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.modal-close{position:absolute;top:18px;right:18px;width:44px;height:44px;display:grid;place-items:center;border-radius:50%;background:rgba(255,253,247,.94);border:1px solid var(--line);color:var(--espresso);font-size:24px;line-height:1;cursor:pointer;z-index:5;box-shadow:var(--shadow-soft);transition:transform var(--ease),background var(--ease),box-shadow var(--ease)}
+.modal-close:hover{transform:rotate(90deg) scale(1.08);background:var(--ivory);box-shadow:var(--shadow-float)}
+.modal-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:0;max-height:92vh;overflow-y:auto;--accent:var(--champagne);--accent-deep:var(--bronze);--accent-grad:var(--grad-champagne)}
+.modal-body[data-cat="hombre"]{--accent:var(--navy-soft);--accent-deep:var(--navy-deep);--accent-grad:var(--grad-navy)}
+.modal-body[data-cat="mujer"]{--accent:var(--rose-soft);--accent-deep:var(--rose-deep);--accent-grad:var(--grad-rose)}
+.modal-body[data-cat="unisex"]{--accent:var(--taupe-soft);--accent-deep:var(--taupe-deep);--accent-grad:var(--grad-taupe)}
+.m-photo{position:relative;min-height:560px;background:linear-gradient(160deg,#fffdf7,#ede1c8);overflow:hidden;margin:0}
+.m-photo::before{content:"";position:absolute;left:0;right:0;top:0;height:5px;background:var(--accent-grad);z-index:2}
+.m-photo .product-photo{width:100%;height:100%;object-fit:cover;object-position:center}
+.m-info{padding:46px 44px;display:flex;flex-direction:column;gap:18px}
+.m-info .product-brand{color:var(--accent-deep)}
+.m-info h3{font-size:46px;line-height:.96;color:var(--espresso)}
+.m-meta{display:flex;gap:8px;flex-wrap:wrap}
+.m-meta span{padding:7px 14px;border:1px solid var(--line-gold);background:rgba(240,220,174,.32);color:var(--bronze);font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;border-radius:var(--radius-pill)}
+.m-desc p{color:var(--cocoa);line-height:1.85;font-size:15px;margin-top:8px}
+.m-desc strong{color:var(--espresso)}
+.m-desc em{color:var(--accent-deep);font-style:normal;font-weight:600}
+.m-desc .m-fine{color:var(--whisper);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:14px}
+.modal-body .notes{margin:6px 0}
+.modal-body .price-row{margin-top:6px}
+.modal-body .price{background:var(--accent-grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradSlide 8s linear infinite}
+.modal-body .pill-btn.primary{background:var(--accent-grad);background-size:200% 100%}
+.m-similar{margin-top:8px;padding-top:18px;border-top:1px dashed var(--line)}
+.m-similar .eyebrow{margin-bottom:14px}
+.m-similar-row{display:grid;gap:10px}
+.product-card[data-open],.show-tile[data-open]{cursor:pointer}
+
+/* Selector Royal: richer matcher */
+.finder-group{margin-top:22px}
+.finder-label{display:block;color:var(--bronze);font-size:11px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;margin-bottom:10px}
+.finder-group .finder-options{margin-top:0;display:flex;flex-wrap:wrap;gap:8px;grid-template-columns:none}
+.finder-stage{display:flex;flex-direction:column;gap:14px}
+.finder-stage-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+.finder-stage-head h3{font-size:26px}
+.finder-results{display:grid;gap:12px}
+.finder-card{position:relative;display:grid;grid-template-columns:118px minmax(0,1fr);gap:18px;align-items:center;padding:12px 16px 12px 12px;border:1px solid var(--line);border-radius:var(--radius-md);background:linear-gradient(160deg,#fffdf7,#f6efe0);cursor:pointer;text-align:left;transition:transform var(--ease),border-color var(--ease),box-shadow var(--ease);box-shadow:var(--shadow-soft);overflow:hidden;--accent:var(--champagne);--accent-grad:var(--grad-champagne)}
+.finder-card[data-cat="hombre"]{--accent:var(--navy-soft);--accent-grad:var(--grad-navy)}
+.finder-card[data-cat="mujer"]{--accent:var(--rose-soft);--accent-grad:var(--grad-rose)}
+.finder-card[data-cat="unisex"]{--accent:var(--taupe-soft);--accent-grad:var(--grad-taupe)}
+.finder-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent-grad)}
+.finder-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:var(--shadow-float)}
+.finder-card-photo{height:108px;border-radius:var(--radius-sm);overflow:hidden;background:linear-gradient(160deg,#fffdf7,#ede1c8);position:relative}
+.finder-card-photo .product-photo{width:100%;height:100%;object-fit:cover}
+.finder-card-info{display:flex;flex-direction:column;gap:4px;min-width:0}
+.finder-card-info .product-brand{color:var(--accent);font-size:10px}
+.finder-card-info b{font-family:var(--serif);font-size:22px;font-weight:500;color:var(--espresso);line-height:1.05;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.finder-card-price{font-family:var(--serif);font-size:20px;background:var(--accent-grad);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:gradSlide 8s linear infinite}
+
 @media (max-width:1120px){
+  .modal-body{grid-template-columns:1fr}
+  .m-photo{min-height:340px}
+  .m-info{padding:30px 26px}
+  .m-info h3{font-size:36px}
   .showcase{grid-template-columns:repeat(2,1fr);grid-auto-rows:200px}
   .show-tile.feat,.show-tile.wide,.show-tile.std{grid-column:span 1;grid-row:span 1}
   .show-tile.feat{grid-column:span 2;grid-row:span 2}
