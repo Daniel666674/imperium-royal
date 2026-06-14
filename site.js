@@ -261,6 +261,8 @@ function bindGlobalClicks(){
     if(favOpen){e.preventDefault();openFavModal();return;}
     const searchOpen=e.target.closest("[data-search-open]");
     if(searchOpen){e.preventDefault();openSearch();return;}
+    const searchClose=e.target.closest("[data-search-close]");
+    if(searchClose){e.preventDefault();closeSearch();return;}
     const chat=e.target.closest("[data-chat-toggle]");
     if(chat){e.preventDefault();toggleChat();return;}
     const trigger=e.target.closest("[data-open]");
