@@ -242,6 +242,30 @@
       color: var(--text-muted);
       margin-bottom: 24px;
     }
+    .bot-monthly {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .bot-monthly span {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+    .bot-note {
+      background: linear-gradient(135deg, rgba(201,168,119,0.12), rgba(217,160,127,0.07));
+      border: 1px solid rgba(201,168,119,0.3);
+      border-radius: 14px;
+      padding: 18px 22px;
+      margin-top: 24px;
+      display: flex;
+      gap: 13px;
+      align-items: flex-start;
+    }
+    .bot-note .bn-icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+    .bot-note p { font-size: 13px; color: var(--text); line-height: 1.6; }
+    .bot-note strong { color: var(--white); }
     .plan-divider {
       height: 1px;
       background: var(--border);
@@ -858,13 +882,83 @@
             <li>Páginas ilimitadas en el alcance</li>
             <li>Diseño UI/UX personalizado</li>
             <li>Tienda en línea (carrito + favoritos)</li>
-            <li>Chatbot de WhatsApp con respuestas automáticas</li>
+            <li>Widget de WhatsApp con respuestas rápidas en el sitio</li>
             <li>Panel de administración de productos</li>
             <li>SEO avanzado + configuración Analytics</li>
             <li>Dominio y hosting primer año incluido</li>
           </ul>
         </div>
 
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         CHATBOT WHATSAPP AUTOMATIZADO
+    ════════════════════════════════════════ -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">Chatbot de WhatsApp Automatizado</h2>
+        <p class="section-subtitle">Complemento opcional · Atención y ventas 24/7 dentro de WhatsApp · Implementación única + operación mensual</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- ESENCIAL -->
+        <div class="price-card">
+          <p class="plan-tier">Opción 01</p>
+          <h3 class="plan-name">Esencial</h3>
+          <p class="plan-desc">Un bot por botones que responde lo de siempre, al instante y a toda hora, para que ningún cliente se quede sin respuesta.</p>
+          <p class="plan-price">$900.000 <span>único</span></p>
+          <p class="bot-monthly">+ $350.000 <span>COP / mes</span></p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Respuestas automáticas a preguntas frecuentes (envíos, pagos, originalidad)</li>
+            <li>Menú de catálogo y horarios de atención</li>
+            <li>Captura de pedido y datos del cliente</li>
+            <li>Transferencia a un asesor humano (handoff)</li>
+            <li>Operación, plataforma y soporte incluidos</li>
+          </ul>
+        </div>
+
+        <!-- PROFESIONAL (featured) -->
+        <div class="price-card featured">
+          <p class="plan-tier">Opción 02</p>
+          <h3 class="plan-name">Profesional</h3>
+          <p class="plan-desc">El bot entiende lenguaje natural y recomienda fragancias como un asesor. Además activamos una campaña al mes para vender a tu base.</p>
+          <p class="plan-price">$1.500.000 <span>único</span></p>
+          <p class="bot-monthly">+ $500.000 <span>COP / mes</span></p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Todo lo del plan Esencial</li>
+            <li>Respuestas con IA en lenguaje natural</li>
+            <li>Recomendación de fragancias según gustos y ocasión</li>
+            <li>1 campaña al mes (reactivación o venta cruzada)</li>
+            <li>Reporte mensual de conversaciones y resultados</li>
+          </ul>
+        </div>
+
+        <!-- PREMIUM -->
+        <div class="price-card">
+          <p class="plan-tier">Opción 03</p>
+          <h3 class="plan-name">Premium</h3>
+          <p class="plan-desc">Automatización total: catálogo sincronizado, campañas masivas gestionadas y seguimiento de pedidos. El equipo de ventas que nunca duerme.</p>
+          <p class="plan-price">$2.500.000 <span>único</span></p>
+          <p class="bot-monthly">+ $750.000 <span>COP / mes</span></p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Todo lo del plan Profesional</li>
+            <li>Catálogo sincronizado dentro del bot</li>
+            <li>Campañas masivas gestionadas (reactivación + venta cruzada + combos)</li>
+            <li>Seguimiento de pedidos automatizado</li>
+            <li>Múltiples flujos y soporte prioritario</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="bot-note" style="margin-bottom:70px;">
+        <span class="bn-icon">💬</span>
+        <p><strong>¿Por qué tiene mensualidad?</strong> A diferencia del sitio web, el chatbot vive sobre la plataforma oficial de WhatsApp (Meta), que cobra por conversación y mensajería. La operación mensual cubre esos costos de plataforma, el monitoreo y el soporte, para que el bot siempre esté activo y respondiendo. El sitio web ya incluye, sin costo extra, el <strong>widget de WhatsApp en la página</strong>; esto es la automatización real <strong>dentro</strong> de WhatsApp.</p>
       </div>
     </section>
 
