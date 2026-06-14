@@ -1,0 +1,20 @@
+{
+  "name": "Imperium Royal | Luxury Perfumery",
+  "short_name": "Imperium Royal",
+  "description": "Perfumeria de lujo en Colombia: fragancias originales, catalogo curado y asesoria privada por WhatsApp.",
+  "lang": "es-CO",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fbf7ee",
+  "theme_color": "#2a1d12",
+  "icons": [
+    {
+      "src": "images/WhatsApp%20Image%202026-06-13%20at%203.58.41%20PM.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
