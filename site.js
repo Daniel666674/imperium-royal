@@ -110,9 +110,10 @@ function renderCatalog(){
   if(count) count.textContent=`${list.length} piezas`;
   const spotlight=document.querySelector("#spotlight");
   if(spotlight){
-    spotlight.innerHTML=`<div><figure>${productArt(hero)}</figure><h3>${hero.name}</h3><p>${hero.brand} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="pill-btn primary" data-add>Reservar pieza</button>`;
+    const heroIdx=PRODUCTS.indexOf(hero);
+    spotlight.innerHTML=`<div><figure data-open="${heroIdx}" style="cursor:pointer">${productArt(hero)}</figure><h3>${hero.name}</h3><p>${hero.brand} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="pill-btn primary" data-open="${heroIdx}">Ver detalle</button>`;
   }
-  grid.innerHTML=list.map((p,i)=>`<article class="product-card enter" data-cat="${p.cat}" style="--i:${Math.min(i,10)}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`).join("");
+  grid.innerHTML=list.map((p,i)=>{const idx=PRODUCTS.indexOf(p);return `<article class="product-card enter" data-cat="${p.cat}" data-open="${idx}" style="--i:${Math.min(i,10)}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`}).join("");
   bindCardMotion();
 }
 
@@ -166,14 +167,93 @@ function bindCatalog(){
   renderCatalog();
 }
 
+const MOOD_COPY={
+  diario:"Para los dias regulares: cercano, elegante y facil de llevar. Ideal para clima calido y uso constante en piel.",
+  oficina:"Profesional y discreto. Proyecta presencia sin invadir el espacio compartido. Funciona en reuniones y largas jornadas.",
+  firma:"Pieza de firma con caracter memorable. La gente la asocia contigo aun cuando no estas. Para marcar territorio sin esfuerzo.",
+  noche:"Intenso y magnetico, pensado para alta recordacion despues de las 7 pm. Deja estela en los espacios donde te mueves.",
+  regalo:"Envolvente y amable. Una entrada segura para regalar o regalarte algo distinto, con presencia inmediata."
+};
+const CAT_COPY={hombre:"Categoria masculina",mujer:"Categoria femenina",unisex:"Sin etiquetas de genero"};
+function descriptionFor(p){
+  return `<p><strong>${p.brand} ${p.name}</strong>. ${MOOD_COPY[p.mood]||""}</p><p>Su estructura olfativa abre con <em>${(p.notes[0]||"").toLowerCase()}</em> en la salida, evoluciona en el corazon hacia <em>${(p.notes[1]||"").toLowerCase()}</em> y reposa sobre una base de <em>${(p.notes[2]||"").toLowerCase()}</em>.</p><p class="m-fine">${CAT_COPY[p.cat]||""} &middot; Presentacion ${p.size}</p>`;
+}
+function similarProducts(p,limit){
+  const idx=PRODUCTS.indexOf(p);
+  return PRODUCTS.map((q,i)=>({q,i,score:(q.cat===p.cat?2:0)+(q.mood===p.mood?2:0)-(i===idx?100:0)})).sort((a,b)=>b.score-a.score).slice(0,limit);
+}
+function waLinkFor(p){
+  const msg=`Hola Imperium Royal, me interesa ${p.brand} ${p.name} (${p.size}) por ${money(p.price)}. Esta disponible?`;
+  return `https://wa.me/573105550199?text=${encodeURIComponent(msg)}`;
+}
+function ensureModal(){
+  if(document.querySelector("#productModal")) return;
+  document.body.insertAdjacentHTML("beforeend",'<dialog id="productModal" class="product-modal" aria-labelledby="modalTitle"><button class="modal-close" data-close aria-label="Cerrar">&times;</button><div class="modal-body" data-modal-body></div></dialog>');
+  const dlg=document.querySelector("#productModal");
+  dlg.addEventListener("click",e=>{ if(e.target===dlg) dlg.close(); });
+  dlg.addEventListener("close",()=>document.body.style.overflow="");
+  document.addEventListener("click",e=>{ if(e.target.closest("[data-close]")) dlg.close(); });
+}
+function openProductModal(idx){
+  const p=PRODUCTS[idx]; if(!p) return;
+  ensureModal();
+  const dlg=document.querySelector("#productModal");
+  const body=dlg.querySelector("[data-modal-body]");
+  const sims=similarProducts(p,2);
+  body.dataset.cat=p.cat;
+  body.innerHTML=`
+    <figure class="m-photo">${productArt(p)}</figure>
+    <div class="m-info">
+      <span class="product-brand">${p.brand}</span>
+      <h3 id="modalTitle">${p.name}</h3>
+      <div class="m-meta"><span>${p.cat}</span><span>${p.mood}</span><span>${p.size}</span></div>
+      <div class="m-desc">${descriptionFor(p)}</div>
+      <div class="notes">
+        <div><b>Salida</b><span>${p.notes[0]||""}</span></div>
+        <div><b>Corazon</b><span>${p.notes[1]||""}</span></div>
+        <div><b>Base</b><span>${p.notes[2]||""}</span></div>
+      </div>
+      <div class="price-row"><span class="price">${money(p.price)}</span><a class="pill-btn primary" href="${waLinkFor(p)}" target="_blank" rel="noopener">Pedir por WhatsApp</a></div>
+      ${sims.length?`<div class="m-similar"><span class="eyebrow">Piezas similares</span><div class="m-similar-row">${sims.map(({q,i})=>`<button class="finder-card" data-cat="${q.cat}" data-open="${i}"><div class="finder-card-photo">${productArt(q)}</div><div class="finder-card-info"><span class="product-brand">${q.brand}</span><b>${q.name}</b><span class="finder-card-price">${money(q.price)}</span></div></button>`).join("")}</div></div>`:""}
+    </div>`;
+  document.body.style.overflow="hidden";
+  dlg.showModal();
+}
+function bindModalDelegation(){
+  document.addEventListener("click",e=>{
+    const trigger=e.target.closest("[data-open]");
+    if(!trigger) return;
+    const idx=parseInt(trigger.dataset.open,10);
+    if(isNaN(idx)) return;
+    if(trigger.tagName==="A") e.preventDefault();
+    openProductModal(idx);
+  });
+}
+
 function bindFinder(){
   const finder=document.querySelector("[data-scent-finder]");
   if(!finder) return;
-  const result=finder.querySelector("[data-result]");
-  const picks={cat:"unisex",mood:"firma"};
+  const results=finder.querySelector("[data-results]");
+  const single=finder.querySelector("[data-result]");
+  const picks={cat:"all",mood:"firma",budget:"any"};
+  const inBudget=(price,b)=>b==="any"||(b==="economico"&&price<=250000)||(b==="medio"&&price>250000&&price<=500000)||(b==="alto"&&price>500000);
+  const rank=()=>PRODUCTS.map((p,i)=>{
+    let s=0;
+    if(picks.cat==="all"||p.cat===picks.cat) s+=3;
+    if(p.mood===picks.mood) s+=3;
+    if(inBudget(p.price,picks.budget)) s+=2;
+    s+=(100-(p.featured||50))*0.005;
+    return {p,i,s};
+  }).sort((a,b)=>b.s-a.s);
+  const card=({p,i})=>`<button class="finder-card" data-cat="${p.cat}" data-open="${i}"><div class="finder-card-photo">${productArt(p)}</div><div class="finder-card-info"><span class="product-brand">${p.brand}</span><b>${p.name}</b><span class="finder-card-price">${money(p.price)}</span></div></button>`;
   const paint=()=>{
-    const match=PRODUCTS.find(p=>(p.cat===picks.cat||picks.cat==="unisex")&&p.mood===picks.mood)||PRODUCTS.find(p=>p.mood===picks.mood)||PRODUCTS[0];
-    result.innerHTML=`<div class="result-name">${match.name}</div><p class="result-copy">${match.brand} funciona para una compra ${picks.mood}: ${match.notes.join(", ")}.</p><div class="price">${money(match.price)}</div><a class="pill-btn primary" href="catalogo.html?cat=${match.cat}">Ver catalogo</a>`;
+    const ranked=rank().slice(0,3);
+    if(!ranked.length) return;
+    if(results){ results.innerHTML=ranked.map(card).join(""); }
+    if(single){
+      const m=ranked[0].p;
+      single.innerHTML=`<div class="result-name">${m.name}</div><p class="result-copy">${m.brand} funciona para una compra ${picks.mood}: ${m.notes.join(", ")}.</p><div class="price">${money(m.price)}</div><button class="pill-btn primary" data-open="${ranked[0].i}">Ver detalle</button>`;
+    }
   };
   finder.querySelectorAll("[data-pick]").forEach(btn=>btn.addEventListener("click",()=>{
     const [key,value]=btn.dataset.pick.split(":");
@@ -249,3 +329,5 @@ function bindGlobal(){
 bindGlobal();
 bindCatalog();
 bindFinder();
+ensureModal();
+bindModalDelegation();
