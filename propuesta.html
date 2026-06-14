@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Propuesta Comercial · Imperium Royal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Manrope:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream-50:#fbf7ee;
+      --cream-100:#f6efe0;
+      --cream-200:#ede1c8;
+      --ivory:#fffdf7;
+      --paper:#faf4e8;
+      --linen:#f1e7d2;
+      --espresso:#2a1d12;
+      --ink:#3a2a1d;
+      --cocoa:#5a4632;
+      --muted:#8a7a64;
+      --whisper:#b8a98e;
+      --champagne:#c9a877;
+      --champagne-2:#e0c596;
+      --champagne-3:#f0dcae;
+      --bronze:#a07842;
+      --rose-soft:#d4a3ad;
+      --rose-deep:#b87887;
+      --navy-soft:#3d5a72;
+      --navy-deep:#243d54;
+      --taupe-soft:#a89685;
+      --taupe-deep:#7a6750;
+      --success:#5a8769;
+      --danger:#b87474;
+      --border:rgba(58,42,29,.14);
+      --border-gold:rgba(201,168,119,.42);
+      --card-bg:rgba(255,253,247,.78);
+      --shadow-soft:0 18px 50px rgba(58,42,29,.1),0 4px 14px rgba(58,42,29,.06);
+      --shadow-float:0 28px 60px rgba(58,42,29,.16),0 8px 22px rgba(58,42,29,.08);
+      --shadow-deep:0 36px 80px rgba(42,29,18,.22),0 10px 28px rgba(42,29,18,.12);
+      --grad-champagne:linear-gradient(135deg,#a07842 0%,#c9a877 28%,#e0c596 55%,#f0dcae 78%,#c9a877 100%);
+      --grad-rose:linear-gradient(135deg,#d4a3ad,#b87887);
+      --grad-navy:linear-gradient(135deg,#3d5a72,#243d54);
+      --grad-taupe:linear-gradient(135deg,#a89685,#7a6750);
+      --serif:"Cormorant Garamond",Georgia,serif;
+      --sans:"Manrope",system-ui,sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--cream-50);
+      color: var(--espresso);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:
+        radial-gradient(1100px 600px at 12% 8%,rgba(212,163,173,.16),transparent 62%),
+        radial-gradient(960px 580px at 88% 18%,rgba(61,90,114,.12),transparent 66%),
+        radial-gradient(820px 520px at 50% 92%,rgba(201,168,119,.16),transparent 68%);
+    }
+    body::after {
+      content:'';position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.22;
+      background-image:radial-gradient(rgba(58,42,29,.22) .5px,transparent .6px);
+      background-size:3px 3px;mix-blend-mode:multiply;
+    }
+
+    .container {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HEADER / HERO ── */
+    header { padding: 72px 0 60px; text-align: center; position: relative; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: rgba(255,253,247,.7);
+      border: 1px solid var(--border-gold);
+      color: var(--bronze);
+      font-size: 11px; font-weight: 800; letter-spacing: 2.8px;
+      text-transform: uppercase;
+      padding: 8px 22px;
+      border-radius: 999px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-soft);
+    }
+    .badge::before { content:''; width:6px; height:6px; border-radius:50%; background: var(--grad-champagne); }
+
+    .brand-mark-hero {
+      width: 78px; height: 78px; margin: 0 auto 24px;
+      display: grid; place-items: center;
+      border: 1px solid var(--border-gold);
+      background: linear-gradient(145deg, rgba(240,220,174,.5), rgba(255,253,247,.85));
+      border-radius: 50%;
+      box-shadow: 0 16px 36px rgba(201,168,119,.25), inset 0 0 22px rgba(240,220,174,.4);
+    }
+    .brand-mark-hero svg { width: 46px; color: var(--bronze); }
+
+    .client-name {
+      font-family: var(--serif);
+      font-size: clamp(48px, 8vw, 96px);
+      font-weight: 500;
+      line-height: .92;
+      letter-spacing: .02em;
+      background: var(--grad-champagne);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 14px;
+    }
+
+    .client-sub {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: .42em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: var(--cocoa);
+      max-width: 620px;
+      margin: 0 auto 44px;
+      font-weight: 400;
+      line-height: 1.8;
+    }
+
+    .divider {
+      width: 70px; height: 2px;
+      background: var(--grad-champagne);
+      border-radius: 2px;
+      margin: 0 auto 70px;
+    }
+
+    /* ── SECTION TITLES ── */
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      line-height: 1.05;
+    }
+    .section-title em {
+      font-style: italic;
+      background: var(--grad-champagne);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      font-weight: 400;
+    }
+    .section-subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      margin-bottom: 42px;
+    }
+    .section-header { margin-bottom: 38px; }
+
+    /* ── PRICING CARDS ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 22px;
+      margin-bottom: 80px;
+    }
+
+    .price-card {
+      background: linear-gradient(160deg, #fffdf7, #f6efe0);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px 30px;
+      position: relative;
+      transition: transform .35s, box-shadow .35s, border-color .35s;
+      box-shadow: var(--shadow-soft);
+    }
+    .price-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-deep);
+      border-color: var(--border-gold);
+    }
+    .price-card.featured {
+      background: linear-gradient(160deg, #fffdf7, #f1e7d2);
+      border-color: var(--champagne);
+      box-shadow: 0 0 0 1px var(--champagne), 0 28px 60px rgba(201,168,119,.28);
+    }
+    .price-card.featured::before {
+      content: 'Más recomendado';
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--grad-champagne);
+      color: #fffdf7;
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 10px 24px rgba(201,168,119,.4);
+    }
+
+    .plan-tier {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 12px;
+    }
+    .plan-name {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    .plan-desc {
+      font-size: 13.5px;
+      color: var(--cocoa);
+      margin-bottom: 28px;
+      line-height: 1.65;
+    }
+    .plan-price {
+      font-family: var(--serif);
+      font-size: 38px;
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+    .plan-price span {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+    .plan-note {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 26px;
+    }
+    .plan-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 22px;
+    }
+    .plan-features { list-style: none; }
+    .plan-features li {
+      font-size: 13.5px;
+      color: var(--ink);
+      padding: 7px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .plan-features li::before {
+      content: '';
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--grad-champagne);
+      flex-shrink: 0; margin-top: 3px;
+      position: relative;
+    }
+    .plan-features li::after {
+      content: '✓';
+      position: absolute;
+      color: #fffdf7;
+      font-size: 10px;
+      font-weight: 800;
+      margin-left: 3px;
+      margin-top: 4px;
+    }
+    .plan-features li { position: relative; }
+
+    /* ── CAMPAÑA BONUS ── */
+    .campaign-section { margin-bottom: 80px; }
+
+    .campaign-card {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(212,163,173,.22), rgba(240,220,174,.32), rgba(168,150,133,.22));
+      border: 1px solid var(--border-gold);
+      padding: 48px 42px;
+      box-shadow: var(--shadow-float);
+    }
+    .campaign-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(201,168,119,.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .campaign-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 22px;
+      margin-bottom: 36px;
+      position: relative;
+    }
+    .campaign-badge {
+      background: var(--grad-champagne);
+      border-radius: 20px;
+      width: 64px; height: 64px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+      box-shadow: 0 14px 30px rgba(201,168,119,.42);
+      color: #fffdf7;
+    }
+    .campaign-header-text { flex: 1; }
+    .campaign-eyebrow {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 10px;
+    }
+    .campaign-title {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--espresso);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .campaign-title em {
+      font-style: italic;
+      background: var(--grad-champagne);
+      background-size: 200% 100%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      font-weight: 400;
+    }
+    .campaign-subtitle {
+      font-size: 14.5px;
+      color: var(--cocoa);
+      line-height: 1.7;
+    }
+    .campaign-subtitle strong { color: var(--bronze); font-weight: 700; }
+
+    .campaign-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .campaign-pillar {
+      background: rgba(255,253,247,.78);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 26px 22px;
+      backdrop-filter: blur(8px);
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+    }
+    .campaign-pillar:hover { transform: translateY(-4px); border-color: var(--border-gold); box-shadow: var(--shadow-soft); }
+    .pillar-icon {
+      width: 48px; height: 48px;
+      border-radius: 16px;
+      background: var(--grad-champagne);
+      display: grid; place-items: center;
+      color: #fffdf7;
+      font-size: 22px;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 22px rgba(201,168,119,.32);
+    }
+    .pillar-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .pillar-body {
+      font-size: 13px;
+      color: var(--cocoa);
+      line-height: 1.7;
+    }
+    .pillar-body strong { color: var(--espresso); font-weight: 700; }
+
+    .campaign-impact {
+      background: rgba(255,253,247,.92);
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      padding: 22px 26px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      position: relative;
+    }
+    .campaign-impact-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--grad-rose);
+      display: grid; place-items: center;
+      color: #fffdf7;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px rgba(184,120,135,.32);
+    }
+    .campaign-impact-text {
+      font-size: 13.5px;
+      color: var(--cocoa);
+      line-height: 1.7;
+    }
+    .campaign-impact-text strong { color: var(--espresso); font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .campaign-pillars { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .campaign-card { padding: 30px 22px; }
+    }
+
+    /* ── CHATBOT SECTION ── */
+    .chatbot-section { margin-bottom: 80px; }
+
+    .chatbot-card {
+      position: relative;
+      border-radius: 28px;
+      overflow: hidden;
+      background: linear-gradient(135deg, rgba(61,90,114,.16), rgba(168,150,133,.18), rgba(255,253,247,.85));
+      border: 1px solid var(--border);
+      padding: 48px 42px;
+      box-shadow: var(--shadow-float);
+    }
+    .chatbot-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top left, rgba(61,90,114,.16) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .chatbot-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 22px;
+      margin-bottom: 34px;
+      position: relative;
+    }
+    .chatbot-badge {
+      background: var(--grad-navy);
+      border-radius: 20px;
+      width: 64px; height: 64px;
+      display: grid; place-items: center;
+      font-size: 26px;
+      flex-shrink: 0;
+      color: #fffdf7;
+      box-shadow: 0 14px 30px rgba(36,61,84,.4);
+    }
+    .chatbot-header-text { flex: 1; }
+    .chatbot-eyebrow {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--navy-deep);
+      margin-bottom: 10px;
+    }
+    .chatbot-title {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      color: var(--espresso);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .chatbot-title em {
+      font-style: italic;
+      background: var(--grad-navy);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      font-weight: 400;
+    }
+    .chatbot-subtitle {
+      font-size: 14.5px;
+      color: var(--cocoa);
+      line-height: 1.7;
+    }
+    .chatbot-subtitle strong { color: var(--navy-deep); font-weight: 700; }
+
+    .chatbot-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 24px;
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    .chatbot-features {
+      background: rgba(255,253,247,.88);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px;
+    }
+    .chatbot-features-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 16px;
+    }
+    .chatbot-list { list-style: none; }
+    .chatbot-list li {
+      font-size: 13.5px;
+      color: var(--ink);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      line-height: 1.5;
+    }
+    .chatbot-list li:last-child { border-bottom: none; }
+    .chatbot-list li::before {
+      content: '';
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--grad-navy);
+      flex-shrink: 0;
+      margin-top: 2px;
+      position: relative;
+    }
+    .chatbot-list li { position: relative; }
+    .chatbot-list li::after {
+      content: '✓';
+      position: absolute;
+      left: 4px; top: 4px;
+      color: #fffdf7;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .chatbot-pricing {
+      background: linear-gradient(160deg, var(--navy-deep), var(--navy-soft));
+      border-radius: 20px;
+      padding: 32px 28px;
+      color: #fffdf7;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 24px 50px rgba(36,61,84,.32);
+      position: relative;
+      overflow: hidden;
+    }
+    .chatbot-pricing::before {
+      content: '';
+      position: absolute;
+      top: -40%; right: -30%;
+      width: 80%; height: 180%;
+      background: radial-gradient(closest-side, rgba(240,220,174,.18), transparent 70%);
+      pointer-events: none;
+    }
+    .chatbot-pricing-row { position: relative; margin-bottom: 22px; }
+    .chatbot-pricing-row:last-of-type { margin-bottom: 0; }
+    .chatbot-pricing-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--champagne-3);
+      margin-bottom: 8px;
+    }
+    .chatbot-pricing-value {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 500;
+      line-height: 1;
+      color: #fffdf7;
+      margin-bottom: 4px;
+    }
+    .chatbot-pricing-value span {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--champagne-3);
+      letter-spacing: .08em;
+    }
+    .chatbot-pricing-note {
+      font-size: 11.5px;
+      color: rgba(255,253,247,.72);
+      line-height: 1.55;
+    }
+    .chatbot-pricing-divider {
+      height: 1px;
+      background: rgba(255,253,247,.14);
+      margin: 22px 0;
+      position: relative;
+    }
+
+    .chatbot-impact {
+      background: rgba(255,253,247,.92);
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      padding: 22px 26px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      position: relative;
+    }
+    .chatbot-impact-icon {
+      width: 48px; height: 48px;
+      border-radius: 14px;
+      background: var(--grad-champagne);
+      display: grid; place-items: center;
+      color: #fffdf7;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px rgba(201,168,119,.36);
+    }
+    .chatbot-impact-text {
+      font-size: 13.5px;
+      color: var(--cocoa);
+      line-height: 1.7;
+    }
+    .chatbot-impact-text strong { color: var(--espresso); font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .chatbot-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .chatbot-card { padding: 30px 22px; }
+    }
+
+    /* ── MANTENIMIENTO ── */
+    .mant-section { margin-bottom: 80px; }
+
+    .mant-card {
+      background: linear-gradient(160deg, #fffdf7, #f6efe0);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 42px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .mant-header {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+    .mant-icon {
+      width: 56px; height: 56px;
+      background: var(--grad-champagne);
+      border-radius: 18px;
+      display: grid; place-items: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      color: #fffdf7;
+      box-shadow: 0 12px 26px rgba(201,168,119,.32);
+    }
+    .mant-title {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 500;
+      color: var(--espresso);
+      line-height: 1.1;
+    }
+    .mant-subtitle { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    .mant-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    @media (max-width: 640px) { .mant-grid { grid-template-columns: 1fr; } }
+
+    .mant-col-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .mant-col-title.includes { color: var(--success); }
+    .mant-col-title.excludes { color: var(--danger); }
+
+    .mant-list { list-style: none; }
+    .mant-list li {
+      font-size: 13.5px;
+      color: var(--ink);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      line-height: 1.5;
+    }
+    .mant-list li:last-child { border-bottom: none; }
+    .mant-list li .icon {
+      flex-shrink: 0; margin-top: 1px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 800;
+      color: #fffdf7;
+    }
+    .mant-list.includes li .icon { background: linear-gradient(135deg, var(--success), #7ea98c); }
+    .mant-list.excludes li .icon { background: linear-gradient(135deg, var(--danger), #d49a9a); }
+
+    /* ── MARKETING INNER ── */
+    .marketing-plans-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .mkt-card {
+      background: linear-gradient(160deg, #fffdf7, #f6efe0);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 32px 28px;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      position: relative;
+      box-shadow: var(--shadow-soft);
+    }
+    .mkt-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-deep);
+      border-color: var(--border-gold);
+    }
+    .mkt-card.premium {
+      border-color: var(--champagne);
+      box-shadow: 0 0 0 1px var(--champagne), 0 22px 50px rgba(201,168,119,.25);
+    }
+    .mkt-card.premium::before {
+      content: 'Mayor impacto';
+      position: absolute;
+      top: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: var(--grad-champagne);
+      color: #fffdf7;
+      font-size: 10px; font-weight: 800; letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 7px 18px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 10px 24px rgba(201,168,119,.4);
+    }
+
+    .mkt-tier {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 10px;
+    }
+    .mkt-name {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      line-height: 1;
+    }
+    .mkt-price {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 500;
+      background: var(--grad-champagne);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 4px;
+      line-height: 1.1;
+    }
+    .mkt-price span {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+      -webkit-text-fill-color: var(--muted);
+      letter-spacing: .1em;
+    }
+    .mkt-price-note {
+      font-size: 11.5px;
+      color: var(--muted);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .mkt-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 18px;
+    }
+    .mkt-features { list-style: none; }
+    .mkt-features li {
+      font-size: 13px;
+      color: var(--ink);
+      padding: 7px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .mkt-features li:last-child { border-bottom: none; }
+    .mkt-features li::before {
+      content: '';
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--grad-champagne);
+      flex-shrink: 0;
+      margin-top: 3px;
+      position: relative;
+    }
+    .mkt-features li { position: relative; }
+    .mkt-features li::after {
+      content: '✓';
+      position: absolute;
+      left: 3px; top: 8px;
+      color: #fffdf7;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* ── CÓMO FUNCIONA ── */
+    .steps-section { margin-bottom: 80px; }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+    }
+
+    .step-card {
+      background: linear-gradient(160deg, #fffdf7, #f6efe0);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 28px 22px;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      box-shadow: var(--shadow-soft);
+    }
+    .step-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-gold);
+      box-shadow: var(--shadow-float);
+    }
+
+    .step-num {
+      font-family: var(--serif);
+      font-size: 42px;
+      font-weight: 500;
+      background: var(--grad-champagne);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 12px;
+      line-height: 1;
+    }
+    .step-title {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .step-desc {
+      font-size: 13px;
+      color: var(--cocoa);
+      line-height: 1.65;
+    }
+
+    /* ── FUERA DEL PLAN ── */
+    .extras-section { margin-bottom: 50px; }
+
+    .extras-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: linear-gradient(160deg, #fffdf7, #f6efe0);
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-soft);
+    }
+    .extras-table thead tr {
+      background: rgba(201,168,119,.16);
+    }
+    .extras-table th {
+      padding: 16px 22px;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .26em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      text-align: left;
+    }
+    .extras-table td {
+      padding: 16px 22px;
+      font-size: 13.5px;
+      color: var(--ink);
+      border-top: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .extras-table tr:hover td { background: rgba(201,168,119,.08); }
+    .extras-table .price-tag {
+      font-weight: 800;
+      color: var(--bronze);
+      white-space: nowrap;
+    }
+    .extras-table .free-tag {
+      font-weight: 800;
+      color: var(--success);
+    }
+    .extras-table .neg-tag {
+      font-weight: 700;
+      color: var(--muted);
+      font-style: italic;
+    }
+    .extras-table td small {
+      display: block;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ── REGLA GENERAL ── */
+    .rule-box {
+      background: linear-gradient(135deg, rgba(212,163,173,.18), rgba(240,220,174,.22));
+      border: 1px solid var(--border-gold);
+      border-radius: 20px;
+      padding: 26px 30px;
+      margin-bottom: 80px;
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+    .rule-icon {
+      width: 46px; height: 46px;
+      border-radius: 14px;
+      background: var(--grad-champagne);
+      display: grid; place-items: center;
+      color: #fffdf7;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 10px 22px rgba(201,168,119,.32);
+    }
+    .rule-text {
+      font-size: 14.5px;
+      color: var(--cocoa);
+      line-height: 1.75;
+    }
+    .rule-text strong { color: var(--espresso); font-weight: 700; }
+
+    /* ── CONTACTO ── */
+    .contact-section { margin-bottom: 80px; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .contact-card {
+      background: linear-gradient(160deg, #fffdf7, #f6efe0);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 32px 30px;
+      transition: transform .3s, box-shadow .3s, border-color .3s;
+      box-shadow: var(--shadow-soft);
+    }
+    .contact-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-gold);
+      box-shadow: var(--shadow-float);
+    }
+
+    .contact-avatar {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--grad-champagne);
+      display: grid; place-items: center;
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 500;
+      color: #fffdf7;
+      margin-bottom: 18px;
+      box-shadow: 0 14px 28px rgba(201,168,119,.3);
+      overflow: hidden;
+      position: relative;
+    }
+    .contact-avatar img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+    .contact-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--espresso);
+      margin-bottom: 4px;
+    }
+    .contact-role {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+      color: var(--bronze);
+      margin-bottom: 18px;
+    }
+    .contact-info { list-style: none; }
+    .contact-info li {
+      font-size: 13px;
+      color: var(--cocoa);
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .contact-info li a {
+      color: var(--cocoa);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .contact-info li a:hover { color: var(--bronze); }
+    .contact-info li .ci-icon {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      background: rgba(201,168,119,.16);
+      display: grid; place-items: center;
+      font-size: 13px;
+      flex-shrink: 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 50px 0 60px;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, transparent, rgba(237,225,200,.4));
+    }
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 500;
+      background: var(--grad-champagne);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+      letter-spacing: .04em;
+    }
+    .footer-sub {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .36em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+    .footer-note {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── PRINT ── */
+    @media print {
+      body { background: #fff; color: #2a1d12; }
+      body::before, body::after { display: none; }
+      .price-card, .mant-card, .step-card, .contact-card, .extras-table, .rule-box,
+      .campaign-card, .chatbot-card, .mkt-card, .campaign-pillar {
+        border: 1px solid #ddd !important;
+        box-shadow: none !important;
+        background: #fafafa !important;
+      }
+      .client-name, .step-num, .footer-logo, .section-title em, .plan-name, .mkt-price, .price {
+        -webkit-text-fill-color: #a07842 !important;
+        color: #a07842 !important;
+      }
+      .chatbot-pricing { background: #243d54 !important; color: #fff !important; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .extras-table th:last-child, .extras-table td:last-child { display: none; }
+    }
+    @media (max-width: 420px) {
+      .steps-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════ -->
+<header>
+  <div class="container">
+    <div class="badge">Propuesta Comercial · 2026</div>
+    <div class="brand-mark-hero">
+      <svg viewBox="0 0 64 64" fill="none">
+        <path d="M8 45 15 20l13 15 4-22 4 22 13-15 7 25H8Z" stroke="currentColor" stroke-width="4" stroke-linejoin="round"/>
+        <path d="M12 50h40" stroke="currentColor" stroke-width="4" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1 class="client-name">Imperium Royal</h1>
+    <p class="client-sub">Luxury Perfumery · Cajica · Colombia</p>
+    <p class="hero-desc">
+      Propuesta integral para llevar Imperium Royal a una experiencia digital a la altura de la marca: un sitio editorial que vende, un concierge automatizado que responde 24/7 y una activacion real de la base de clientes desde el primer mes.
+    </p>
+    <div class="divider"></div>
+  </div>
+</header>
+
+<main>
+  <div class="container">
+
+    <!-- ═══════════════════════════════════════
+         PLANES DE CREACIÓN
+    ════════════════════════════════════════ -->
+    <section>
+      <div class="section-header">
+        <h2 class="section-title">Planes de creacion del <em>sitio web</em></h2>
+        <p class="section-subtitle">Pago unico · Entrega 3–5 semanas segun complejidad</p>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- BÁSICO -->
+        <div class="price-card">
+          <p class="plan-tier">Nivel 01</p>
+          <h3 class="plan-name">Esencial</h3>
+          <p class="plan-desc">Presencia digital de marca para clientes que ya te conocen. Vitrina editorial, contacto directo y autoridad inmediata en Google.</p>
+          <p class="plan-price">$1.800.000 <span>COP</span></p>
+          <p class="plan-note">Pago unico</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Hasta 4 paginas (Inicio, Catalogo, Guia, Contacto)</li>
+            <li>Diseno editorial responsivo y elegante</li>
+            <li>Catalogo visual con marcas principales</li>
+            <li>Boton flotante WhatsApp + concierge</li>
+            <li>SEO basico optimizado para Bogota / Cajica</li>
+            <li>Dominio y hosting primer ano incluido</li>
+          </ul>
+        </div>
+
+        <!-- ESTÁNDAR (featured) -->
+        <div class="price-card featured">
+          <p class="plan-tier">Nivel 02</p>
+          <h3 class="plan-name">Editorial</h3>
+          <p class="plan-desc">Lo que ya tienes hoy, llevado a su mejor version: catalogo filtrable, guia interactiva, atelier y experiencia de marca completa.</p>
+          <p class="plan-price">$2.900.000 <span>COP</span></p>
+          <p class="plan-note">Pago unico</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Hasta 7 paginas (incluye Atelier y Servicios)</li>
+            <li>Catalogo con filtros, busqueda y orden por precio</li>
+            <li>Guia reactiva por ocasion, estilo y genero</li>
+            <li>Animaciones premium y micro-interacciones</li>
+            <li>SEO intermedio + Google Analytics configurado</li>
+            <li>Integracion con redes sociales y reseñas</li>
+            <li>Dominio y hosting primer ano incluido</li>
+          </ul>
+        </div>
+
+        <!-- AVANZADO -->
+        <div class="price-card">
+          <p class="plan-tier">Nivel 03</p>
+          <h3 class="plan-name">Tienda Completa</h3>
+          <p class="plan-desc">Experiencia digital completa: catalogo editorial + tienda en linea con carrito, pagos, panel administrativo y autonomia total.</p>
+          <p class="plan-price">$4.200.000 <span>COP</span></p>
+          <p class="plan-note">Pago unico</p>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>Paginas ilimitadas en el alcance</li>
+            <li>UI/UX personalizado para marca de lujo</li>
+            <li>Tienda en linea con carrito y pagos</li>
+            <li>Panel admin para gestionar productos y precios</li>
+            <li>Pasarela de pago (Nequi, PSE, Bancolombia)</li>
+            <li>Velocidad y rendimiento optimizados</li>
+            <li>SEO avanzado + Analytics + Search Console</li>
+            <li>Dominio y hosting primer ano incluido</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         BONUS — CAMPAÑA DE CLIENTES
+    ════════════════════════════════════════ -->
+    <section class="campaign-section">
+      <div class="campaign-card">
+
+        <div class="campaign-top">
+          <div class="campaign-badge">✦</div>
+          <div class="campaign-header-text">
+            <p class="campaign-eyebrow">Cortesia exclusiva · Plan Editorial y Tienda Completa</p>
+            <h3 class="campaign-title">Si vas con el plan completo, <em>nosotros tambien vamos con todo</em></h3>
+            <p class="campaign-subtitle">
+              Al elegir Editorial o Tienda Completa, arrancamos con tres acciones de alto impacto pensadas para <strong>generar ventas reales desde el primer mes</strong>, sin costo adicional. Porque una inversion bien respaldada se convierte en clientes mucho mas rapido.
+            </p>
+          </div>
+        </div>
+
+        <div class="campaign-pillars">
+
+          <div class="campaign-pillar">
+            <div class="pillar-icon">✿</div>
+            <p class="pillar-title">Reactivacion WhatsApp de tu base</p>
+            <p class="pillar-body">
+              Contactamos hasta <strong>100 clientes de tu base</strong> que ya te compraron con una recomendacion personalizada de su <strong>proximo perfume firma</strong>. Cliente que ya confia en ti = el canal de venta mas eficiente que existe. Lo activamos desde el dia uno.
+            </p>
+          </div>
+
+          <div class="campaign-pillar">
+            <div class="pillar-icon">✦</div>
+            <p class="pillar-title">Campana de cross-sell por familia olfativa</p>
+            <p class="pillar-body">
+              Para quienes compraron recientemente, lanzamos una campana de <strong>fragancias complementarias</strong> segun el perfil que ya tienen: si compraron oriental, recomendamos su contraparte fresca o de noche. Mensaje correcto, momento correcto, sin spam.
+            </p>
+          </div>
+
+          <div class="campaign-pillar">
+            <div class="pillar-icon">✧</div>
+            <p class="pillar-title">Sets estrategicos y combos de regalo</p>
+            <p class="pillar-body">
+              Disenamos <strong>combos y sets de regalo</strong> con copy, visual y precio pensados para audiencias especificas: el que regala en aniversario, la signature scent + miniatura de viaje, el set descubrimiento. Mas conversion, menos decision por precio.
+            </p>
+          </div>
+
+        </div>
+
+        <div class="campaign-impact">
+          <div class="campaign-impact-icon">♥</div>
+          <p class="campaign-impact-text">
+            <strong>Tu base de clientes ya es tu activo mas valioso.</strong> La mayoria de marcas de perfumeria la ignora y sigue pagando por traer clientes nuevos. Nosotros la activamos desde el primer mes para que el plan se financie solo, y lo que venga despues es crecimiento puro.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         CHATBOT AUTOMATIZADO (NUEVO)
+    ════════════════════════════════════════ -->
+    <section class="chatbot-section">
+      <div class="section-header">
+        <h2 class="section-title">Concierge digital <em>automatizado</em></h2>
+        <p class="section-subtitle">Adicional opcional · Chatbot inteligente embebido en el sitio</p>
+      </div>
+
+      <div class="chatbot-card">
+
+        <div class="chatbot-top">
+          <div class="chatbot-badge">◉</div>
+          <div class="chatbot-header-text">
+            <p class="chatbot-eyebrow">Atencion 24/7 sin contratar personal</p>
+            <h3 class="chatbot-title">Un asesor que <em>nunca duerme</em>, entrenado en tu catalogo</h3>
+            <p class="chatbot-subtitle">
+              Un chatbot con IA <strong>embebido en el sitio</strong> y entrenado con tu catalogo, marcas, notas olfativas y tono de marca. Responde dudas, recomienda fragancias, captura datos del lead y entrega la conversacion al WhatsApp cuando esta lista para cerrar. Convierte visitas dormidas en ventas reales.
+            </p>
+          </div>
+        </div>
+
+        <div class="chatbot-grid">
+
+          <div class="chatbot-features">
+            <p class="chatbot-features-title">Que incluye</p>
+            <ul class="chatbot-list">
+              <li>Chatbot embebido (burbuja flotante) en todas las paginas del sitio</li>
+              <li>Entrenamiento sobre catalogo completo: marcas, notas, precios, ocasiones</li>
+              <li>Recomendacion personalizada por ocasion, presupuesto y estilo</li>
+              <li>Captura de nombre, telefono y correo del lead automaticamente</li>
+              <li>Transferencia inteligente a WhatsApp cuando hay intencion de compra</li>
+              <li>Respuestas alineadas al tono editorial de Imperium Royal</li>
+              <li>Panel mensual con conversaciones, leads capturados y conversion</li>
+              <li>Idiomas: espanol nativo + ingles basico</li>
+            </ul>
+          </div>
+
+          <div class="chatbot-pricing">
+            <div class="chatbot-pricing-row">
+              <p class="chatbot-pricing-label">Implementacion</p>
+              <p class="chatbot-pricing-value">$1.800.000 <span>COP</span></p>
+              <p class="chatbot-pricing-note">Pago unico · Incluye entrenamiento, integracion con el sitio, pruebas y puesta en produccion.</p>
+            </div>
+            <div class="chatbot-pricing-divider"></div>
+            <div class="chatbot-pricing-row">
+              <p class="chatbot-pricing-label">Operacion mensual</p>
+              <p class="chatbot-pricing-value">$380.000 <span>COP / mes</span></p>
+              <p class="chatbot-pricing-note">Cubre infraestructura del modelo IA, mantenimiento, mejoras y actualizaciones del catalogo cada vez que cambian precios o referencias.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="chatbot-impact">
+          <div class="chatbot-impact-icon">✦</div>
+          <p class="chatbot-impact-text">
+            <strong>Cada visita que llega al sitio fuera de horario hoy se pierde.</strong> Con el concierge automatizado, esas visitas se convierten en leads identificados, recomendados y listos para que tu equipo cierre por WhatsApp al dia siguiente. Es la diferencia entre un sitio vitrina y un sitio que vende.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         MANTENIMIENTO MENSUAL  (CONTENIDO IDENTICO AL BASELINE)
+    ════════════════════════════════════════ -->
+    <section class="mant-section">
+      <div class="section-header">
+        <h2 class="section-title">Plan de mantenimiento <em>mensual</em></h2>
+        <p class="section-subtitle">Opcional · Se contrata despues de la entrega del sitio</p>
+      </div>
+
+      <div class="mant-card">
+        <div class="mant-header">
+          <div class="mant-icon">✦</div>
+          <div>
+            <p class="mant-title">Mantenimiento &amp; Soporte Continuo</p>
+            <p class="mant-subtitle">Tu sitio siempre actualizado, sin preocupaciones</p>
+          </div>
+        </div>
+
+        <div class="mant-grid">
+          <!-- INCLUYE -->
+          <div>
+            <p class="mant-col-title includes">✓ &nbsp;Que incluye</p>
+            <ul class="mant-list includes">
+              <li><span class="icon">✓</span> 1 sesion de edicion por semana, hasta 5 cambios por sesion (textos, fotos, ajustes menores)</li>
+              <li><span class="icon">✓</span> Soporte por WhatsApp en horario laboral (lun–vie 8:00–18:00)</li>
+              <li><span class="icon">✓</span> Resolucion de fallos en 2–3 horas sin costo adicional</li>
+              <li><span class="icon">✓</span> Monitoreo basico de disponibilidad del sitio</li>
+              <li><span class="icon">✓</span> Revision mensual de Google Analytics, que paginas funcionan y que no</li>
+            </ul>
+          </div>
+
+          <!-- NO INCLUYE -->
+          <div>
+            <p class="mant-col-title excludes">✗ &nbsp;Que no incluye</p>
+            <ul class="mant-list excludes">
+              <li><span class="icon">✗</span> Paginas nuevas o secciones adicionales</li>
+              <li><span class="icon">✗</span> Rediseno de secciones existentes</li>
+              <li><span class="icon">✗</span> Integraciones nuevas (pasarelas de pago, formularios complejos, etc.)</li>
+              <li><span class="icon">✗</span> Contenido creado desde cero (fotos, copywriting, diseno grafico)</li>
+              <li><span class="icon">✗</span> Solicitudes fuera del horario laboral</li>
+              <li><span class="icon">✗</span> Mas de 5 cambios por sesion semanal</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- SEPARADOR INTERNO -->
+        <div style="height:1px; background: var(--border); margin: 36px 0;"></div>
+
+        <!-- MARKETING INTRO -->
+        <div class="mant-header" style="margin-bottom: 18px;">
+          <div class="mant-icon">✿</div>
+          <div>
+            <p class="mant-title">Mantenimiento Continuo + Marketing</p>
+            <p class="mant-subtitle">Sabemos que mencionaste un presupuesto de alrededor de $1.500.000 y lo respetamos. Pero si el objetivo es crecer de verdad, esto es lo que recomendamos: una estrategia que no solo mantiene tu sitio, sino que construye tu marca, genera alcance real y convierte seguidores en clientes. Dos opciones, segun tu nivel de involucramiento.</p>
+          </div>
+        </div>
+
+        <div class="marketing-plans-grid" style="margin-top: 26px;">
+
+          <!-- GESTIÓN COMPLETA -->
+          <div class="mkt-card premium">
+            <p class="mkt-tier">Opcion 01</p>
+            <h3 class="mkt-name">Gestion Completa</h3>
+            <p class="mkt-price">$1.800.000 – $2.000.000 <span>COP / mes</span></p>
+            <p class="mkt-price-note">Nosotros nos encargamos de todo</p>
+            <div class="mkt-divider"></div>
+            <ul class="mkt-features">
+              <li>Parrilla de contenidos mensual para Instagram, Facebook/WhatsApp y TikTok</li>
+              <li>Redaccion de guiones y copy para cada red social</li>
+              <li>2 visitas al mes para grabacion de video y fotografia en sede Bogota</li>
+              <li>Diseno y edicion de todo el contenido</li>
+              <li>Programacion y publicacion del contenido</li>
+            </ul>
+          </div>
+
+          <!-- GESTIÓN REMOTA -->
+          <div class="mkt-card">
+            <p class="mkt-tier">Opcion 02</p>
+            <h3 class="mkt-name">Gestion Remota</h3>
+            <p class="mkt-price">$1.550.000 – $1.650.000 <span>COP / mes</span></p>
+            <p class="mkt-price-note">Tu grabas, nosotros producimos</p>
+            <div class="mkt-divider"></div>
+            <ul class="mkt-features">
+              <li>Parrilla de contenidos mensual</li>
+              <li>Guiones detallados con indicaciones de angulos, iluminacion y encuadre</li>
+              <li>Edicion de videos y piezas a partir del material grabado por ustedes</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         CÓMO FUNCIONA
+    ════════════════════════════════════════ -->
+    <section class="steps-section">
+      <div class="section-header">
+        <h2 class="section-title">Como <em>funciona</em></h2>
+        <p class="section-subtitle">Simple, directo y sin burocracia</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <p class="step-num">01</p>
+          <p class="step-title">Contactanos como quieras</p>
+          <p class="step-desc">WhatsApp, llamada o correo, lo que te quede mas facil, en horario laboral (lun–vie 8:00–18:00). Sin protocolos.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num">02</p>
+          <p class="step-title">Manda los cambios cuando quieras</p>
+          <p class="step-desc">Nos vas enviando lo que necesites durante la semana y los aplicamos todos juntos en la sesion semanal. Hasta 5 cambios por sesion.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num">03</p>
+          <p class="step-title">Respuesta en 24h</p>
+          <p class="step-desc">Tiempo de respuesta garantizado de 24 horas habiles para cualquier solicitud dentro del plan.</p>
+        </div>
+        <div class="step-card">
+          <p class="step-num">04</p>
+          <p class="step-title">Sin sorpresas</p>
+          <p class="step-desc">Si algo esta fuera del alcance del plan, te lo decimos antes de ejecutar y acordamos el costo. Nunca trabajamos sin aprobacion.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         FUERA DEL PLAN
+    ════════════════════════════════════════ -->
+    <section class="extras-section">
+      <div class="section-header">
+        <h2 class="section-title">Fuera del <em>plan</em></h2>
+        <p class="section-subtitle">Servicios adicionales cotizados y aprobados antes de ejecutar</p>
+      </div>
+
+      <table class="extras-table">
+        <thead>
+          <tr>
+            <th>Servicio</th>
+            <th>Costo</th>
+            <th>Detalle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Pagina nueva</strong></td>
+            <td><span class="price-tag">Desde $180.000</span></td>
+            <td><small>Depende de complejidad y contenido. Se cotiza antes de arrancar.</small></td>
+          </tr>
+          <tr>
+            <td><strong>Carga masiva de productos</strong></td>
+            <td><span class="price-tag">Desde $250.000</span></td>
+            <td><small>Carga de catalogo extendido cuando llegan nuevas referencias o coleccion completa.</small></td>
+          </tr>
+          <tr>
+            <td><strong>Urgencias fuera de horario</strong></td>
+            <td><span class="price-tag">$60.000</span></td>
+            <td><small>Por intervencion fuera de lun–vie 8:00–18:00. Aplica solo si tu lo solicitas.</small></td>
+          </tr>
+          <tr>
+            <td><strong>Cambios adicionales</strong></td>
+            <td><span class="neg-tag">A negociar</span></td>
+            <td><small>Si son pocos y rapidos, no se cobran. Si el volumen lo justifica, acordamos antes de ejecutar.</small></td>
+          </tr>
+          <tr>
+            <td><strong>Fallos del sitio</strong></td>
+            <td><span class="free-tag">Sin costo</span></td>
+            <td><small>Si algo se rompe o el sitio cae, lo resolvemos en 2–3 horas. Esta cubierto en el plan.</small></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         REGLA GENERAL
+    ════════════════════════════════════════ -->
+    <div class="rule-box">
+      <div class="rule-icon">✦</div>
+      <p class="rule-text">
+        <strong>Regla general:</strong> Si es rapido y es poco, no se cobra. Si requiere tiempo real de trabajo por encima de lo pactado, lo hablamos antes, <strong>nunca despues</strong>.
+      </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         CONTACTO
+    ════════════════════════════════════════ -->
+    <section class="contact-section">
+      <div class="section-header">
+        <h2 class="section-title">Contacto</h2>
+        <p class="section-subtitle">Estamos disponibles lun–vie 8:00–18:00 para resolver tus dudas</p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-card">
+          <div class="contact-avatar" data-photo="daniel">DA</div>
+          <p class="contact-name">Daniel Acosta</p>
+          <p class="contact-role">Direccion · Producto y desarrollo</p>
+          <ul class="contact-info">
+            <li>
+              <span class="ci-icon">✉</span>
+              <a href="mailto:daniel.f.acosta96@gmail.com">daniel.f.acosta96@gmail.com</a>
+            </li>
+            <li>
+              <span class="ci-icon">✆</span>
+              <a href="https://wa.me/573136662777">+57 313 666 2777</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-avatar" data-photo="juan">JD</div>
+          <p class="contact-name">Juan Manuel Diaz</p>
+          <p class="contact-role">Direccion · Marketing y contenido</p>
+          <ul class="contact-info">
+            <li>
+              <span class="ci-icon">✉</span>
+              <a href="mailto:j-dico@outlook.com">j-dico@outlook.com</a>
+            </li>
+            <li>
+              <span class="ci-icon">✆</span>
+              <a href="https://wa.me/573148543846">+57 314 854 3846</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+  </div><!-- /container -->
+</main>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <p class="footer-logo">Imperium Royal</p>
+    <p class="footer-sub">Luxury Perfumery</p>
+    <p class="footer-note">
+      Propuesta valida por 30 dias · Precios en pesos colombianos (COP) · IVA no incluido<br>
+      Cajica, Cundinamarca · Cobertura nacional
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
