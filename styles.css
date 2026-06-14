@@ -336,7 +336,9 @@ footer ul{list-style:none;display:grid;gap:8px}
   .hero-panel{min-height:560px}.spotlight{position:relative;top:auto}.product-grid{grid-template-columns:repeat(2,1fr)}.grid-four{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:740px){
-  .shell{width:min(100% - 30px,1380px)}.ticker{height:32px}.nav-inner{min-height:72px}.brand strong{font-size:22px}.brand-mark{width:40px;height:40px}.icon-btn:not(.menu-toggle){display:none}
+  .shell{width:min(100% - 30px,1380px)}.ticker{height:32px}.nav-inner{min-height:72px;gap:10px}.brand strong{font-size:22px}.brand-mark{width:40px;height:40px}
+  .icon-btn:not(.menu-toggle):not(.nav-tool){display:none}
+  .icon-btn,.nav-tool{width:42px;height:42px}
   .hero-grid{padding:52px 0 42px}h1{font-size:clamp(54px,17vw,88px)}.lead{font-size:15px}.proof-strip{grid-template-columns:repeat(2,1fr);margin-top:38px}
   .hero-panel{min-height:460px}.photo-frame.main{width:270px;height:330px;right:34px}.photo-frame.side{width:190px;height:230px}.photo-frame.mini{width:170px;height:190px}.floating-note{display:none}
   .section{padding:76px 0}.section-head{align-items:start;flex-direction:column}.panel{padding:32px;min-height:360px}.grid-four,.service-grid,.finder-options{grid-template-columns:1fr}
@@ -512,10 +514,10 @@ footer ul{list-style:none;display:grid;gap:8px}
 @keyframes favPop{0%{transform:scale(.6)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 
 /* Nav tools (search + favoritos) */
-.nav-tool{position:relative}
+.nav-tool{position:relative;overflow:visible}
 .nav-tool svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2}
 .fav-nav svg{width:20px;height:20px}
-.fav-count{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 4px;display:none;place-items:center;border-radius:999px;background:var(--grad-rose);color:#fffdf7;font-size:10px;font-weight:800;box-shadow:0 4px 10px rgba(184,120,135,.4)}
+.fav-count{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;display:none;place-items:center;border-radius:999px;background:var(--grad-rose);color:#fffdf7;font-size:10px;font-weight:800;line-height:1;box-shadow:0 4px 12px rgba(184,120,135,.5),0 0 0 2px var(--cream-50);pointer-events:none}
 .fav-count.show{display:grid}
 
 /* Modal action row */
@@ -552,10 +554,15 @@ footer ul{list-style:none;display:grid;gap:8px}
 
 /* Chat widget */
 .chat-widget{position:fixed;right:24px;bottom:24px;z-index:60;display:flex;flex-direction:column;align-items:flex-end;gap:14px}
-.chat-launch{position:relative;width:64px;height:64px;display:grid;place-items:center;background:linear-gradient(135deg,#1f8f58,#2ec27a);color:#fff;border-radius:50%;box-shadow:0 18px 40px rgba(31,143,88,.4),0 4px 14px rgba(58,42,29,.18);cursor:pointer;transition:transform var(--ease-bouncy),box-shadow var(--ease);animation:waBreathe 3.2s ease-in-out infinite}
-.chat-launch::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:linear-gradient(135deg,#2ec27a,#1f8f58);opacity:.5;z-index:-1;animation:waPulse 2.4s ease-out infinite}
-.chat-launch svg{width:32px;height:32px}
-.chat-launch:hover{transform:scale(1.1) rotate(-8deg)}
+.chat-peek{position:relative;max-width:240px;padding:12px 16px 12px 18px;background:#fffdf7;border:1px solid var(--line);border-radius:18px 18px 4px 18px;box-shadow:var(--shadow-float);color:var(--ink);font-size:13px;line-height:1.4;animation:peekIn .6s cubic-bezier(.2,.8,.2,1) both}
+.chat-peek b{display:block;font-family:var(--serif);font-size:16px;color:var(--espresso)}
+.chat-peek small{display:block;color:var(--muted);margin-top:2px;font-size:11.5px}
+.chat-peek-x{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;background:rgba(58,42,29,.08);color:var(--cocoa);font-size:14px;line-height:1;cursor:pointer;display:grid;place-items:center}
+@keyframes peekIn{from{opacity:0;transform:translateY(10px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+.chat-launch{position:relative;width:64px;height:64px;display:grid;place-items:center;background:linear-gradient(135deg,#1f8f58 0%,#25d366 60%,#2ec27a 100%);color:#fff;border-radius:50%;box-shadow:0 18px 40px rgba(37,211,102,.42),0 4px 14px rgba(58,42,29,.2);cursor:pointer;transition:transform var(--ease-bouncy),box-shadow var(--ease);animation:waBreathe 3.2s ease-in-out infinite}
+.chat-launch::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:linear-gradient(135deg,#25d366,#1f8f58);opacity:.5;z-index:-1;animation:waPulse 2.4s ease-out infinite}
+.chat-launch svg{width:34px;height:34px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.18))}
+.chat-launch:hover{transform:scale(1.1) rotate(-8deg);box-shadow:0 24px 50px rgba(37,211,102,.55),0 6px 16px rgba(58,42,29,.24)}
 .chat-launch.active{animation:none}
 .chat-badge{position:absolute;top:-2px;right:-2px;min-width:20px;height:20px;display:grid;place-items:center;border-radius:999px;background:var(--grad-rose);color:#fff;font-size:11px;font-weight:800;box-shadow:0 4px 10px rgba(184,120,135,.5)}
 .chat-panel{width:min(360px,calc(100vw - 36px));background:var(--ivory);border:1px solid var(--line);border-radius:var(--radius-lg);box-shadow:var(--shadow-deep);overflow:hidden;display:flex;flex-direction:column;max-height:min(560px,72vh);animation:modalIn .36s cubic-bezier(.2,.8,.2,1)}
@@ -594,9 +601,55 @@ footer ul{list-style:none;display:grid;gap:8px}
 /* Recently viewed */
 .recent-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 
-@media (max-width:900px){.testi-grid{grid-template-columns:1fr}.recent-row{grid-template-columns:1fr}}
+@media (max-width:900px){.testi-grid{grid-template-columns:1fr}.recent-row{grid-template-columns:1fr}.collections{grid-template-columns:1fr}.collection-card{height:380px}}
 @media (max-width:740px){
   .icon-btn.nav-tool{display:inline-flex}
-  .chat-widget{right:16px;bottom:16px}
-  .chat-launch{width:56px;height:56px}.chat-launch svg{width:28px;height:28px}
+  .nav-actions{gap:6px}
+  .fav-btn{width:42px;height:42px}.fav-btn svg{width:21px;height:21px}
+  .product-modal{max-width:100vw;width:100vw;max-height:100vh;height:100vh;border-radius:0;margin:0}
+  .modal-body{max-height:100vh;grid-template-rows:auto 1fr}
+  .m-photo{min-height:280px;height:280px}
+  .m-info{padding:24px 22px;gap:14px}
+  .m-info h3{font-size:30px}
+  .m-actions{flex-direction:column;align-items:stretch;gap:10px}
+  .m-actions .wa-cta{width:100%;justify-content:center}
+  .m-actions .fav-btn{align-self:flex-start}
+  .modal-close{top:12px;right:12px;width:40px;height:40px}
+  .fav-modal{max-width:100vw;width:100vw;max-height:100vh;height:100vh;border-radius:0}
+  .fav-modal-body{padding:30px 22px;max-height:100vh}
+  .fav-modal-body h3{font-size:30px}
+  .chat-widget{right:14px;bottom:14px;gap:10px}
+  .chat-launch{width:60px;height:60px}.chat-launch svg{width:30px;height:30px}
+  .chat-peek{display:none}
+  .chat-panel{width:calc(100vw - 28px);max-height:min(70vh,560px)}
+  .chat-log{padding:14px}
+  .chat-msg{font-size:13px;max-width:88%}
+  .search-overlay{padding:20px 14px}
+  .search-bar{padding:14px 16px;gap:10px}
+  .search-bar input{font-size:16px}
+  .search-results{padding:12px;gap:10px}
+  .finder-card{grid-template-columns:90px 1fr;padding:10px 14px 10px 10px;gap:14px}
+  .finder-card-photo{height:88px}
+  .finder-card-info b{font-size:18px}
+  .finder-card-price{font-size:17px}
+  .finder-group{margin-top:18px}
+  .finder-label{font-size:10px;margin-bottom:8px}
+  .product-image .fav-btn{width:36px;height:36px;top:10px;right:10px}
+  .product-image .fav-btn svg{width:18px;height:18px}
+  .testi{padding:28px 22px}
+  .testi blockquote{font-size:19px}
+  .hero{min-height:auto}
+  .hero-grid{min-height:auto;padding:44px 0 36px;gap:24px}
 }
+@media (max-width:420px){
+  .nav-link.active{padding:0 10px;font-size:10px}
+  .nav-inner{gap:6px}
+  .brand strong{font-size:19px}.brand small{font-size:7px;letter-spacing:.28em}.brand-mark{width:34px;height:34px}.brand-mark svg{width:22px}
+  .icon-btn,.nav-tool{width:38px;height:38px}
+  .m-info h3{font-size:26px}
+  .show-tile .cap b{font-size:22px}
+  .show-tile.feat .cap b{font-size:30px}
+  .collection-card{height:320px}
+  .collection-card .c-body h3{font-size:38px}
+}
+@media (prefers-color-scheme:dark) and (max-width:740px){.chat-panel{box-shadow:0 22px 60px rgba(0,0,0,.5)}}

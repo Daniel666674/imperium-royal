@@ -349,25 +349,32 @@ function chatReply(item){
 function initChat(){
   document.querySelectorAll(".floating-wa").forEach(n=>n.remove());
   const quick=CHAT_QUICK.map((it,i)=>`<button class="chat-chip" data-chat-q="${i}">${it.q}</button>`).join("");
+  const peekShown=sessionStorage.getItem("ir_peek_seen");
+  const peekHtml=peekShown?"":`<div class="chat-peek" data-peek><button class="chat-peek-x" data-peek-close aria-label="Cerrar">&times;</button><b>Hola, soy Concierge Royal</b><small>Te ayudo a elegir tu perfume por WhatsApp.</small></div>`;
   document.body.insertAdjacentHTML("beforeend",`
     <div class="chat-widget">
       <div class="chat-panel" id="chatPanel" hidden>
-        <header class="chat-head"><span class="chat-avatar">${WA_SVG}</span><div><b>Imperium Royal</b><small><i></i> En linea · responde al instante</small></div><button class="chat-x" data-chat-toggle aria-label="Cerrar">&times;</button></header>
+        <header class="chat-head"><span class="chat-avatar">${WA_SVG}</span><div><b>Imperium Royal</b><small><i></i> En linea &middot; responde al instante</small></div><button class="chat-x" data-chat-toggle aria-label="Cerrar">&times;</button></header>
         <div class="chat-log" data-chat-log></div>
         <div class="chat-quick">${quick}</div>
         <div class="chat-foot"><a class="pill-btn primary wa-cta" href="https://wa.me/573105550199?text=Hola%20Imperium%20Royal%2C%20quiero%20asesoria" target="_blank" rel="noopener">${WA_SVG}<span>Continuar en WhatsApp</span></a></div>
       </div>
-      <button class="chat-launch" data-chat-toggle aria-label="Abrir chat">${WA_SVG}<span class="chat-badge">1</span></button>
+      ${peekHtml}
+      <button class="chat-launch" data-chat-toggle aria-label="Abrir chat de WhatsApp">${WA_SVG}<span class="chat-badge">1</span></button>
     </div>`);
   document.querySelector(".chat-quick").addEventListener("click",e=>{const b=e.target.closest("[data-chat-q]");if(!b)return;chatReply(CHAT_QUICK[+b.dataset.chatQ]);});
+  document.querySelector("[data-peek-close]")?.addEventListener("click",e=>{e.stopPropagation();dismissPeek();});
+  if(!peekShown) setTimeout(dismissPeek,10000);
   window.__chatGreeted=false;
 }
+function dismissPeek(){const p=document.querySelector("[data-peek]");if(p){p.remove();try{sessionStorage.setItem("ir_peek_seen","1")}catch(e){}}}
 function toggleChat(){
   const panel=document.querySelector("#chatPanel");if(!panel)return;
   const open=panel.hasAttribute("hidden");
   panel.toggleAttribute("hidden",!open);
   document.querySelector(".chat-launch")?.classList.toggle("active",open);
   const badge=document.querySelector(".chat-badge");if(badge)badge.style.display="none";
+  dismissPeek();
   if(open&&!window.__chatGreeted){window.__chatGreeted=true;chatTyping(true);setTimeout(()=>{chatTyping(false);chatMsg("Hola 👋 Soy el concierge de Imperium Royal. Toca una pregunta o escribenos por WhatsApp.","bot")},600);}
 }
 
