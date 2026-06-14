@@ -78,8 +78,8 @@ const PRODUCTS=[
 const money=n=>"$"+n.toLocaleString("es-CO");
 function productArt(p){
   if(p.img){
-    const u='https://raw.githubusercontent.com/daniel666674/imperium-royal/main/images/'+encodeURIComponent(p.img);
-    return `<img src="${u}" alt="${p.brand} ${p.name}" loading="lazy" class="product-photo">`;
+    const u='https://cdn.jsdelivr.net/gh/daniel666674/imperium-royal@main/images/'+encodeURIComponent(p.img);
+    return `<img src="${u}" alt="${p.brand} ${p.name}" loading="lazy" decoding="async" class="product-photo">`;
   }
   return `<div class="scent-art art-fresh" role="img" aria-label="${p.brand} ${p.name}"><span class="scent-box"></span><span class="scent-bottle"></span></div>`;
 }
@@ -112,7 +112,7 @@ function renderCatalog(){
   if(spotlight){
     spotlight.innerHTML=`<div><figure>${productArt(hero)}</figure><h3>${hero.name}</h3><p>${hero.brand} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="pill-btn primary" data-add>Reservar pieza</button>`;
   }
-  grid.innerHTML=list.map((p,i)=>`<article class="product-card enter" data-cat="${p.cat}" style="--i:${i}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`).join("");
+  grid.innerHTML=list.map((p,i)=>`<article class="product-card enter" data-cat="${p.cat}" style="--i:${Math.min(i,10)}"><figure class="product-image">${productArt(p)}</figure><div class="product-info"><span class="product-brand">${p.brand} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span><button class="mini-add" data-add>Agregar</button></div></div></article>`).join("");
   bindCardMotion();
 }
 
@@ -130,6 +130,19 @@ function bindCardMotion(){
       card.style.setProperty("--rx","0deg");
     });
   });
+}
+
+const SOCIAL=[
+  {label:"Instagram",href:"https://instagram.com/imperiumroyal",svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 1.62c-3.15 0-3.52.01-4.76.07-1.15.05-1.77.24-2.18.4-.55.22-.94.47-1.35.88-.41.41-.66.8-.88 1.35-.16.41-.35 1.03-.4 2.18-.06 1.24-.07 1.61-.07 4.76s.01 3.52.07 4.76c.05 1.15.24 1.77.4 2.18.22.55.47.94.88 1.35.41.41.8.66 1.35.88.41.16 1.03.35 2.18.4 1.24.06 1.61.07 4.76.07s3.52-.01 4.76-.07c1.15-.05 1.77-.24 2.18-.4.55-.22.94-.47 1.35-.88.41-.41.66-.8.88-1.35.16-.41.35-1.03.4-2.18.06-1.24.07-1.61.07-4.76s-.01-3.52-.07-4.76c-.05-1.15-.24-1.77-.4-2.18-.22-.55-.47-.94-.88-1.35-.41-.41-.8-.66-1.35-.88-.41-.16-1.03-.35-2.18-.4-1.24-.06-1.61-.07-4.76-.07zm0 2.76a5.3 5.3 0 1 1 0 10.6 5.3 5.3 0 0 1 0-10.6zm0 1.62a3.68 3.68 0 1 0 0 7.36 3.68 3.68 0 0 0 0-7.36zm5.48-2.9a1.24 1.24 0 1 1 0 2.48 1.24 1.24 0 0 1 0-2.48z"/></svg>'},
+  {label:"TikTok",href:"https://tiktok.com/@imperiumroyal",svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 0 1-1.05-2.82h-3.1v12.4a2.52 2.52 0 0 1-2.52 2.52 2.52 2.52 0 0 1 0-5.04c.26 0 .51.04.75.11V9.8a5.6 5.6 0 0 0-.75-.05 5.62 5.62 0 1 0 5.62 5.62V8.96a7.34 7.34 0 0 0 4.3 1.38V7.24a4.28 4.28 0 0 1-3.25-1.42z"/></svg>'},
+  {label:"Facebook",href:"https://facebook.com/imperiumroyal",svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>'},
+  {label:"WhatsApp",href:"https://wa.me/573105550199",svg:'<svg viewBox="0 0 32 32" fill="currentColor"><path d="M16.003.064C7.17.064.008 7.226.008 16.062a15.94 15.94 0 0 0 2.137 7.992L0 32.064l8.2-2.148a15.98 15.98 0 0 0 7.803 1.992h.007c8.83 0 15.99-7.162 15.99-15.998 0-4.28-1.663-8.302-4.682-11.322A15.89 15.89 0 0 0 16.003.064zM23.31 19.28c-.4-.2-2.37-1.17-2.74-1.3-.37-.13-.64-.2-.9.2-.27.4-1.03 1.3-1.27 1.57-.23.27-.47.3-.87.1-.4-.2-1.69-.62-3.22-1.98-1.19-1.06-1.99-2.37-2.22-2.77-.23-.4-.02-.62.18-.82.18-.18.4-.47.6-.7.2-.23.27-.4.4-.67.13-.27.07-.5-.03-.7-.1-.2-.9-2.17-1.23-2.97-.33-.78-.66-.67-.9-.69-.23-.01-.5-.01-.77-.01-.27 0-.7.1-1.07.5-.37.4-1.4 1.37-1.4 3.34 0 1.97 1.43 3.87 1.63 4.13.2.27 2.82 4.31 6.83 6.04.95.41 1.7.66 2.28.84.96.31 1.83.26 2.52.16.77-.12 2.37-.97 2.7-1.9.33-.93.33-1.73.23-1.9-.1-.17-.37-.27-.77-.47z"/></svg>'}
+];
+function injectSocial(){
+  const foot=document.querySelector(".footer-bottom");
+  if(!foot||foot.querySelector(".social"))return;
+  const row=SOCIAL.map(s=>`<a class="social-btn" href="${s.href}" target="_blank" rel="noopener" aria-label="${s.label}">${s.svg}</a>`).join("");
+  foot.insertAdjacentHTML("afterbegin",`<div class="social">${row}</div>`);
 }
 
 function bindCatalog(){
@@ -172,8 +185,14 @@ function bindFinder(){
 function bindGlobal(){
   document.body.insertAdjacentHTML("afterbegin",'<div class="progress" id="scrollProgress"></div>');
   document.body.insertAdjacentHTML("afterbegin",'<div class="cursor-glow" id="cursorGlow"></div>');
-  document.querySelector(".menu-toggle")?.addEventListener("click",()=>document.querySelector(".nav-links")?.classList.toggle("open"));
-  const revealObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add("visible")}),{threshold:.16});
+  const menuToggle=document.querySelector(".menu-toggle");
+  menuToggle?.addEventListener("click",()=>{
+    const open=document.querySelector(".nav-links")?.classList.toggle("open");
+    menuToggle.classList.toggle("open",open);
+    menuToggle.setAttribute("aria-expanded",open?"true":"false");
+  });
+  injectSocial();
+  const revealObserver=new IntersectionObserver((entries,obs)=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible");obs.unobserve(entry.target)}}),{threshold:0,rootMargin:"0px 0px -6% 0px"});
   document.querySelectorAll(".reveal").forEach(el=>revealObserver.observe(el));
   const header=document.querySelector(".site-header");
   window.addEventListener("scroll",()=>{
