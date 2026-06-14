@@ -145,6 +145,39 @@
       margin: 0 auto 60px;
     }
 
+    .demo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: #1c140c;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 12px 30px rgba(201,168,119,0.32);
+      transition: transform 0.3s, box-shadow 0.3s;
+      margin-bottom: 40px;
+    }
+    .demo-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 42px rgba(201,168,119,0.45);
+    }
+    .demo-btn .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #1c140c;
+      box-shadow: 0 0 0 0 rgba(28,20,12,0.5);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(28,20,12,0.45); }
+      70% { box-shadow: 0 0 0 8px rgba(28,20,12,0); }
+      100% { box-shadow: 0 0 0 0 rgba(28,20,12,0); }
+    }
+
     /* ── SECTION TITLES ── */
     .section-title {
       font-family: var(--serif);
@@ -320,6 +353,17 @@
     }
     .mant-title { font-family: var(--serif); font-size: 24px; font-weight: 600; color: var(--white); }
     .mant-subtitle { font-size: 13px; color: var(--text-muted); }
+    .mant-header.priced { justify-content: space-between; flex-wrap: wrap; }
+    .mant-price-tag { text-align: right; flex-shrink: 0; }
+    .mant-price-tag strong {
+      font-family: var(--serif);
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--white);
+      display: block;
+      line-height: 1;
+    }
+    .mant-price-tag span { font-size: 12px; color: var(--text-muted); }
 
     .mant-grid {
       display: grid;
@@ -815,6 +859,7 @@
     <p class="hero-desc">
       Propuesta de digitalización para Imperium Royal: creación y mantenimiento de tu tienda de fragancias en línea, para que tu marca venda más, proyecte lujo y genere confianza en cada cliente.
     </p>
+    <a class="demo-btn" href="https://daniel666674.github.io/imperium-royal/index.html" target="_blank" rel="noopener"><span class="dot"></span> Ver demo en vivo →</a>
     <div class="divider"></div>
   </div>
 </header>
@@ -1032,12 +1077,15 @@
       </div>
 
       <div class="mant-card">
-        <div class="mant-header">
-          <div class="mant-icon">🛠️</div>
-          <div>
-            <p class="mant-title">Mantenimiento &amp; Soporte Continuo</p>
-            <p class="mant-subtitle">Tu sitio siempre actualizado, sin preocupaciones</p>
+        <div class="mant-header priced">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div class="mant-icon">🛠️</div>
+            <div>
+              <p class="mant-title">Mantenimiento &amp; Soporte · Solo sitio web</p>
+              <p class="mant-subtitle">Tu sitio siempre actualizado, sin preocupaciones</p>
+            </div>
           </div>
+          <div class="mant-price-tag"><strong>$300.000</strong><span>COP / mes</span></div>
         </div>
 
         <div class="mant-grid">
@@ -1197,6 +1245,16 @@
       <span class="rule-icon">💡</span>
       <p class="rule-text">
         <strong>Regla general:</strong> Si es rápido y es poco, no se cobra. Si requiere tiempo real de trabajo por encima de lo pactado, lo hablamos antes, <strong>nunca después</strong>.
+      </p>
+    </div>
+
+    <!-- ═══════════════════════════════════════
+         PROPIEDAD DEL PROYECTO
+    ════════════════════════════════════════ -->
+    <div class="rule-box" style="background:linear-gradient(135deg, rgba(134,184,154,0.16), rgba(201,168,119,0.07)); border-color:rgba(134,184,154,0.42);">
+      <span class="rule-icon">🔑</span>
+      <p class="rule-text">
+        <strong>El proyecto es 100% tuyo.</strong> El sitio web, el dominio, el código y todo el contenido que te entregamos quedan a tu nombre y bajo tu propiedad total. <strong>No retenemos la titularidad de ningún proyecto</strong>: lo que compras, es tuyo, sin ataduras ni mensualidades obligatorias para seguir usándolo. Lo único que nos reservamos es el derecho a <strong>documentar el proyecto como caso de éxito</strong> en nuestro portafolio y redes, siempre cuidando y respetando tu marca.
       </p>
     </div>
 
