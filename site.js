@@ -78,7 +78,7 @@ const PRODUCTS=[
 const money=n=>"$"+n.toLocaleString("es-CO");
 function productArt(p){
   if(p.img){
-    const u='https://cdn.jsdelivr.net/gh/daniel666674/imperium-royal@main/images/'+encodeURIComponent(p.img);
+    const u='images/'+encodeURIComponent(p.img);
     return `<img src="${u}" alt="${p.brand} ${p.name}" loading="lazy" decoding="async" class="product-photo">`;
   }
   return `<div class="scent-art art-fresh" role="img" aria-label="${p.brand} ${p.name}"><span class="scent-box"></span><span class="scent-bottle"></span></div>`;
