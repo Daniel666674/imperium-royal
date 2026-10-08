@@ -1,14 +1,14 @@
 {
-  "name": "Imperium Royal | Luxury Perfumery",
-  "short_name": "Imperium Royal",
-  "description": "Perfumeria de lujo en Colombia: fragancias originales, catalogo curado y asesoria privada por WhatsApp.",
+  "name": "Maison Duo | Dos aromas, un precio",
+  "short_name": "Maison Duo",
+  "description": "Perfumes originales en Colombia: cada uno a $110.000 y combo de 2 por $180.000, con asesoria por WhatsApp.",
   "lang": "es-CO",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#fbf7ee",
-  "theme_color": "#2a1d12",
+  "background_color": "#fcf6f1",
+  "theme_color": "#2b1722",
   "icons": [
     {
       "src": "images/WhatsApp%20Image%202026-06-13%20at%203.58.41%20PM.jpeg",
