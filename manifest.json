@@ -1,7 +1,7 @@
 {
   "name": "Maison Duo | Dos aromas, un precio",
   "short_name": "Maison Duo",
-  "description": "Perfumes originales en Colombia: cada uno a $110.000 y combo de 2 por $180.000, con asesoria por WhatsApp.",
+  "description": "Perfumes inspirados en fragancias famosas, en Colombia: cada uno a $110.000 y combo de 2 por $180.000, con asesoria por WhatsApp.",
   "lang": "es-CO",
   "start_url": "./index.html",
   "scope": "./",

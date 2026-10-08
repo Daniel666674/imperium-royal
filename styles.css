@@ -754,6 +754,12 @@ footer ul{list-style:none;display:grid;gap:8px}
   .m-actions .combo-btn,.m-actions .wa-cta{flex:none;width:100%}
 }
 
+.brand-disclaimer{max-width:920px;margin-top:16px;padding:0 0 30px;color:var(--muted);font-size:11.5px;line-height:1.6;text-align:center}
+/* "Inspirado en <marca>" is long: let it wrap like normal text and keep the dot on the first line */
+.product-brand{display:inline-block;line-height:1.5}
+.product-brand::before{display:inline-block;flex:none;vertical-align:middle;margin-right:8px;position:relative;top:-1px}
+@media (max-width:740px){.product-brand{font-size:10px;letter-spacing:.14em}}
+
 /* Primary buttons on the dark combo surfaces: light rose-gold fill + plum text so the label stays readable */
 .combo-banner .pill-btn.primary,.combo-tray .pill-btn.primary{background:linear-gradient(135deg,#f3d5c6,#e3b8a5 55%,#f3d5c6);color:#2b1722;animation:none;box-shadow:0 14px 32px rgba(0,0,0,.3)}
 .combo-banner .pill-btn.primary:hover,.combo-tray .pill-btn.primary:hover{color:#2b1722;box-shadow:0 20px 40px rgba(0,0,0,.4)}
