@@ -760,6 +760,19 @@ footer ul{list-style:none;display:grid;gap:8px}
 .product-brand::before{display:inline-block;flex:none;vertical-align:middle;margin-right:8px;position:relative;top:-1px}
 @media (max-width:740px){.product-brand{font-size:10px;letter-spacing:.14em}}
 
+/* Combo banner as the page hero (first thing on the home page) */
+.combo-hero{padding:34px 0 24px}
+.combo-banner h1{margin-top:16px;max-width:none;font-size:clamp(50px,6.2vw,98px);line-height:.9;color:var(--ivory)}
+.combo-proof{max-width:none;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:22px}
+@media (max-width:740px){
+  .combo-hero{padding:18px 0 10px}
+  .combo-banner h1{font-size:clamp(46px,14.5vw,72px)}
+  .combo-proof{gap:8px;margin-top:16px}
+  .combo-proof div{padding:14px 10px}
+  .combo-proof b{font-size:28px}
+  .combo-proof span{font-size:9px;letter-spacing:.12em}
+}
+
 /* Primary buttons on the dark combo surfaces: light rose-gold fill + plum text so the label stays readable */
 .combo-banner .pill-btn.primary,.combo-tray .pill-btn.primary{background:linear-gradient(135deg,#f3d5c6,#e3b8a5 55%,#f3d5c6);color:#2b1722;animation:none;box-shadow:0 14px 32px rgba(0,0,0,.3)}
 .combo-banner .pill-btn.primary:hover,.combo-tray .pill-btn.primary:hover{color:#2b1722;box-shadow:0 20px 40px rgba(0,0,0,.4)}
