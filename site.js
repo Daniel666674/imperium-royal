@@ -807,6 +807,7 @@ function bindFinder(){
   const results=finder.querySelector("[data-results]");
   const single=finder.querySelector("[data-result]");
   const picks={cat:"all",mood:"firma"};
+  finder.querySelectorAll("[data-pick].active").forEach(b=>{const [k,v]=b.dataset.pick.split(":");picks[k]=v;});
   const rank=()=>PRODUCTS.map((p,i)=>{
     let s=0;
     if(picks.cat==="all"||p.cat===picks.cat) s+=3;
@@ -820,8 +821,18 @@ function bindFinder(){
     if(!ranked.length) return;
     if(results){ results.innerHTML=ranked.map(card).join(""); }
     if(single){
-      const m=ranked[0].p;
-      single.innerHTML=`<div class="result-name">${m.name}</div><p class="result-copy">Inspirado en ${m.brand}: funciona para una compra ${picks.mood}: ${m.notes.join(", ")}.</p><div class="price">${money(m.price)}</div><button class="pill-btn primary" data-open="${ranked[0].i}">Ver detalle</button>`;
+      const m=ranked[0].p,mi=ranked[0].i;
+      const labels=["Salida","Corazon","Base"];
+      const chips=m.notes.map((n,k)=>`<div class="rs-note"><b>${labels[k]}</b><span>${n}</span></div>`).join("");
+      const alts=ranked.slice(1).map(card).join("");
+      const saving=COMBO_SIZE*UNIT_PRICE-COMBO_PRICE;
+      single.innerHTML=`<div class="rs-top"><span class="rs-badge">Tu match ideal</span><span class="rs-meta">${CAT_COPY[m.cat]||""} &middot; ${m.mood}</span></div>
+      <div class="rs-main"><figure class="rs-photo" data-open="${mi}">${productArt(m)}</figure><div class="rs-body"><div class="result-name">${m.name}</div><p class="result-copy">${inspiredBy(m)} &middot; ${m.size}. ${MOOD_COPY[m.mood]||""}</p></div></div>
+      <div class="rs-notes">${chips}</div>
+      <div class="rs-price"><span class="price">${money(m.price)}</span><small>Llevate 2 por <b>${money(COMBO_PRICE)}</b> y ahorra ${money(saving)}</small></div>
+      <div class="rs-actions"><a class="pill-btn primary wa-cta" href="${waLinkFor(m)}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir este perfume por WhatsApp</span></a>${comboBtn(mi,true)}<button class="pill-btn secondary" data-open="${mi}">Ver detalle</button></div>
+      <div class="rs-alt"><span class="finder-label">Otras 2 opciones para tu combo</span><div class="finder-results">${alts}</div></div>`;
+      updateFavUI();updateComboUI();
     }
   };
   finder.querySelectorAll("[data-pick]").forEach(btn=>btn.addEventListener("click",()=>{
