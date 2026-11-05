@@ -530,8 +530,9 @@ function similarProducts(p,limit){
   const idx=PRODUCTS.indexOf(p);
   return PRODUCTS.map((q,i)=>({q,i,score:(q.cat===p.cat?2:0)+(q.mood===p.mood?2:0)-(i===idx?100:0)})).sort((a,b)=>b.score-a.score).slice(0,limit);
 }
+const WA_GENERIC=`Hola Maison Duo 👋 Quiero armar mi combo de 2 perfumes por ${money(COMBO_PRICE)}. ¿Me ayudan a elegir? Me gustan los aromas: `;
 function waLinkFor(p){
-  const msg=`Hola Maison Duo, me interesa ${p.name}, inspirado en ${p.brand} (${p.size}), por ${money(p.price)} (o 2 perfumes a tu eleccion por ${money(COMBO_PRICE)}). Esta disponible?`;
+  const msg=`Hola Maison Duo 👋 Quiero pedir este perfume:\n\n*${p.name}* (inspirado en ${p.brand}, ${p.size}) — ${money(p.price)}\n\n¿Está disponible? Si sumo un segundo perfume, ¿me dejan los 2 en ${money(COMBO_PRICE)}? Mi ciudad es: `;
   return `https://wa.me/573112703720?text=${encodeURIComponent(msg)}`;
 }
 const WA_PATH="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z";
@@ -568,13 +569,13 @@ function comboBtn(i,wide){
     :`<button class="mini-add combo-add" data-combo-toggle="${i}" data-on="En combo" data-off="Al combo" aria-label="Sumar al combo">Al combo</button>`;
 }
 function comboWaLink(items){
-  const list=items.map(({p})=>`${p.name} (inspirado en ${p.brand}, ${p.size})`).join("; ");
-  const msg=`Hola Maison Duo, quiero armar mi combo: ${list}. Total ${money(comboTotal(items.length))}. Estan disponibles?`;
+  const list=items.map(({p},n)=>`${n+1}. *${p.name}* (inspirado en ${p.brand}, ${p.size})`).join("\n");
+  const msg=`Hola Maison Duo 👋 Quiero armar mi combo:\n\n${list}\n\nTotal: *${money(comboTotal(items.length))}*\n\n¿Están disponibles? Mi ciudad es: `;
   return `https://wa.me/573112703720?text=${encodeURIComponent(msg)}`;
 }
 function ensureComboTray(){
   if(document.querySelector("#comboTray")) return;
-  document.body.insertAdjacentHTML("beforeend",'<aside id="comboTray" class="combo-tray" hidden aria-label="Tu combo"><div class="combo-tray-main"><div class="combo-slots" data-combo-slots></div><p class="combo-msg" data-combo-msg aria-live="polite"></p></div><div class="combo-tray-side"><div class="combo-total"><s data-combo-was></s><b data-combo-price></b></div><a class="pill-btn primary wa-cta" data-combo-wa href="#" target="_blank" rel="noopener">'+WA_SVG+'<span>Pedir combo</span></a><button class="combo-clear" data-combo-clear>Vaciar</button></div></aside>');
+  document.body.insertAdjacentHTML("beforeend",'<aside id="comboTray" class="combo-tray" hidden aria-label="Tu combo"><div class="combo-tray-main"><div class="combo-slots" data-combo-slots></div><p class="combo-msg" data-combo-msg aria-live="polite"></p></div><div class="combo-tray-side"><div class="combo-total"><s data-combo-was></s><b data-combo-price></b></div><a class="pill-btn primary wa-cta" data-combo-wa href="#" target="_blank" rel="noopener">'+WA_SVG+'<span>Pedir mi combo por WhatsApp</span></a><button class="combo-clear" data-combo-clear>Vaciar</button></div></aside>');
   if("ResizeObserver" in window){
     const tray=document.querySelector("#comboTray");
     new ResizeObserver(()=>{if(!tray.hidden) document.body.style.setProperty("--tray-h",tray.offsetHeight+"px")}).observe(tray);
@@ -655,7 +656,7 @@ function openProductModal(idx){
         <div><b>Corazon</b><span>${p.notes[1]||""}</span></div>
         <div><b>Base</b><span>${p.notes[2]||""}</span></div>
       </div>
-      <div class="price-row"><div class="m-price"><span class="price">${money(p.price)}</span><small>o 2 a tu eleccion por <b>${money(COMBO_PRICE)}</b></small></div><div class="m-actions">${favBtn(idx)}${comboBtn(idx,true)}<a class="pill-btn primary wa-cta" href="${waLinkFor(p)}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir por WhatsApp</span></a></div></div>
+      <div class="price-row"><div class="m-price"><span class="price">${money(p.price)}</span><small>o 2 a tu eleccion por <b>${money(COMBO_PRICE)}</b></small></div><div class="m-actions">${favBtn(idx)}${comboBtn(idx,true)}<a class="pill-btn primary wa-cta" href="${waLinkFor(p)}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir este perfume por WhatsApp</span></a></div></div>
       ${sims.length?`<div class="m-similar"><span class="eyebrow">Piezas similares</span><div class="m-similar-row">${sims.map(({q,i})=>miniCard(q,i)).join("")}</div></div>`:""}
     </div>`;
   document.body.style.overflow="hidden";
@@ -705,11 +706,11 @@ function ensureFavModal(){
 function renderFavModal(){
   const body=document.querySelector("[data-fav-body]");if(!body)return;
   const favs=getFavs();
-  if(!favs.length){body.innerHTML='<div class="fav-empty"><p>Aun no has guardado piezas. Toca el corazon en cualquier perfume para guardarlo aqui.</p><a class="pill-btn primary" href="catalogo.html">Explorar catalogo</a></div>';return;}
+  if(!favs.length){body.innerHTML='<div class="fav-empty"><p>Aun no has guardado piezas. Toca el corazon en cualquier perfume para guardarlo aqui.</p><a class="pill-btn primary" href="catalogo.html">Ver los perfumes</a></div>';return;}
   const rows=favs.map(i=>{const p=PRODUCTS[i];return p?`<div class="fav-row" data-cat="${p.cat}">${miniCard(p,i)}<button class="fav-remove" data-fav-toggle="${i}" aria-label="Quitar">Quitar</button></div>`:""}).join("");
-  const names=favs.map(i=>{const p=PRODUCTS[i];return p?`${p.name} (inspirado en ${p.brand})`:""}).filter(Boolean).join("; ");
-  const msg=encodeURIComponent(`Hola Maison Duo, me interesan estas piezas: ${names}. Segun el combo (${money(UNIT_PRICE)} c/u, 2 por ${money(COMBO_PRICE)}) serian ${money(comboTotal(favs.length))}. Me confirman disponibilidad?`);
-  body.innerHTML=`<div class="fav-list">${rows}</div><a class="pill-btn primary wa-cta" href="https://wa.me/573112703720?text=${msg}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir todo por WhatsApp</span></a>`;
+  const names=favs.map(i=>{const p=PRODUCTS[i];return p?`• *${p.name}* (inspirado en ${p.brand})`:""}).filter(Boolean).join("\n");
+  const msg=encodeURIComponent(`Hola Maison Duo 👋 Estos son mis favoritos:\n\n${names}\n\nCon el combo (${money(UNIT_PRICE)} c/u, 2 por ${money(COMBO_PRICE)}) me quedaría en *${money(comboTotal(favs.length))}*. ¿Me confirman disponibilidad y envío? Mi ciudad es: `);
+  body.innerHTML=`<div class="fav-list">${rows}</div><a class="pill-btn primary wa-cta" href="https://wa.me/573112703720?text=${msg}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir mis favoritos por WhatsApp</span></a>`;
   updateFavUI();
 }
 function openFavModal(){ensureFavModal();renderFavModal();document.body.style.overflow="hidden";const d=document.querySelector("#favModal");if(!d.open)d.showModal();}
@@ -754,7 +755,7 @@ const CHAT_QUICK=[
   {q:"Metodos de pago",a:"Aceptamos Nequi, Daviplata, Bancolombia y pago contra entrega segun tu ciudad."},
   {q:"Que es \"inspirado en\"?",a:"Son perfumes con un aroma muy cercano al de fragancias famosas. Te decimos siempre en cual se inspira cada uno. No son los productos de esas marcas ni tenemos relacion con ellas."},
   {q:"Quiero una recomendacion",a:"Con gusto. Usa el Selector Duo aqui en la pagina, o cuentame para quien y para que ocasion, y te paso 3 opciones para armar tu combo.",link:{href:"guia.html",label:"Abrir selector"}},
-  {q:"Ver catalogo",a:"Aqui tienes el catalogo completo de 74 piezas 👇",link:{href:"catalogo.html",label:"Abrir catalogo"}}
+  {q:"Ver catalogo",a:`Aqui tienes los ${PRODUCTS.length} perfumes del catalogo 👇`,link:{href:"catalogo.html",label:"Abrir catalogo"}}
 ];
 function chatMsg(text,who){const log=document.querySelector("[data-chat-log]");if(!log)return;log.insertAdjacentHTML("beforeend",`<div class="chat-msg ${who}">${text}</div>`);log.scrollTop=log.scrollHeight;}
 function chatTyping(show){const log=document.querySelector("[data-chat-log]");if(!log)return;let t=log.querySelector(".chat-typing");if(show){if(!t){log.insertAdjacentHTML("beforeend",'<div class="chat-msg bot chat-typing"><span></span><span></span><span></span></div>');log.scrollTop=log.scrollHeight}}else if(t)t.remove();}
@@ -772,14 +773,14 @@ function initChat(){
   document.querySelectorAll(".floating-wa").forEach(n=>n.remove());
   const quick=CHAT_QUICK.map((it,i)=>`<button class="chat-chip" data-chat-q="${i}">${it.q}</button>`).join("");
   const peekShown=sessionStorage.getItem("ir_peek_seen");
-  const peekHtml=peekShown?"":`<div class="chat-peek" data-peek><button class="chat-peek-x" data-peek-close aria-label="Cerrar">&times;</button><b>Hola, soy Concierge Duo</b><small>Te ayudo a elegir tu perfume por WhatsApp.</small></div>`;
+  const peekHtml=peekShown?"":`<div class="chat-peek" data-peek><button class="chat-peek-x" data-peek-close aria-label="Cerrar">&times;</button><b>2 perfumes por ${money(COMBO_PRICE)} 🔥</b><small>Te ayudo a elegir el tuyo por WhatsApp. Respondo en minutos.</small></div>`;
   document.body.insertAdjacentHTML("beforeend",`
     <div class="chat-widget">
       <div class="chat-panel" id="chatPanel" hidden>
         <header class="chat-head"><span class="chat-avatar">${WA_SVG}</span><div><b>Maison Duo</b><small><i></i> En linea &middot; responde al instante</small></div><button class="chat-x" data-chat-toggle aria-label="Cerrar">&times;</button></header>
         <div class="chat-log" data-chat-log></div>
         <div class="chat-quick">${quick}</div>
-        <div class="chat-foot"><a class="pill-btn primary wa-cta" href="https://wa.me/573112703720?text=Hola%20Maison%20Duo%2C%20quiero%20asesoria" target="_blank" rel="noopener">${WA_SVG}<span>Continuar en WhatsApp</span></a></div>
+        <div class="chat-foot"><a class="pill-btn primary wa-cta" href="https://wa.me/573112703720?text=${encodeURIComponent(WA_GENERIC)}" target="_blank" rel="noopener">${WA_SVG}<span>Hablar con un asesor ahora</span></a></div>
       </div>
       ${peekHtml}
       <button class="chat-launch" data-chat-toggle aria-label="Abrir chat de WhatsApp">${WA_SVG}<span class="chat-badge">1</span></button>
@@ -797,7 +798,7 @@ function toggleChat(){
   document.querySelector(".chat-launch")?.classList.toggle("active",open);
   const badge=document.querySelector(".chat-badge");if(badge)badge.style.display="none";
   dismissPeek();
-  if(open&&!window.__chatGreeted){window.__chatGreeted=true;chatTyping(true);setTimeout(()=>{chatTyping(false);chatMsg("Hola 👋 Soy el concierge de Maison Duo. Toca una pregunta o escribenos por WhatsApp.","bot")},600);}
+  if(open&&!window.__chatGreeted){window.__chatGreeted=true;chatTyping(true);setTimeout(()=>{chatTyping(false);chatMsg(`Hola 👋 Soy el concierge de Maison Duo. Cada perfume vale ${money(UNIT_PRICE)} y llevas 2 por ${money(COMBO_PRICE)}. Toca una pregunta o habla con un asesor por WhatsApp.`,"bot")},600);}
 }
 
 function bindFinder(){
