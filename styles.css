@@ -776,3 +776,25 @@ footer ul{list-style:none;display:grid;gap:8px}
 /* Primary buttons on the dark combo surfaces: light rose-gold fill + plum text so the label stays readable */
 .combo-banner .pill-btn.primary,.combo-tray .pill-btn.primary{background:linear-gradient(135deg,#f3d5c6,#e3b8a5 55%,#f3d5c6);color:#2b1722;animation:none;box-shadow:0 14px 32px rgba(0,0,0,.3)}
 .combo-banner .pill-btn.primary:hover,.combo-tray .pill-btn.primary:hover{color:#2b1722;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.load-more{display:flex;justify-content:center;margin:28px 0 8px}
+
+.rs-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.rs-badge{background:var(--grad-champagne,#c98f7c);color:#fff;font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;padding:8px 14px;border-radius:999px}
+.rs-meta{color:var(--bronze);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.rs-main{display:grid;grid-template-columns:150px minmax(0,1fr);gap:20px;align-items:center}
+.rs-photo{margin:0;height:170px;border-radius:var(--radius-md);overflow:hidden;background:linear-gradient(160deg,#fffcf9,#efdfd3);cursor:pointer}
+.rs-photo img{width:100%;height:100%;object-fit:contain}
+.rs-main .result-name{font-size:40px}
+.rs-notes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.rs-note{background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:10px 12px;display:grid;gap:4px}
+.rs-note b{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--bronze)}
+.rs-note span{font-size:13px;line-height:1.4}
+.rs-price{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.rs-price small{color:var(--cocoa)}
+.rs-actions{display:flex;gap:10px;flex-wrap:wrap}
+.rs-actions .wa-cta{flex:1 1 100%}
+.rs-alt .finder-results{margin-top:10px}
+.finder-result{min-height:0}
+@media(max-width:700px){.rs-main{grid-template-columns:110px minmax(0,1fr)}.rs-main .result-name{font-size:30px}.rs-notes{grid-template-columns:1fr}.finder-copy,.finder-stage{padding:26px}}
+.rs-price .price{font-size:36px;line-height:1;color:var(--bronze);background:none;-webkit-text-fill-color:currentColor;opacity:1}
+.rs-price{justify-content:flex-start}
