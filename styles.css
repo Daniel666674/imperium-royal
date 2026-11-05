@@ -840,3 +840,20 @@ footer ul{list-style:none;display:grid;gap:8px}
   .m-similar{padding-bottom:24px}
   .modal-close{top:10px;right:10px}
 }
+.load-more{display:flex;justify-content:center;margin:36px 0 0;width:100%}
+.load-more:empty{display:none}
+.load-more .pill-btn{min-width:min(100%,320px);justify-content:center}
+/* catalog layout fixes */
+.catalog-layout{align-items:start}
+.spotlight{align-self:start;position:sticky;top:104px;height:auto;min-height:0}
+@media (max-width:900px){.spotlight{display:none}.catalog-layout{gap:0}}
+/* catalog toolbar on small screens */
+@media (max-width:700px){
+  .catalog-tools{gap:12px;padding:16px}
+  .catalog-tools .tabs{width:100%;display:flex;flex-wrap:wrap;gap:8px}
+  .catalog-tools .tab-btn{flex:1 1 calc(50% - 8px)}
+  .search-wrap{flex:1 1 100%;width:100%}
+  .search-wrap>span{display:none}
+  .search-wrap input{width:100%;min-width:0;font-size:14px}
+  .catalog-count,.select{flex:1 1 calc(50% - 8px);justify-content:center;min-width:0}
+}

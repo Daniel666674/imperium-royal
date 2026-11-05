@@ -460,7 +460,7 @@ function renderCatalog(){
   }
   grid.innerHTML=list.slice(0,shown).map((p,i)=>{const idx=PRODUCTS.indexOf(p);return `<article class="product-card enter" data-cat="${p.cat}" data-open="${idx}" style="--i:${Math.min(i,10)}"><figure class="product-image">${favBtn(idx)}${productArt(p)}</figure><div class="product-info"><span class="product-brand">${inspiredBy(p)} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span>${comboBtn(idx)}</div></div></article>`}).join("");
   let more=document.querySelector("#loadMore");
-  if(!more){more=document.createElement("div");more.id="loadMore";more.className="load-more";grid.after(more);}
+  if(!more){more=document.createElement("div");more.id="loadMore";more.className="load-more";(grid.closest(".catalog-layout")||grid).after(more);}
   more.innerHTML=list.length>shown?`<button class="pill-btn primary" type="button">Ver mas perfumes (${list.length-shown})</button>`:"";
   more.querySelector("button")?.addEventListener("click",()=>{shown+=CATALOG_PAGE;renderCatalog();});
   bindCardMotion();
