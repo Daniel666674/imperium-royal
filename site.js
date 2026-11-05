@@ -645,7 +645,7 @@ function openProductModal(idx){
   const sims=similarProducts(p,2);
   body.dataset.cat=p.cat;
   body.innerHTML=`
-    <figure class="m-photo">${productArt(p)}</figure>
+    <figure class="m-photo">${p.img?`<img class="m-photo-bg" src="images/${encodeURIComponent(p.img)}" alt="" aria-hidden="true">`:""}${productArt(p)}</figure>
     <div class="m-info">
       <span class="product-brand">${inspiredBy(p)}</span>
       <h3 id="modalTitle">${p.name}</h3>
