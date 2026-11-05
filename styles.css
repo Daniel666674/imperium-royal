@@ -776,3 +776,4 @@ footer ul{list-style:none;display:grid;gap:8px}
 /* Primary buttons on the dark combo surfaces: light rose-gold fill + plum text so the label stays readable */
 .combo-banner .pill-btn.primary,.combo-tray .pill-btn.primary{background:linear-gradient(135deg,#f3d5c6,#e3b8a5 55%,#f3d5c6);color:#2b1722;animation:none;box-shadow:0 14px 32px rgba(0,0,0,.3)}
 .combo-banner .pill-btn.primary:hover,.combo-tray .pill-btn.primary:hover{color:#2b1722;box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.load-more{display:flex;justify-content:center;margin:28px 0 8px}
