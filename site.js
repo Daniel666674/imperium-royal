@@ -422,7 +422,7 @@ const inspiredBy=p=>`Inspirado en ${p.brand}`;
 function productArt(p){
   if(p.img){
     const u='images/'+encodeURIComponent(p.img);
-    return `<img src="${u}" alt="${p.name}, ${inspiredBy(p).toLowerCase()}" loading="lazy" decoding="async" class="product-photo">`;
+    return `<img src="${u}" alt="${p.name}, ${inspiredBy(p).toLowerCase()}" loading="lazy" decoding="async" class="product-photo${/\.webp$/.test(p.img)?" is-cut":""}">`;
   }
   return `<div class="scent-art art-fresh" role="img" aria-label="${p.name}, ${inspiredBy(p).toLowerCase()}"><span class="scent-box"></span><span class="scent-bottle"></span></div>`;
 }
@@ -435,35 +435,73 @@ function sorted(list){
   });
 }
 
-const CATALOG_PAGE=48;
+const CATALOG_PAGE=40;
 let shown=CATALOG_PAGE,lastViewKey="";
-let activeFilter=new URLSearchParams(location.search).get("cat")||"all";
+const STORE={cat:new URLSearchParams(location.search).get("cat")||"all",mood:"all",fam:"all",brand:"all",type:"all"};
+const STORE_LABELS={cat:{hombre:"Hombre",mujer:"Mujer",unisex:"Unisex"},mood:{diario:"Diario",oficina:"Oficina",noche:"Noche",firma:"Firma",regalo:"Regalo"},type:{perfume:"Perfumes",estuche:"Estuches y cofres"}};
+function storeAttr(p,i){
+  const f=advFeatures()[i];
+  return {cat:p.cat,mood:p.mood,fam:f.dom,brand:p.brand,type:f.gift?"estuche":"perfume"};
+}
+function storeMatch(p,i,skip){
+  const a=storeAttr(p,i);
+  return Object.keys(STORE).every(k=>k===skip||STORE[k]==="all"||a[k]===STORE[k]);
+}
+function storeOptions(key){
+  const counts={};
+  PRODUCTS.forEach((p,i)=>{if(storeMatch(p,i,key)){const v=storeAttr(p,i)[key];counts[v]=(counts[v]||0)+1;}});
+  let entries=Object.entries(counts);
+  if(key==="brand") entries.sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])); 
+  return entries;
+}
+function storeLabel(key,v){
+  if(key==="fam") return ADV_FAM[v]?.label||v;
+  return STORE_LABELS[key]?.[v]||v;
+}
+function renderStoreFilters(){
+  const box=document.querySelector("#storeFilters");
+  if(!box) return;
+  const keepScroll=box.querySelector(".sf-scroll .sf-list")?.scrollTop||0;
+  const group=(key,title,order)=>{
+    let opts=storeOptions(key);
+    if(order) opts.sort((a,b)=>order.indexOf(a[0])-order.indexOf(b[0]));
+    const total=opts.reduce((n,[,c])=>n+c,0);
+    const row=(v,label,c)=>`<button type="button" class="sf-opt${STORE[key]===v?" on":""}" data-sf="${key}:${v}"><span class="sf-box" aria-hidden="true"></span><span class="sf-label">${label}</span><em>${c}</em></button>`;
+    return `<div class="sf-group${key==="brand"?" sf-scroll":""}"><h4>${title}</h4><div class="sf-list">${row("all","Todos",total)}${opts.map(([v,c])=>row(v,storeLabel(key,v),c)).join("")}</div></div>`;
+  };
+  box.innerHTML=`<div class="sf-head"><b>Filtrar</b><button type="button" class="sf-close" id="filterClose" aria-label="Cerrar filtros">&times;</button></div>`+
+    group("cat","Para quien",["hombre","mujer","unisex"])+group("mood","Ocasion",["diario","oficina","noche","firma","regalo"])+group("fam","Aroma",Object.keys(ADV_FAM))+group("type","Tipo",["perfume","estuche"])+group("brand","Inspirado en")+
+    `<div class="sf-foot"><button type="button" class="pill-btn secondary" data-sf-clear>Limpiar filtros</button><button type="button" class="pill-btn primary" id="filterApply">Ver resultados</button></div>`;
+  const sl=box.querySelector(".sf-scroll .sf-list");if(sl) sl.scrollTop=keepScroll;
+}
+function storeCard(p,idx,i){
+  const f=advFeatures()[idx];
+  const badge=f.gift?'<span class="sc-badge">Estuche</span>':((p.featured||99)<=6?'<span class="sc-badge hot">Mas pedido</span>':"");
+  return `<article class="sc enter" data-cat="${p.cat}" data-open="${idx}" style="--i:${Math.min(i,10)}"><figure class="sc-img">${favBtn(idx)}${badge}${productArt(p)}</figure><div class="sc-body"><span class="sc-brand">${inspiredBy(p)}</span><h3>${p.name}</h3><p class="sc-notes">${p.notes[0]} &middot; ${p.notes[1]}</p><div class="sc-meta"><span>${storeLabel("fam",f.dom)}</span><span>${p.size}</span></div><div class="sc-foot"><div class="sc-price"><b>${money(p.price)}</b><small>2 por ${money(COMBO_PRICE)}</small></div><button type="button" class="sc-add combo-add" data-combo-toggle="${idx}" data-on="En tu combo &#10003;" data-off="Agregar al combo">Agregar al combo</button></div></div></article>`;
+}
 function renderCatalog(){
   const grid=document.querySelector("#productGrid");
   if(!grid) return;
-  const query=(document.querySelector("#searchInput")?.value||"").trim().toLowerCase();
-  const filtered=(activeFilter==="all"?PRODUCTS:PRODUCTS.filter(p=>p.cat===activeFilter)).filter(p=>{
-    const haystack=[p.brand,p.name,p.cat,p.mood,p.notes.join(" ")].join(" ").toLowerCase();
-    return !query||haystack.includes(query);
-  });
+  const query=advNorm(document.querySelector("#searchInput")?.value||"");
+  const filtered=PRODUCTS.filter((p,i)=>storeMatch(p,i)&&(!query||advNorm([p.brand,p.name,p.cat,p.mood,p.notes.join(" "),ADV_FAM[advFeatures()[i].dom].label].join(" ")).includes(query)));
   const list=sorted(filtered);
-  const viewKey=activeFilter+"|"+query+"|"+(document.querySelector("#sortSelect")?.value||"featured");
+  const viewKey=JSON.stringify(STORE)+"|"+query+"|"+(document.querySelector("#sortSelect")?.value||"featured");
   if(viewKey!==lastViewKey){lastViewKey=viewKey;shown=CATALOG_PAGE;}
-  const hero=list[0]||PRODUCTS[0];
-  document.querySelectorAll("[data-filter]").forEach(btn=>btn.classList.toggle("active",btn.dataset.filter===activeFilter));
   const count=document.querySelector("#catalogCount");
-  if(count) count.textContent=`${list.length} piezas`;
-  const spotlight=document.querySelector("#spotlight");
-  if(spotlight){
-    const heroIdx=PRODUCTS.indexOf(hero);
-    spotlight.innerHTML=`<div><figure data-open="${heroIdx}" style="cursor:pointer">${productArt(hero)}</figure><h3>${hero.name}</h3><p>${inspiredBy(hero)} / ${hero.size}. ${hero.notes.join(", ")}.</p><div class="price">${money(hero.price)}</div></div><button class="pill-btn primary" data-open="${heroIdx}">Ver detalle</button>`;
-  }
-  grid.innerHTML=list.slice(0,shown).map((p,i)=>{const idx=PRODUCTS.indexOf(p);return `<article class="product-card enter" data-cat="${p.cat}" data-open="${idx}" style="--i:${Math.min(i,10)}"><figure class="product-image">${favBtn(idx)}${productArt(p)}</figure><div class="product-info"><span class="product-brand">${inspiredBy(p)} / ${p.size}</span><h3>${p.name}</h3><div class="notes"><div><b>Salida</b><span>${p.notes[0]}</span></div><div><b>Corazon</b><span>${p.notes[1]}</span></div><div><b>Base</b><span>${p.notes[2]}</span></div></div><div class="price-row"><span class="price">${money(p.price)}</span>${comboBtn(idx)}</div></div></article>`}).join("");
+  if(count) count.textContent=`${list.length} perfume${list.length===1?"":"s"}`;
+  const active=Object.keys(STORE).filter(k=>STORE[k]!=="all");
+  const badge=document.querySelector("#filterBadge");
+  if(badge) badge.textContent=active.length?`(${active.length})`:"";
+  const chips=document.querySelector("#storeChips");
+  if(chips) chips.innerHTML=active.length?active.map(k=>`<button type="button" class="sc-chip" data-sf="${k}:all">${storeLabel(k,STORE[k])} <span aria-hidden="true">&times;</span></button>`).join("")+`<button type="button" class="sc-chip clear" data-sf-clear>Limpiar todo</button>`:"";
+  renderStoreFilters();
+  document.querySelectorAll("#filterApply").forEach(b=>b.textContent=`Ver ${list.length} perfume${list.length===1?"":"s"}`);
+  grid.innerHTML=list.length?list.slice(0,shown).map((p,i)=>storeCard(p,PRODUCTS.indexOf(p),i)).join(""):`<div class="store-empty"><b>No encontramos perfumes con esos filtros</b><p>Prueba quitando alguno o busca por otra marca.</p><button type="button" class="pill-btn primary" data-sf-clear>Limpiar filtros</button></div>`;
   let more=document.querySelector("#loadMore");
-  if(!more){more=document.createElement("div");more.id="loadMore";more.className="load-more";(grid.closest(".catalog-layout")||grid).after(more);}
-  more.innerHTML=list.length>shown?`<button class="pill-btn primary" type="button">Ver mas perfumes (${list.length-shown})</button>`:"";
-  more.querySelector("button")?.addEventListener("click",()=>{shown+=CATALOG_PAGE;renderCatalog();});
-  bindCardMotion();
+  if(more){
+    more.innerHTML=list.length>shown?`<p class="lm-count">Mostrando ${Math.min(shown,list.length)} de ${list.length}</p><button class="pill-btn primary" type="button">Ver mas perfumes (${list.length-shown})</button>`:(list.length>CATALOG_PAGE?`<p class="lm-count">Viste los ${list.length} perfumes</p>`:"");
+    more.querySelector("button")?.addEventListener("click",()=>{shown+=CATALOG_PAGE;renderCatalog();});
+  }
   updateFavUI();
   updateComboUI();
 }
@@ -506,10 +544,16 @@ function injectSocial(){
 }
 
 function bindCatalog(){
-  document.querySelectorAll("[data-filter]").forEach(btn=>btn.addEventListener("click",()=>{
-    activeFilter=btn.dataset.filter;
-    renderCatalog();
-  }));
+  if(!document.querySelector("#productGrid")) return;
+  const page=document.querySelector("#catalogo");
+  const closeDrawer=()=>document.querySelector("#storeFilters")?.classList.remove("open");
+  page.addEventListener("click",e=>{
+    const f=e.target.closest("[data-sf]");
+    if(f){const [k,v]=f.dataset.sf.split(":");STORE[k]=(STORE[k]===v&&k!=="cat")?"all":v;renderCatalog();return;}
+    if(e.target.closest("[data-sf-clear]")){Object.keys(STORE).forEach(k=>STORE[k]="all");const q=document.querySelector("#searchInput");if(q)q.value="";renderCatalog();return;}
+    if(e.target.closest("#filterToggle")){document.querySelector("#storeFilters").classList.add("open");return;}
+    if(e.target.closest("#filterClose")||e.target.closest("#filterApply")){closeDrawer();document.querySelector(".store-main")?.scrollIntoView({behavior:"smooth",block:"start"});}
+  });
   document.querySelector("#searchInput")?.addEventListener("input",renderCatalog);
   document.querySelector("#sortSelect")?.addEventListener("change",renderCatalog);
   renderCatalog();
@@ -801,48 +845,198 @@ function toggleChat(){
   if(open&&!window.__chatGreeted){window.__chatGreeted=true;chatTyping(true);setTimeout(()=>{chatTyping(false);chatMsg(`Hola 👋 Soy el concierge de Maison Duo. Cada perfume vale ${money(UNIT_PRICE)} y llevas 2 por ${money(COMBO_PRICE)}. Toca una pregunta o habla con un asesor por WhatsApp.`,"bot")},600);}
 }
 
-function bindFinder(){
-  const finder=document.querySelector("[data-scent-finder]");
-  if(!finder) return;
-  const results=finder.querySelector("[data-results]");
-  const single=finder.querySelector("[data-result]");
-  const picks={cat:"all",mood:"firma"};
-  finder.querySelectorAll("[data-pick].active").forEach(b=>{const [k,v]=b.dataset.pick.split(":");picks[k]=v;});
-  const rank=()=>PRODUCTS.map((p,i)=>{
-    let s=0;
-    if(picks.cat==="all"||p.cat===picks.cat) s+=3;
-    if(p.mood===picks.mood) s+=3;
-    s+=(100-(p.featured||50))*0.005;
-    return {p,i,s};
-  }).sort((a,b)=>b.s-a.s);
-  const card=({p,i})=>`<button class="finder-card" data-cat="${p.cat}" data-open="${i}"><div class="finder-card-photo">${productArt(p)}</div><div class="finder-card-info"><span class="product-brand">${inspiredBy(p)}</span><b>${p.name}</b><span class="finder-card-price">${money(p.price)}</span></div></button>`;
-  const paint=()=>{
-    const ranked=rank().slice(0,3);
-    if(!ranked.length) return;
-    if(results){ results.innerHTML=ranked.map(card).join(""); }
-    if(single){
-      const m=ranked[0].p,mi=ranked[0].i;
-      const labels=["Salida","Corazon","Base"];
-      const chips=m.notes.map((n,k)=>`<div class="rs-note"><b>${labels[k]}</b><span>${n}</span></div>`).join("");
-      const alts=ranked.slice(1).map(card).join("");
-      const saving=COMBO_SIZE*UNIT_PRICE-COMBO_PRICE;
-      single.innerHTML=`<div class="rs-top"><span class="rs-badge">Tu match ideal</span><span class="rs-meta">${CAT_COPY[m.cat]||""} &middot; ${m.mood}</span></div>
-      <div class="rs-main"><figure class="rs-photo" data-open="${mi}">${productArt(m)}</figure><div class="rs-body"><div class="result-name">${m.name}</div><p class="result-copy">${inspiredBy(m)} &middot; ${m.size}. ${MOOD_COPY[m.mood]||""}</p></div></div>
-      <div class="rs-notes">${chips}</div>
-      <div class="rs-price"><span class="price">${money(m.price)}</span><small>Llevate 2 por <b>${money(COMBO_PRICE)}</b> y ahorra ${money(saving)}</small></div>
-      <div class="rs-actions"><a class="pill-btn primary wa-cta" href="${waLinkFor(m)}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir este perfume por WhatsApp</span></a>${comboBtn(mi,true)}<button class="pill-btn secondary" data-open="${mi}">Ver detalle</button></div>
-      <div class="rs-alt"><span class="finder-label">Otras 2 opciones para tu combo</span><div class="finder-results">${alts}</div></div>`;
-      updateFavUI();updateComboUI();
+/* ===== Generador de recomendaciones (Selector Duo) ===== */
+const ADV_FAM={
+  fresco:{label:"Fresco y citrico",kw:["limon","bergamota","mandarina","naranja","pomelo","lima","menta","marin","acuatica","manzana","pepino","bambu","te verde","yuzu","hierba","pina","citrico","lavanda","salvia"]},
+  frutal:{label:"Frutal",kw:["fruta","pera","durazno","mango","lichi","litchi","frambuesa","fresa","cereza","granada","ciruela","grosella","maracuya","arandano","kiwi","melon","higo"]},
+  floral:{label:"Floral",kw:["rosa","jazmin","peonia","flor","gardenia","lirio","iris","violeta","fresia","neroli","orquidea","nardo","tuberosa","magnolia","heliotropo","ylang","loto","nenufar"]},
+  dulce:{label:"Dulce y gourmand",kw:["vainilla","caramelo","chocolate","cacao","cafe","praline","coco","tonka","miel","crema","galleta","malvavisco","algodon","toffee","leche","almendra","pistacho","dulce","mantequilla","datil"]},
+  especiado:{label:"Especiado",kw:["pimienta","canela","cardamomo","jengibre","azafran","nuez moscada","especia","clavo","anis","absenta"]},
+  amaderado:{label:"Amaderado y oud",kw:["cedro","sandalo","madera","pachuli","musgo","cuero","tabaco","incienso","resina","ambar","oud","vetiver","abedul","whisky","ron"]}
+};
+const ADV_CAT=[["all","Cualquiera"],["hombre","Hombre"],["mujer","Mujer"],["unisex","Unisex"]];
+const ADV_OCC=[["all","Cualquiera"],["diario","Diario"],["oficina","Oficina"],["noche","Noche"],["firma","Firma"],["regalo","Regalo"]];
+const ADV_INT=[["all","Cualquiera"],["1","Suave"],["2","Moderada"],["3","Intensa"]];
+const ADV_CLIMA=[["all","Todo el ano"],["calido","Calido"],["frio","Fresco / frio"]];
+const ADV_MOOD_SHORT={diario:"el uso diario",oficina:"la oficina",noche:"salir de noche",firma:"ser tu perfume de firma",regalo:"regalar"};
+const ADV_INT_LABEL={1:"suave",2:"moderada",3:"intensa"};
+let ADV_CACHE=null;
+function advIntensity(p){
+  const n=(p.name+" "+p.size).toLowerCase();
+  if(/intense|intenso|elixir|parfum|extrait|absolu|prive|black|noir|onyx|oud|night|nuit|dukhan|legion|rogue|platinum|royal|gold|scandal|million|phantom|ultra|fame|good girl|libre|spicebomb|bad boy|tobacco|baccarat|rouge|amber/.test(n)||p.mood==="noche") return 3;
+  if(/aqua|light|fresh|fraiche|sport|splash|spray|ck one|blue|cool|pure|daisy|marin|energy|vert|natural|white|candy|cloud/.test(n)) return 1;
+  return 2;
+}
+function advFeatures(){
+  if(ADV_CACHE) return ADV_CACHE;
+  ADV_CACHE=PRODUCTS.map(p=>{
+    const text=(p.notes.join(" ")+" "+p.name).toLowerCase();
+    const vec={};let dom="fresco",best=-1;
+    for(const k in ADV_FAM){const hits=ADV_FAM[k].kw.filter(w=>text.includes(w)).length;vec[k]=Math.min(1,hits/2);if(vec[k]>best){best=vec[k];dom=k;}}
+    const w=(vec.dulce+vec.especiado+vec.amaderado)-(vec.fresco+vec.frutal+vec.floral);
+    return {vec,dom,int:advIntensity(p),season:w>0.6?"frio":(w<-0.4?"calido":"todo"),gift:/estuche|cofre/i.test(p.name+" "+p.size)};
+  });
+  return ADV_CACHE;
+}
+function advCos(a,b){let d=0,x=0,y=0;for(const k in a){d+=a[k]*b[k];x+=a[k]*a[k];y+=b[k]*b[k];}return x&&y?d/Math.sqrt(x*y):0;}
+const advNorm=s=>(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").trim();
+function advFindLiked(q){
+  const t=advNorm(q).split(/\s+/).filter(w=>w.length>2);
+  if(!t.length) return -1;
+  const hay=PRODUCTS.map(p=>advNorm(p.brand+" "+p.name));
+  let idx=hay.findIndex(h=>t.every(w=>h.includes(w)));
+  if(idx<0) idx=hay.findIndex(h=>t.some(w=>h.includes(w)));
+  return idx;
+}
+function advRank(picks,likedIdx){
+  const F=advFeatures();
+  const ans={mood:picks.mood!=="all",fam:picks.fam.length>0,int:picks.int!=="all",clima:picks.clima!=="all",liked:likedIdx>=0};
+  const W={mood:3,fam:4,int:2,clima:1.5,liked:4};
+  let max=0;for(const k in ans) if(ans[k]) max+=W[k];
+  const lv=likedIdx>=0?F[likedIdx].vec:null;
+  const rows=[];
+  PRODUCTS.forEach((p,i)=>{
+    if(i===likedIdx) return;
+    const f=F[i];
+    if(!(picks.cat==="all"||p.cat===picks.cat||(picks.cat!=="unisex"&&p.cat==="unisex"))) return;
+    const s={};let t=0;
+    if(ans.mood){
+      const near=(["diario","oficina"].includes(p.mood)&&["diario","oficina"].includes(picks.mood))||(["noche","firma"].includes(p.mood)&&["noche","firma"].includes(picks.mood));
+      s.mood=p.mood===picks.mood?1:(picks.mood==="regalo"&&f.gift?1:(near?.5:0));t+=W.mood*s.mood;
     }
+    if(ans.fam){s.fam=Math.max(...picks.fam.map(k=>f.vec[k]));if(picks.fam.includes(f.dom)) s.fam=Math.max(s.fam,.9);t+=W.fam*s.fam;}
+    if(ans.int){s.int=Math.max(0,1-Math.abs(f.int-(+picks.int))*.5);t+=W.int*s.int;}
+    if(ans.clima){s.clima=f.season===picks.clima?1:(f.season==="todo"?.6:0);t+=W.clima*s.clima;}
+    if(ans.liked){s.liked=Math.min(1,advCos(lv,f.vec)+(p.brand===PRODUCTS[likedIdx].brand?.2:0));t+=W.liked*s.liked;}
+    if(picks.cat===p.cat&&picks.cat!=="unisex") t+=.6;
+    t+=(1000-(p.featured||500))/1e5;
+    rows.push({p,i,f,s,t,pct:max>0?Math.round(52+47*Math.min(1,t/max)):null});
+  });
+  rows.sort((a,b)=>b.t-a.t);
+  return {rows,ans,max};
+}
+function advReasons(r,picks,likedIdx){
+  const {p,f,s}=r,out=[];
+  if(picks.cat!=="all"){out.push(p.cat==="unisex"&&picks.cat!=="unisex"?"Es unisex: lo puedes usar tu y compartirlo":`Hecho para ${p.cat==="hombre"?"hombre":"mujer"}`);}
+  if(s.mood>=.5) out.push(`Pensado para ${ADV_MOOD_SHORT[picks.mood]}${f.gift&&picks.mood==="regalo"?" (viene en estuche)":""}`);
+  if(s.fam>=.5){const k=picks.fam.find(x=>f.vec[x]>=.5||f.dom===x)||f.dom;out.push(`Perfil ${ADV_FAM[k].label.toLowerCase()}: ${p.notes.join(", ").toLowerCase()}`);}
+  if(s.int>=.5) out.push(`Intensidad ${ADV_INT_LABEL[f.int]}: ${f.int===3?"se nota y deja estela":(f.int===1?"fresco y discreto":"equilibrado, entra bien a cualquier plan")}`);
+  if(s.clima>=.6) out.push(f.season==="calido"?"Rinde mejor con clima calido":(f.season==="frio"?"Brilla en clima fresco o frio":"Funciona todo el ano"));
+  if(likedIdx>=0&&s.liked>=.5) out.push(`Parecido a ${PRODUCTS[likedIdx].name} por sus notas`);
+  if(!out.length) out.push(`Uno de nuestros mas pedidos: ${p.notes.join(", ").toLowerCase()}`);
+  return out.slice(0,4);
+}
+function advTip(r){
+  const {p,f}=r;
+  const spray=f.int===3?"2 sprays en cuello y pecho":(f.int===1?"3 a 4 sprays, reaplica cada 4 horas":"3 sprays en cuello, munecas y pecho");
+  const when={diario:"Ideal de dia, para ir a clases o a trabajar.",oficina:"Discreto para espacios cerrados y reuniones.",noche:"Estrenalo despues de las 7 pm.",firma:"Usalo siempre y que te reconozcan por el.",regalo:"Perfecto para regalar: causa buena primera impresion."}[p.mood]||"";
+  return `${when} ${spray} sobre piel hidratada.`;
+}
+function advComplement(top,rows,picks){
+  const dayish=["diario","oficina"].includes(top.p.mood);
+  const wantNight=dayish;
+  let best=null,bs=-1;
+  rows.slice(0,60).forEach(r=>{
+    if(r.i===top.i||r.f.gift!==top.f.gift&&top.f.gift) return;
+    if(!(r.p.cat===top.p.cat||r.p.cat==="unisex"||top.p.cat==="unisex")) return;
+    let c=r.t*.4;
+    const night=["noche","firma"].includes(r.p.mood);
+    if(top.p.mood==="regalo") c+=0; else c+=(night===wantNight)?4:0;
+    if(r.f.dom!==top.f.dom) c+=1.2;
+    if(r.f.int!==top.f.int) c+=.4;
+    if(c>bs){bs=c;best=r;}
+  });
+  return best;
+}
+function bindFinder(){
+  const root=document.querySelector("[data-scent-finder]");
+  if(!root) return;
+  const picks={cat:"all",mood:"all",fam:[],int:"all",clima:"all"};
+  let liked="";
+  const chips=(key,list)=>list.map(([v,l])=>`<button type="button" class="choice${(key==="fam"?false:picks[key]===v)?" active":""}" data-adv="${key}:${v}" aria-pressed="false">${l}</button>`).join("");
+  const famChips=Object.keys(ADV_FAM).map(k=>`<button type="button" class="choice" data-adv="fam:${k}" aria-pressed="false">${ADV_FAM[k].label}</button>`).join("");
+  const names=[...new Set(PRODUCTS.flatMap(p=>[p.brand,p.name]))].sort().map(n=>`<option value="${n.replace(/"/g,"&quot;")}">`).join("");
+  root.classList.add("advisor");
+  root.innerHTML=`<div class="finder-copy adv-form">
+    <span class="eyebrow">Generador Duo</span>
+    <h2>Tu perfume ideal, <em>paso a paso</em></h2>
+    <p class="adv-lead">Responde lo que quieras. Cada respuesta afina la recomendacion y te armamos el combo perfecto.</p>
+    <div class="adv-progress" aria-hidden="true"><i data-adv-bar></i><span data-adv-count>0 de 6 respondidas</span></div>
+    <div class="finder-group"><span class="finder-label">1 &middot; Para quien es</span><div class="finder-options">${chips("cat",ADV_CAT)}</div></div>
+    <div class="finder-group"><span class="finder-label">2 &middot; Ocasion</span><div class="finder-options">${chips("mood",ADV_OCC)}</div></div>
+    <div class="finder-group"><span class="finder-label">3 &middot; Que aromas te gustan <small>(hasta 2)</small></span><div class="finder-options">${famChips}</div></div>
+    <div class="finder-group"><span class="finder-label">4 &middot; Intensidad</span><div class="finder-options">${chips("int",ADV_INT)}</div></div>
+    <div class="finder-group"><span class="finder-label">5 &middot; Clima donde lo usaras</span><div class="finder-options">${chips("clima",ADV_CLIMA)}</div></div>
+    <div class="finder-group"><label class="finder-label" for="advLiked">6 &middot; Un perfume que ya te guste <small>(opcional)</small></label><input id="advLiked" class="adv-input" list="advList" type="text" placeholder="Ej: Sauvage, Libre, Baccarat..." autocomplete="off"><datalist id="advList">${names}</datalist><small class="adv-liked-msg" data-adv-liked-msg></small></div>
+    <div class="adv-actions"><button type="button" class="pill-btn secondary" data-adv-act="random">Sorprendeme</button><button type="button" class="pill-btn secondary" data-adv-act="reset">Reiniciar</button><a class="pill-btn primary adv-jump" href="#advOut">Ver mi recomendacion &darr;</a></div>
+  </div>
+  <div class="finder-stage adv-out" id="advOut" aria-live="polite"></div>`;
+  const out=root.querySelector("#advOut");
+  const likedMsg=root.querySelector("[data-adv-liked-msg]");
+  const syncChips=()=>{
+    root.querySelectorAll("[data-adv]").forEach(b=>{
+      const [k,v]=b.dataset.adv.split(":");
+      const on=k==="fam"?picks.fam.includes(v):picks[k]===v;
+      b.classList.toggle("active",on);b.setAttribute("aria-pressed",on);
+    });
+    const n=(picks.cat!=="all")+(picks.mood!=="all")+(picks.fam.length>0)+(picks.int!=="all")+(picks.clima!=="all")+(liked.trim()!=="");
+    root.querySelector("[data-adv-bar]").style.width=(n/6*100)+"%";
+    root.querySelector("[data-adv-count]").textContent=`${n} de 6 respondidas`;
   };
-  finder.querySelectorAll("[data-pick]").forEach(btn=>btn.addEventListener("click",()=>{
-    const [key,value]=btn.dataset.pick.split(":");
-    picks[key]=value;
-    finder.querySelectorAll(`[data-pick^="${key}:"]`).forEach(b=>b.classList.remove("active"));
-    btn.classList.add("active");
-    paint();
-  }));
-  paint();
+  const mini=(r,tag)=>`<button type="button" class="finder-card" data-cat="${r.p.cat}" data-open="${r.i}"><div class="finder-card-photo">${productArt(r.p)}</div><div class="finder-card-info"><span class="product-brand">${tag||inspiredBy(r.p)}</span><b>${r.p.name}</b><span class="finder-card-price">${money(r.p.price)}${r.pct?` &middot; ${r.pct}% afinidad`:""}</span></div></button>`;
+  let current=null,forced=null;
+  const paint=()=>{
+    const likedIdx=advFindLiked(liked);
+    likedMsg.textContent=liked.trim()?(likedIdx>=0?`Buscamos aromas parecidos a ${PRODUCTS[likedIdx].name} (${PRODUCTS[likedIdx].brand}).`:"No lo encontramos en el catalogo; prueba con otra marca o nombre."):"";
+    const {rows,ans,max}=advRank(picks,likedIdx);
+    if(!rows.length){out.innerHTML=`<div class="adv-empty"><b>Sin coincidencias</b><p>Prueba quitando algun filtro.</p></div>`;return;}
+    const top=forced&&rows.find(r=>r.i===forced)||rows[0];
+    current=top;
+    const comp=advComplement(top,rows,picks);
+    const alts=rows.filter(r=>r.i!==top.i&&(!comp||r.i!==comp.i)).slice(0,3);
+    const labels=["Salida","Corazon","Base"];
+    const reasons=advReasons(top,picks,likedIdx).map(x=>`<li>${x}</li>`).join("");
+    const chipsN=top.p.notes.map((n,k)=>`<div class="rs-note"><b>${labels[k]}</b><span>${n}</span></div>`).join("");
+    const anyAns=max>0;
+    const pctHtml=anyAns?`<div class="adv-meter" role="img" aria-label="Afinidad ${top.pct}%"><b>${top.pct}%</b><span>afinidad</span><i style="--p:${top.pct}%"></i></div>`:`<span class="rs-meta">Seleccion popular</span>`;
+    let comboHtml="";
+    if(comp){
+      const dn=m=>["diario","oficina"].includes(m)?"Para el dia":(["noche","firma"].includes(m)?"Para la noche":"Para regalar");
+      comboHtml=`<div class="adv-combo"><div class="adv-combo-head"><span class="finder-label">Tu combo ideal</span><div class="adv-combo-price"><s>${money(COMBO_SIZE*UNIT_PRICE)}</s><b>${money(COMBO_PRICE)}</b></div></div>
+      <div class="adv-combo-pair"><div>${mini(top,dn(top.p.mood))}</div><span class="adv-plus">+</span><div>${mini(comp,dn(comp.p.mood))}</div></div>
+      <p class="adv-combo-note">Dos aromas que se complementan: ${ADV_FAM[top.f.dom].label.toLowerCase()} y ${ADV_FAM[comp.f.dom].label.toLowerCase()}. Ahorras ${money(COMBO_SIZE*UNIT_PRICE-COMBO_PRICE)}.</p>
+      <div class="adv-combo-actions"><a class="pill-btn primary wa-cta" href="${comboWaLink([{p:top.p},{p:comp.p}])}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir este combo por WhatsApp</span></a><button type="button" class="pill-btn secondary" data-adv-act="addpair" data-i1="${top.i}" data-i2="${comp.i}">Cargar a mi combo</button></div></div>`;
+    }
+    out.innerHTML=`<div class="rs-top"><span class="rs-badge">${anyAns?"Tu match ideal":"Para empezar"}</span>${pctHtml}</div>
+      <div class="rs-main"><figure class="rs-photo" data-open="${top.i}">${productArt(top.p)}</figure><div class="rs-body"><div class="result-name">${top.p.name}</div><p class="result-copy">${inspiredBy(top.p)} &middot; ${top.p.size} &middot; ${ADV_FAM[top.f.dom].label}</p></div></div>
+      <div class="adv-why"><span class="finder-label">Por que te lo recomendamos</span><ul class="adv-reasons">${reasons}</ul></div>
+      <div class="rs-notes">${chipsN}</div>
+      <p class="adv-tip"><b>Como usarlo:</b> ${advTip(top)}</p>
+      <div class="rs-price"><span class="price">${money(top.p.price)}</span><small>o 2 por <b>${money(COMBO_PRICE)}</b></small></div>
+      <div class="rs-actions"><a class="pill-btn primary wa-cta" href="${waLinkFor(top.p)}" target="_blank" rel="noopener">${WA_SVG}<span>Pedir este perfume por WhatsApp</span></a>${comboBtn(top.i,true)}<button class="pill-btn secondary" data-open="${top.i}">Ver detalle</button></div>
+      ${comboHtml}
+      ${alts.length?`<div class="rs-alt"><span class="finder-label">Tambien te pueden gustar</span><div class="finder-results">${alts.map(r=>mini(r)).join("")}</div></div>`:""}`;
+    updateFavUI();updateComboUI();
+  };
+  const refresh=()=>{forced=null;syncChips();paint();};
+  root.addEventListener("click",e=>{
+    const b=e.target.closest("[data-adv]");
+    if(b){
+      const [k,v]=b.dataset.adv.split(":");
+      if(k==="fam"){const at=picks.fam.indexOf(v);if(at>=0)picks.fam.splice(at,1);else{picks.fam.push(v);if(picks.fam.length>2)picks.fam.shift();}}
+      else picks[k]=v;
+      refresh();return;
+    }
+    const a=e.target.closest("[data-adv-act]");
+    if(!a) return;
+    const act=a.dataset.advAct;
+    if(act==="reset"){picks.cat=picks.mood=picks.int=picks.clima="all";picks.fam=[];liked="";root.querySelector("#advLiked").value="";refresh();}
+    else if(act==="random"){const {rows}=advRank(picks,advFindLiked(liked));const pool=rows.slice(0,12);if(pool.length){forced=pool[Math.floor(Math.random()*pool.length)].i;paint();}}
+    else if(act==="addpair"){[+a.dataset.i1,+a.dataset.i2].forEach(i=>{if(!comboState.includes(i))comboState.push(i);});saveCombo();updateComboUI();a.textContent="En tu combo ✓";}
+  });
+  let timer;
+  root.querySelector("#advLiked").addEventListener("input",e=>{liked=e.target.value;clearTimeout(timer);timer=setTimeout(refresh,220);});
+  syncChips();paint();
 }
 
 function bindGlobal(){
